@@ -1,0 +1,48 @@
+---
+layout: page
+title: "Admin - Home"
+permalink: /admin/
+---
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="events" class="col-sm-2 control-label">Events</label>
+          <div class="col-sm-10">
+            <select id="events" class="form-control" >
+              <option value="-1">- Select an event to score -</option>
+            </select>
+            <div style="margin-top:10px;">
+              <button id="add_event" class="btn btn-md btn-block">Add Event</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+$(function() {
+  
+  // handle event selection
+  $( "#add_event" ).click(function(ev) {
+    ev.preventDefault();
+    var option = $("#events option:selected");
+    var val = this.value;
+
+    // console.log(option.val() + '-' + option.text());
+    ParadoxScout.addEventAndTeams(option.val(), function(error) {
+      if(error)
+        alert(error);
+      else {
+        alert('success');
+      }
+    });
+  });
+
+  // load this year's events on load
+  ParadoxScout.buildEventsDropdown($('#events'));
+});
+</script>
