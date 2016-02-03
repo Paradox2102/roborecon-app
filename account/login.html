@@ -77,7 +77,7 @@ $(function() {
     ev.preventDefault();
     ParadoxScout.loginWithOAuth('github', function(error) {
       if (error) {
-        $("#error").text(err);
+        $("#error").text(error);
       }
       else {
         location.href = '/';
