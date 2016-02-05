@@ -1,7 +1,7 @@
 <nav class="site-nav navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <a href="/" class="navbar-brand">Paradox Scout</a>
+      <a href="{{ site.url }}" class="navbar-brand">Paradox Scout</a>
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -11,11 +11,11 @@
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li>
-          <a href="/about">About</a>
+          <a href="{{ site.url }}/about">About</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/profile"><span data-bind="text: name"></span></a></li>
+        <li><a href="{{ site.url }}/profile"><span data-bind="text: name"></span></a></li>
         <li><a href="#" data-bind="click: login_or_out"><span data-bind="text: login_or_out_button"></span></a></li>
       </ul>
     </div>
