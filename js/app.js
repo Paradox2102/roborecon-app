@@ -1,4 +1,5 @@
-
+---
+---
 var ParadoxScout = ParadoxScout || {};
 
 ParadoxScout.start = function(next) {
@@ -82,10 +83,10 @@ var personalize = function(user) {
     login_or_out : function() {
       if (user) {
         ParadoxScout.DataService.logout();
-        location.href = '/';
+        location.href = '{{ site.url }}';
       }
       else {
-        location.href = '/login';
+        location.href = '{{ site.url }}/login';
       }
     },
     login_or_out_button : ko.computed(function(){
