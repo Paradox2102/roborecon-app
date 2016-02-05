@@ -5,7 +5,7 @@ permalink: /login/
 ---
 <div class="container">
   <div class="omb_login">
-    <h3 class="omb_authTitle"><a href="/login">Login</a> or Sign up</h3>
+    <h3 class="omb_authTitle">Login</h3>
     <div class="row omb_row-sm-offset-3 omb_socialButtons">
       <div class="col-xs-4 col-sm-2">
         <a href="#" class="btn btn-md btn-block omb_btn-facebook">
@@ -27,14 +27,14 @@ permalink: /login/
       </div>
     </div>
 
-    <div class="row omb_row-sm-offset-3 omb_loginOr">
+    <div class="row omb_row-sm-offset-3 omb_loginOr" style="display:none;">
       <div class="col-xs-12 col-sm-6">
         <hr class="omb_hrOr">
         <span class="omb_spanOr">or</span>
       </div>
     </div>
 
-    <div class="row omb_row-sm-offset-3">
+    <div class="row omb_row-sm-offset-3" style="display:none;">
       <div class="col-xs-12 col-sm-6">
         <div class="input-group">
           <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -55,18 +55,22 @@ permalink: /login/
         <span id="error" class="help-block" style="color:red;font-weight:bold;"></span>
       </div>
     </div>
-    <div class="row omb_row-sm-offset-3">
+    <div class="row omb_row-sm-offset-3" style="display:none;">
       <div class="col-xs-12 col-sm-3">
         <label class="checkbox">
           <input type="checkbox" value="remember-me">Remember Me
         </label>
       </div>
-      <div class="col-xs-12 col-sm-3">
+      <div class="col-xs-12 col-sm-3" style="display:none;">
         <p class="omb_forgotPwd">
           <a href="#">Forgot password?</a>
         </p>
       </div>
     </div>
+    <p style="text-align:center;margin-top:20px;">
+      * Before logging in, please contact SDA Robotics to ensure your e-mail address has been
+      whitelisted for use of this application
+    </p>
   </div>
 </div>
 

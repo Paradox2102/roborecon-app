@@ -67,10 +67,16 @@ ParadoxScout.DataService = function() {
       var provider = authData == null ? null : authData.provider;
 
       if (authData) {
-        var user_key = cleanUserKey(authData[provider].email);
-        dbRef.child('users').child(user_key).once('value', function(user) {
-            next(user.val());
-        });
+        // try getting from cache first-child
+        if(authData.provider == 'github') {
+          next({ email: authData.github.email, name: authData.github.displayName });
+        }
+        else {
+          var user_key = cleanUserKey(authData[provider].email);
+          dbRef.child('users').child(user_key).once('value', function(user) {
+              next(user.val());
+          });
+        };
       }
       else {
         next(null);
@@ -78,7 +84,7 @@ ParadoxScout.DataService = function() {
   },
 
   // event and teams methods
-  upsertEventAndTeams = function(eventKey, eventData, teamsData, eventTeamsData, next) {
+  updateEventAndTeams = function(eventKey, eventData, teamsData, eventTeamsData, next) {
     dbRef.child('/events/' + eventKey).set(eventData)
       .then(function() {
         return dbRef.child('/teams').update(teamsData)
@@ -93,18 +99,29 @@ ParadoxScout.DataService = function() {
       });
   },
 
+  // match scores methods
+  updateTeamScores = function(eventKey, scoringData, next) {
+    dbRef.child('/event_scores/' + eventKey).set(scoringData)
+      .then(next)
+      .catch(function(error) {
+        console.log.bind(console);
+        next(error);
+      });
+  },
+
 
   // utility methods
   cleanUserKey = function (email) {
     return email.replace('.', '%2E');
-  }
+  };
 
   // public api
   return {
     loginWithOAuth: loginWithOAuth,
     logout: logout,
-    upsertEventAndTeams: upsertEventAndTeams,
-    getCurrentUser: getCurrentUser
+    updateEventAndTeams: updateEventAndTeams,
+    getCurrentUser: getCurrentUser,
+    updateTeamScores: updateTeamScores
   };
 
 }();

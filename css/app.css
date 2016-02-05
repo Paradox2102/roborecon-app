@@ -320,6 +320,46 @@ pre.highlight > code {
   color: #099;
 }
 
+/*
+  page header styles
+**/
+#main-header {
+  display:flex;align-items:center;font-size:36px;height:75px;background-color:#D59E2A;
+}
+
+/*
+  main navigation bar and menu styles
+**/
+.menu-padding {
+    padding-top:55px;
+}
+
+.navbar,
+.navbar ul,
+.navbar-nav li a {
+    background-color: #D5482A !important;
+    color: #fff !important;
+  }
+
+.navbar-nav li a:hover {
+  background-color: #AA3921 !important;
+  color: #fff !important;
+}
+
+.navbar-nav li.divider,
+.navbar-toggle .icon-bar  {
+  background-color: #fff;
+}
+
+/*** RESPONSIVE CSS ***/
+
+/*
+  media based styles for any elements that need adjusting when screen is < 992px
+**/
+@media (max-width: 991px) {
+    #main-header {font-size: 22px;}
+}
+
 
 
 @media (min-width: 768px) {
@@ -332,14 +372,14 @@ pre.highlight > code {
     text-align: center;
   line-height: 300%;
 }
-  
+
 .omb_login .omb_socialButtons a {
-  color: white; // In yourUse @body-bg 
+  color: white; // In yourUse @body-bg
   opacity:0.9;
 }
 .omb_login .omb_socialButtons a:hover {
   color: white;
-  opacity:0.9;      
+  opacity:0.9;
 }
 .omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
 .omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
@@ -371,7 +411,7 @@ pre.highlight > code {
   background-color: #222222;
   width: 3em;
   text-align: center;
-}     
+}
 
 .omb_login .omb_loginForm .input-group.i {
   width: 2em;
@@ -380,10 +420,10 @@ pre.highlight > code {
     color: red;
 }
 
-  
+
 @media (min-width: 768px) {
     .omb_login .omb_forgotPwd {
         text-align: right;
     margin-top:10px;
-  }   
+  }
 }

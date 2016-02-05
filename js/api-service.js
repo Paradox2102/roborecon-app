@@ -7,6 +7,7 @@ ParadoxScout.ApiService = function() {
   eventsUrl = rootApiUrl + '/api/v2/events/{year}',
   eventUrl = rootApiUrl + '/api/v2/event/{event_key}',
   teamsUrl = rootApiUrl + '/api/v2/event/{event_key}/teams',
+  matchesUrl = rootApiUrl + '/api/v2/event/{event_key}/matches',
 
   // private methods
   getDataFromBlueAlliance = function(apiUrl) {
@@ -32,6 +33,10 @@ ParadoxScout.ApiService = function() {
 
   getEventAndTeams = function(eventKey) {
     return $.when(getEvent(eventKey), getTeamsForEvent(eventKey))
+  },
+
+  getAllMatchDetails = function(eventKey) {
+    return getDataFromBlueAlliance(matchesUrl.replace('{event_key}', eventKey));
   };
 
   // public api
@@ -39,7 +44,8 @@ ParadoxScout.ApiService = function() {
     getEvents: getEvents,
     getEvent: getEvent,
     getTeamsForEvent: getTeamsForEvent,
-    getEventAndTeams: getEventAndTeams
+    getEventAndTeams: getEventAndTeams,
+    getAllMatchDetails: getAllMatchDetails
   };
 
 }();
