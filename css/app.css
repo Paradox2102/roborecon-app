@@ -32,6 +32,11 @@
   border-style: none !important;
 }
 
+/*** DASHBOARD table styles ***/
+.dataTable.fixedHeader-floating {
+  background-color: #2E3338 !important;
+}
+
 /*** RESPONSIVE CSS ***/
 
 /* media based styles for any elements that need adjusting when screen is < 992px */

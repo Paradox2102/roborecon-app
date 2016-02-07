@@ -1,10 +1,9 @@
 ---
 layout: page
 ---
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      Dashboard here
       <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
       </table>
     </div>
@@ -53,8 +52,11 @@ $(function() {
 
     var dashboard = $('#example').DataTable({
       responsive: true,
-      'data': teamsArray,
-      'columns': [
+      colReorder: true,
+      order: [[ 1, "desc" ]], // default sort set to total_points | desc
+      pageLength: 25,
+      data: teamsArray,
+      columns: [
         { title: 'Team', data: 'team_key' },
         { title: 'Total', data: 'total_points' },
         { title: 'adjust_points', data: 'adjust_points' },
@@ -87,7 +89,7 @@ $(function() {
       }]
     });
 
-    new $.fn.dataTable.FixedHeader(dashboard, {headerOffset: 100});
+    new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
 
   });
 
