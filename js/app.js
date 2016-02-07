@@ -114,15 +114,16 @@ ParadoxScout.updateTeamScores = function(eventKey, next) {
       var teamEventDetails = {};
 
       $.each(teamScores, function(i, score) {
-        var matchScore = {};
-        matchScore[score.matchKey] = score.scores;
-        matchScore[score.matchKey].match_time = new Date(1000 * score.match_time).toString();
+        var matchScore = score.scores;
+        matchScore.match_time = new Date(1000 * score.match_time).toString();
 
         if(score.teamKey in teamEventDetails) {
           teamEventDetails[score.teamKey].scores[score.matchKey] = matchScore;
         }
         else {
-          teamEventDetails[score.teamKey] = { competition_id: ParadoxScout.CompetitionYear, updated_at: updatedAt, scores: matchScore };
+          var firsMatch = {};
+          firsMatch[score.matchKey] = matchScore
+          teamEventDetails[score.teamKey] = { competition_id: ParadoxScout.CompetitionYear, updated_at: updatedAt, scores: firsMatch };
         }
       });
 
