@@ -14,7 +14,7 @@ layout: page
 <script>
 $(function() {
   // build the dashboard
-  $.getJSON("/sample-event-scores.json", function(teamData) {
+  $.getJSON("{{ site.url }}/sample-event-scores.json", function(teamData) {
     // build an object that contains one record per team
     var teams = {};
 
