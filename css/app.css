@@ -37,6 +37,12 @@
   background-color: #2E3338 !important;
 }
 
+#dashboard th,
+#dashboard td {
+    white-space: nowrap;
+}
+
+
 /*** RESPONSIVE CSS ***/
 
 /* media based styles for any elements that need adjusting when screen is < 992px */

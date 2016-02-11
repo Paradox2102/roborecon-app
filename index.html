@@ -5,7 +5,7 @@ layout: page
   <div class="row">
     <div id="buttons" class="col-md-12 text-right" style="margin-bottom:10px;"></div>
     <div class="col-md-12">
-      <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+      <table id="dashboard" class="table table-striped table-bordered" cellspacing="0" width="100%">
       </table>
     </div>
   </div>
@@ -51,7 +51,7 @@ $(function() {
     // conver teams object into an array for datatables
     var teamsArray = $.map(teams, function(item) { return item; });
 
-    var dashboard = $('#example').DataTable({
+    var dashboard = $('#dashboard').DataTable({
       responsive: true,
       colReorder: true,
       order: [[ 1, "desc" ]], // default sort set to total_points | desc
@@ -59,31 +59,31 @@ $(function() {
       buttons: [ 'print', { extend: 'excel', title: 'Excel' }, { extend: 'colvis', title: 'Columns' } ],
       data: teamsArray,
       columns: [
-        { title: 'Team', data: 'team_key' },
-        { title: 'Total', data: 'total_points' },
-        { title: 'adjust_points', data: 'adjust_points' },
-        { title: 'auto_points', data: 'auto_points' },
-        { title: 'container_count_level1', data: 'container_count_level1' },
-        { title: 'container_count_level2', data: 'container_count_level2' },
-        { title: 'container_count_level3', data: 'container_count_level3' },
-        { title: 'container_count_level4', data: 'container_count_level4' },
-        { title: 'container_count_level5', data: 'container_count_level5' },
-        { title: 'container_count_level6', data: 'container_count_level6' },
-        { title: 'container_points', data: 'container_points' },
-        { title: 'container_set', data: 'container_set' },
-        { title: 'foul_count', data: 'foul_count' },
-        { title: 'foul_points', data: 'foul_points' },
-        { title: 'litter_count_container', data: 'litter_count_container' },
-        { title: 'litter_count_landfill', data: 'litter_count_landfill' },
-        { title: 'litter_count_unprocessed', data: 'litter_count_unprocessed' },
-        { title: 'litter_points', data: 'litter_points' },
-        { title: 'robot_set', data: 'robot_set' },
-        { title: 'teleop_points', data: 'teleop_points' },
-        { title: 'tote_count_far', data: 'tote_count_far' },
-        { title: 'tote_count_near', data: 'tote_count_near' },
-        { title: 'tote_points', data: 'tote_points' },
-        { title: 'tote_set', data: 'tote_set' },
-        { title: 'tote_stack', data: 'tote_stack' }
+        { title: 'Team', data: 'team_key', render: function(data,type,full,meta) { return '<span style="padding-right:15px;">' + data + '</span>[ <a style="color:#D5482A"href="{{ site.url }}/team-details?team_id=' + data + '"><i class="fa fa-search"></i></a> | <a style="color:#D59E2A;" href="{{ site.url }}/rate?team_id=' + data + '"><i class="fa fa-star-o"></i></a> ]' } },
+        { title: 'Total', data: 'total_points', orderSequence: ['desc', 'asc'] },
+        { title: 'adjust_points', data: 'adjust_points', orderSequence: ['desc', 'asc'] },
+        { title: 'auto_points', data: 'auto_points', orderSequence: ['desc', 'asc'] },
+        { title: 'container_count_level1', data: 'container_count_level1', orderSequence: ['desc', 'asc'] },
+        { title: 'container_count_level2', data: 'container_count_level2', orderSequence: ['desc', 'asc'] },
+        { title: 'container_count_level3', data: 'container_count_level3', orderSequence: ['desc', 'asc'] },
+        { title: 'container_count_level4', data: 'container_count_level4', orderSequence: ['desc', 'asc'] },
+        { title: 'container_count_level5', data: 'container_count_level5', orderSequence: ['desc', 'asc'] },
+        { title: 'container_count_level6', data: 'container_count_level6', orderSequence: ['desc', 'asc'] },
+        { title: 'container_points', data: 'container_points', orderSequence: ['desc', 'asc'] },
+        { title: 'container_set', data: 'container_set', orderSequence: ['desc', 'asc'] },
+        { title: 'foul_count', data: 'foul_count', orderSequence: ['desc', 'asc'] },
+        { title: 'foul_points', data: 'foul_points', orderSequence: ['desc', 'asc'] },
+        { title: 'litter_count_container', data: 'litter_count_container', orderSequence: ['desc', 'asc'] },
+        { title: 'litter_count_landfill', data: 'litter_count_landfill', orderSequence: ['desc', 'asc'] },
+        { title: 'litter_count_unprocessed', data: 'litter_count_unprocessed', orderSequence: ['desc', 'asc'] },
+        { title: 'litter_points', data: 'litter_points', orderSequence: ['desc', 'asc'] },
+        { title: 'robot_set', data: 'robot_set', orderSequence: ['desc', 'asc'] },
+        { title: 'teleop_points', data: 'teleop_points', orderSequence: ['desc', 'asc'] },
+        { title: 'tote_count_far', data: 'tote_count_far', orderSequence: ['desc', 'asc'] },
+        { title: 'tote_count_near', data: 'tote_count_near', orderSequence: ['desc', 'asc'] },
+        { title: 'tote_points', data: 'tote_points', orderSequence: ['desc', 'asc'] },
+        { title: 'tote_set', data: 'tote_set', orderSequence: ['desc', 'asc'] },
+        { title: 'tote_stack', data: 'tote_stack', orderSequence: ['desc', 'asc'] },
       ],
       'columnDefs': [{
         'defaultContent': '-',
@@ -91,10 +91,9 @@ $(function() {
       }]
     });
 
-    new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
+    dashboard.buttons().container().appendTo( $('#buttons'));
 
-    dashboard.buttons().container()
-    .appendTo( $('#buttons'));
+    new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
   });
 
 });
