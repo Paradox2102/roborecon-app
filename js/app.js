@@ -9,11 +9,30 @@ ParadoxScout.start = function(next) {
   // default event key
   ParadoxScout.CurrentEventKey = '2015casd';
 
+  // setup default notification options
+  toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-full-width",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "3000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  };
+
   // if user is not authenticated, invalidate cache and route to /login as needed
   if(!ParadoxScout.DataService.isAuthenticated()) {
     AppUtility.invalidateCache();
 
-    if (location.pathname.indexOf('/login') < 0) return location.href = '/login'
+    if (location.pathname.indexOf('/login') < 0) return location.href = siteUrl + '/login'
   }
 
   // update ui with current user info
@@ -130,7 +149,9 @@ ParadoxScout.getEventScoutingData = function(eventKey, next) {
 };
 
 ParadoxScout.getTeamScoutingData = function(eventKey, teamKey, next) {
+  eventKey = verifyEventKey(eventKey);
 
+  ParadoxScout.DataService.getTeamScoutingData(eventKey, teamKey, next);
 };
 
 // update db with all current match scoring data from TBA
@@ -216,10 +237,10 @@ var personalize = function(user) {
     login_or_out : function() {
       if (user) {
         ParadoxScout.DataService.logout();
-        location.href = '/';
+        location.href = siteUrl;
       }
       else {
-        location.href = '/login';
+        location.href = siteUrl + '/login';
       }
     },
     login_or_out_button : ko.computed(function(){
