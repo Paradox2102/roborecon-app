@@ -29,11 +29,17 @@ $(function() {
   // handle event selection
   $( "#add_event" ).click(function(ev) {
     ev.preventDefault();
+
+    $('.loaderImage').show();
+
     var option = $("#events option:selected");
     var val = this.value;
 
     // console.log(option.val() + '-' + option.text());
-    ParadoxScout.addEventAndTeams(option.val(), function(error) {
+    ParadoxScout.updateEventAndTeams(option.val(), function(error) {
+      
+      $('.loaderImage').hide();
+
       if(error)
         alert(error);
       else {

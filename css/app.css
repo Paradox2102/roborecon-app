@@ -1,3 +1,20 @@
+/*** misc ***/
+.loaderImage {
+  margin: 0px; 
+  padding: 0px; 
+  position: fixed; 
+  right: 0px; 
+  top: 0px; 
+  width: 100%; 
+  height: 100%; 
+  background-color: rgb(102, 102, 102); 
+  z-index: 30001; 
+  opacity: 0.8;
+  display: none;
+}
+.loaderImage > div {
+  position:absolute; top:50%; left:50%; margin-left: -75px; margin-top: -75px;
+}
 
 /*** main HEADER styles ***/
 #main-header {

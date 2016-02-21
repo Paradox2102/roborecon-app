@@ -6,13 +6,184 @@ permalink: /rate/
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      Team Rating Form:
+      <form id="reportForm" class="form-horizontal">
+        <fieldset>
+
+          <legend>Scouting Report</legend>
+
+          <div class="row">
+            <div class="col-md-5">
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="teams">Team to Rate:</label>
+                <div class="col-md-8">
+                  <select id="teams" name="team_id" class="form-control">
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_robot_stability">Robot Stability:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_robot_stability" id="rating_robot_stability_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_robot_stability" id="rating_robot_stability_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_robot_stability" id="rating_robot_stability_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_robot_stability" id="rating_robot_stability_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_robot_stability" id="rating_robot_stability_5" value="5" autocomplete="off">5</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_high_goal">High Goal:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_high_goal" id="rating_high_goal_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_high_goal" id="rating_high_goal_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_high_goal" id="rating_high_goal_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_high_goal" id="rating_high_goal_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_high_goal" id="rating_high_goal_5" value="5" autocomplete="off">5</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_low_goal">Low Goal:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_low_goal" id="rating_low_goal_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_low_goal" id="rating_low_goal_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_low_goal" id="rating_low_goal_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_low_goal" id="rating_low_goal_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_low_goal" id="rating_low_goal_5" value="5" autocomplete="off">5</label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-7">
+
+              <div class="form-group">
+                <label class="col-md-2 control-label" for="rating_notes">Notes:</label>
+                <div class="col-md-9">                     
+                  <textarea id="rating_notes" class="form-control" style="height:250px;" name="rating_notes"></textarea>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_other1">Other 1:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_other1" id="rating_other1_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other1" id="rating_other1_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other1" id="rating_other1_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other1" id="rating_other1_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other1" id="rating_other1_5" value="5" autocomplete="off">5</label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-4">
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_other2">Other 2:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_other2" id="rating_other2_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other2" id="rating_other2_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other2" id="rating_other2_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other2" id="rating_other2_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other2" id="rating_other2_5" value="5" autocomplete="off">5</label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-4">
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_other3">Other 3:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_other3" id="rating_other3_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other3" id="rating_other3_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other3" id="rating_other3_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other3" id="rating_other3_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_other3" id="rating_other3_5" value="5" autocomplete="off">5</label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </fieldset>
+        <button id="submit" type="button" class="btn btn-primary btn-lg">Submit Scouting Report</button>
+        <span id="error" class="help-block" style="color:red;font-weight:bold;"></span>
+      </form>
     </div>
   </div>
 </div>
 
 <script>
 $(function() {
+  // add new user scouting report
+  $("#submit").on("click", function(ev) {
+    ev.preventDefault();
+    
+    $('.loaderImage').show();
+
+    // map from data into json object
+    var data = {};
+    $.each($('#reportForm').serializeArray(), function(k, v) {
+      data[v.name] = v.value;
+    });
+    //console.log(json);
+
+    // add scouting report
+    ParadoxScout.addScoutingReport(data, function(error) {
+      $('.loaderImage').hide();
+
+      if (error) {
+        AppUtility.showErrorMsg("An error occurred!", error);
+      }
+      else {
+        AppUtility.showSuccessMsg("Scouting Report Saved!", '', function() { 
+          setTimeout("location.href = '{{ site.url }}'", 3000);
+        } );
+      }
+    });
+  });
+
+
+  // on page load ... 
+  // 1. build teams dropdown
+  $('.loaderImage').show();
+
+  ParadoxScout.buildTeamsDropdown($('#teams'), '2016casd', function(error) {
+
+    $('.loaderImage').hide();
+
+    if (error) {
+      AppUtility.showErrorMsg("An error occurred!", error);
+    }
+    else {
+      // if a team key is included in querystring, select that team
+      var selectedTeamKey = AppUtility.getUrlParameter('team_id');
+      if(selectedTeamKey && $("#teams option[value='" + selectedTeamKey + "']").length > 0) {
+        $('#teams').val(selectedTeamKey);
+      }
+    }
+  });
 
 });
 </script>
+

@@ -13,88 +13,75 @@ layout: page
 
 <script>
 $(function() {
-  // build the dashboard
-  $.getJSON("{{ site.url }}/sample-event-scores.json", function(teamData) {
-    // build an object that contains one record per team
-    var teams = {};
 
-    $.each(teamData, function(teamKey, teamDetails) {
-      // get list of matches
-      var matches = teamDetails.scores;
+  function loadDashboard() {
+    $('.loaderImage').show();
 
-      $.each(matches, function(matchKey, match) {
+    // build the dashboard -- for testing use: $.getJSON("{{ site.url }}/sample-event-scores.json", function(teamData) {
+    ParadoxScout.getEventScoutingData(null, function(teamData, error) {
+      
+      $('.loaderImage').hide();
 
-        if(teams.hasOwnProperty(teamKey)) {
-          // if team exists in 'teams', sum existing scoring category values
-          $.each(match, function(scoringCategoryKey, scoringCategoryValue) {
-            // if looking at teamKey or matchTime, continue to next item
-            if(scoringCategoryKey == 'team_key' || scoringCategoryKey == 'match_time') return true;
+      if(error) {
+        AppUtility.showErrorMsg("An error occurred!", error);
+      }
+      else {
+        // build dashboard
+        var dashboard = $('#dashboard').DataTable({
+          responsive: true,
+          colReorder: true,
+          order: [[ 1, "desc" ]], // default sort set to total_points | desc
+          pageLength: 25,
+          buttons: [ 'print', { extend: 'excel', title: 'Excel' }, { extend: 'colvis', title: 'Columns' } ],
+          data: teamData,
+          columns: [
+            { title: 'Team', data: 'team_key', 
+              render: function(data,type,full,meta) { 
+                return '<span style="padding-right:15px;">' + data + '</span>[ <a style="color:#D5482A"href="{{ site.url }}/team-details?team_id=' + data + '"><i class="fa fa-search"></i></a> | <a style="color:#D59E2A;" href="{{ site.url }}/rate?team_id=' + data + '"><i class="fa fa-star-o"></i></a> ]' 
+              } 
+            },
+            { title: 'Total', data: 'total_points', orderSequence: ['desc', 'asc'] },
+            { title: 'adjust_points', data: 'adjust_points', orderSequence: ['desc', 'asc'] },
+            { title: 'auto_points', data: 'auto_points', orderSequence: ['desc', 'asc'] },
+            { title: 'container_count_level1', data: 'container_count_level1', orderSequence: ['desc', 'asc'] },
+            { title: 'container_count_level2', data: 'container_count_level2', orderSequence: ['desc', 'asc'] },
+            { title: 'container_count_level3', data: 'container_count_level3', orderSequence: ['desc', 'asc'] },
+            { title: 'container_count_level4', data: 'container_count_level4', orderSequence: ['desc', 'asc'] },
+            { title: 'container_count_level5', data: 'container_count_level5', orderSequence: ['desc', 'asc'] },
+            { title: 'container_count_level6', data: 'container_count_level6', orderSequence: ['desc', 'asc'] },
+            { title: 'container_points', data: 'container_points', orderSequence: ['desc', 'asc'] },
+            { title: 'container_set', data: 'container_set', orderSequence: ['desc', 'asc'] },
+            { title: 'foul_count', data: 'foul_count', orderSequence: ['desc', 'asc'] },
+            { title: 'foul_points', data: 'foul_points', orderSequence: ['desc', 'asc'] },
+            { title: 'litter_count_container', data: 'litter_count_container', orderSequence: ['desc', 'asc'] },
+            { title: 'litter_count_landfill', data: 'litter_count_landfill', orderSequence: ['desc', 'asc'] },
+            { title: 'litter_count_unprocessed', data: 'litter_count_unprocessed', orderSequence: ['desc', 'asc'] },
+            { title: 'litter_points', data: 'litter_points', orderSequence: ['desc', 'asc'] },
+            { title: 'robot_set', data: 'robot_set', orderSequence: ['desc', 'asc'] },
+            { title: 'teleop_points', data: 'teleop_points', orderSequence: ['desc', 'asc'] },
+            { title: 'tote_count_far', data: 'tote_count_far', orderSequence: ['desc', 'asc'] },
+            { title: 'tote_count_near', data: 'tote_count_near', orderSequence: ['desc', 'asc'] },
+            { title: 'tote_points', data: 'tote_points', orderSequence: ['desc', 'asc'] },
+            { title: 'tote_set', data: 'tote_set', orderSequence: ['desc', 'asc'] },
+            { title: 'tote_stack', data: 'tote_stack', orderSequence: ['desc', 'asc'] },
+          ],
+          'columnDefs': [{
+            'defaultContent': '-',
+            'targets': '_all'
+          }]
+        });
 
-            if ($.isNumeric(scoringCategoryValue)) {
-              teams[teamKey][scoringCategoryKey] += match[scoringCategoryKey];
-            }
-            else if (typeof(JSON.parse(scoringCategoryValue)) == 'boolean') {
-              var currentVal = JSON.parse(teams[teamKey][scoringCategoryKey]);
-              var newVal = JSON.parse(match[scoringCategoryKey]);
+        // add print, excel, column visibility buttons
+        dashboard.buttons().container().appendTo( $('#buttons'));
 
-              teams[teamKey][scoringCategoryKey] = currentVal + newVal;
-            }
-          });
-        }
-        else {
-          teams[teamKey] = match;
-          teams[teamKey].team_key = teamKey;
-        }
-      });
+        // make column header sticky
+        new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
+      }
     });
+  }
+  
 
-    // conver teams object into an array for datatables
-    var teamsArray = $.map(teams, function(item) { return item; });
-
-    var dashboard = $('#dashboard').DataTable({
-      responsive: true,
-      colReorder: true,
-      order: [[ 1, "desc" ]], // default sort set to total_points | desc
-      pageLength: 25,
-      buttons: [ 'print', { extend: 'excel', title: 'Excel' }, { extend: 'colvis', title: 'Columns' } ],
-      data: teamsArray,
-      columns: [
-        { title: 'Team', data: 'team_key', render: function(data,type,full,meta) { return '<span style="padding-right:15px;">' + data + '</span>[ <a style="color:#D5482A"href="{{ site.url }}/team-details?team_id=' + data + '"><i class="fa fa-search"></i></a> | <a style="color:#D59E2A;" href="{{ site.url }}/rate?team_id=' + data + '"><i class="fa fa-star-o"></i></a> ]' } },
-        { title: 'Total', data: 'total_points', orderSequence: ['desc', 'asc'] },
-        { title: 'adjust_points', data: 'adjust_points', orderSequence: ['desc', 'asc'] },
-        { title: 'auto_points', data: 'auto_points', orderSequence: ['desc', 'asc'] },
-        { title: 'container_count_level1', data: 'container_count_level1', orderSequence: ['desc', 'asc'] },
-        { title: 'container_count_level2', data: 'container_count_level2', orderSequence: ['desc', 'asc'] },
-        { title: 'container_count_level3', data: 'container_count_level3', orderSequence: ['desc', 'asc'] },
-        { title: 'container_count_level4', data: 'container_count_level4', orderSequence: ['desc', 'asc'] },
-        { title: 'container_count_level5', data: 'container_count_level5', orderSequence: ['desc', 'asc'] },
-        { title: 'container_count_level6', data: 'container_count_level6', orderSequence: ['desc', 'asc'] },
-        { title: 'container_points', data: 'container_points', orderSequence: ['desc', 'asc'] },
-        { title: 'container_set', data: 'container_set', orderSequence: ['desc', 'asc'] },
-        { title: 'foul_count', data: 'foul_count', orderSequence: ['desc', 'asc'] },
-        { title: 'foul_points', data: 'foul_points', orderSequence: ['desc', 'asc'] },
-        { title: 'litter_count_container', data: 'litter_count_container', orderSequence: ['desc', 'asc'] },
-        { title: 'litter_count_landfill', data: 'litter_count_landfill', orderSequence: ['desc', 'asc'] },
-        { title: 'litter_count_unprocessed', data: 'litter_count_unprocessed', orderSequence: ['desc', 'asc'] },
-        { title: 'litter_points', data: 'litter_points', orderSequence: ['desc', 'asc'] },
-        { title: 'robot_set', data: 'robot_set', orderSequence: ['desc', 'asc'] },
-        { title: 'teleop_points', data: 'teleop_points', orderSequence: ['desc', 'asc'] },
-        { title: 'tote_count_far', data: 'tote_count_far', orderSequence: ['desc', 'asc'] },
-        { title: 'tote_count_near', data: 'tote_count_near', orderSequence: ['desc', 'asc'] },
-        { title: 'tote_points', data: 'tote_points', orderSequence: ['desc', 'asc'] },
-        { title: 'tote_set', data: 'tote_set', orderSequence: ['desc', 'asc'] },
-        { title: 'tote_stack', data: 'tote_stack', orderSequence: ['desc', 'asc'] },
-      ],
-      'columnDefs': [{
-        'defaultContent': '-',
-        'targets': '_all'
-      }]
-    });
-
-    dashboard.buttons().container().appendTo( $('#buttons'));
-
-    new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
-  });
-
+  // on page load ... 
+  loadDashboard();
 });
 </script>

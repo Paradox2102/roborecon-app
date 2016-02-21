@@ -3,7 +3,43 @@ layout: default
 ---
 <script>
 $(function() {
+  // start app
   ParadoxScout.start();
+
+  // setup sticky navbar
+  var menu = $('#main-menu');
+  var origOffsetY = menu.offset().top;
+
+  function scroll() {
+   if ($(window).scrollTop() >= origOffsetY) {
+     $('#main-menu').addClass('navbar-fixed-top');
+     $('#main-body').addClass('menu-padding');
+   }
+   else {
+     $('#main-menu').removeClass('navbar-fixed-top');
+     $('#main-body').removeClass('menu-padding');
+   }
+  }
+  document.onscroll = scroll;
+
+  toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-full-width",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "3000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
+
 });
 </script>
 {{content}}
