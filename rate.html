@@ -21,110 +21,319 @@ permalink: /rate/
                   </select>
                 </div>
               </div>
-
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_robot_stability">Robot Stability:</label>
-                <div class="col-md-8">   
-                  <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_robot_stability" id="rating_robot_stability_1" value="1" autocomplete="off">1</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_robot_stability" id="rating_robot_stability_2" value="2" autocomplete="off">2</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_robot_stability" id="rating_robot_stability_3" value="3" autocomplete="off">3</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_robot_stability" id="rating_robot_stability_4" value="4" autocomplete="off">4</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_robot_stability" id="rating_robot_stability_5" value="5" autocomplete="off">5</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_high_goal">High Goal:</label>
-                <div class="col-md-8">   
-                  <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_high_goal" id="rating_high_goal_1" value="1" autocomplete="off">1</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_high_goal" id="rating_high_goal_2" value="2" autocomplete="off">2</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_high_goal" id="rating_high_goal_3" value="3" autocomplete="off">3</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_high_goal" id="rating_high_goal_4" value="4" autocomplete="off">4</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_high_goal" id="rating_high_goal_5" value="5" autocomplete="off">5</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_low_goal">Low Goal:</label>
-                <div class="col-md-8">   
-                  <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_low_goal" id="rating_low_goal_1" value="1" autocomplete="off">1</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_low_goal" id="rating_low_goal_2" value="2" autocomplete="off">2</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_low_goal" id="rating_low_goal_3" value="3" autocomplete="off">3</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_low_goal" id="rating_low_goal_4" value="4" autocomplete="off">4</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_low_goal" id="rating_low_goal_5" value="5" autocomplete="off">5</label>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="col-md-7">
-
-              <div class="form-group">
-                <label class="col-md-2 control-label" for="rating_notes">Notes:</label>
-                <div class="col-md-9">                     
-                  <textarea id="rating_notes" class="form-control" style="height:250px;" name="rating_notes"></textarea>
-                </div>
-              </div>
-
             </div>
           </div>
 
           <div class="row">
-            <div class="col-md-4">
-
+            <div class="col-md-6">
+              <div class="col-md-12 panel panel-default">Scoring Ability:</div>
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_other1">Other 1:</label>
+                <label class="col-md-4 control-label" for="rating_scoring_high_goal">High Goal:</label>
                 <div class="col-md-8">   
                   <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_other1" id="rating_other1_1" value="1" autocomplete="off">1</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other1" id="rating_other1_2" value="2" autocomplete="off">2</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other1" id="rating_other1_3" value="3" autocomplete="off">3</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other1" id="rating_other1_4" value="4" autocomplete="off">4</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other1" id="rating_other1_5" value="5" autocomplete="off">5</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_high_goal" id="rating_scoring_high_goal_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_high_goal" id="rating_scoring_high_goal_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_high_goal" id="rating_scoring_high_goal_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_high_goal" id="rating_scoring_high_goal_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_high_goal" id="rating_scoring_high_goal_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_scoring_high_goal_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_scoring_low_goal">Low Goal:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_low_goal" id="rating_scoring_low_goal_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_low_goal" id="rating_scoring_low_goal_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_low_goal" id="rating_scoring_low_goal_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_low_goal" id="rating_scoring_low_goal_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_low_goal" id="rating_scoring_low_goal_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_scoring_low_goal_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_scoring_tower_climb">Tower Climb:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_climb" id="rating_scoring_tower_climb1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_climb" id="rating_scoring_tower_climb_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_climb" id="rating_scoring_tower_climb_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_climb" id="rating_scoring_tower_climb_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_climb" id="rating_scoring_tower_climb_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_scoring_tower_climb_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_scoring_tower_capture">Tower Capture:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_capture" id="rating_scoring_tower_capture_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_capture" id="rating_scoring_tower_capture_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_capture" id="rating_scoring_tower_capture_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_capture" id="rating_scoring_tower_capture_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_capture" id="rating_scoring_tower_capture_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_scoring_tower_capture_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 panel panel-default">Other:</div>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_overall">Overall:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall" id="rating_overall_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall" id="rating_overall_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall" id="rating_overall_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall" id="rating_overall_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall" id="rating_overall_5" value="5" autocomplete="off">5</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_overall_robot_stability">Robot Stability:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_5" value="5" autocomplete="off">5</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_overall_alliance_coop">Alliance Cooperation:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_alliance_coop" id="rating_overall_alliance_coop_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_alliance_coop" id="rating_overall_alliance_coop_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_alliance_coop" id="rating_overall_alliance_coop_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_alliance_coop" id="rating_overall_alliance_coop_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_alliance_coop" id="rating_overall_alliance_coop_5" value="5" autocomplete="off">5</label>
                   </div>
                 </div>
               </div>
 
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
+              <div class="col-md-12 panel panel-default">Obstacles:</div>
 
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_other2">Other 2:</label>
+                <label class="col-md-4 control-label" for="rating_obstacle_cheval_de_frise">Cheval de Frise:</label>
                 <div class="col-md-8">   
                   <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_other2" id="rating_other2_1" value="1" autocomplete="off">1</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other2" id="rating_other2_2" value="2" autocomplete="off">2</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other2" id="rating_other2_3" value="3" autocomplete="off">3</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other2" id="rating_other2_4" value="4" autocomplete="off">4</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other2" id="rating_other2_5" value="5" autocomplete="off">5</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_cheval_de_frise" id="rating_obstacle_cheval_de_frise_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_cheval_de_frise" id="rating_obstacle_cheval_de_frise_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_cheval_de_frise" id="rating_obstacle_cheval_de_frise_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_cheval_de_frise" id="rating_obstacle_cheval_de_frise_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_cheval_de_frise" id="rating_obstacle_cheval_de_frise_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_obstacle_cheval_de_frise_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_obstacle_drawbridge">Drawbridge:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_drawbridge" id="rating_obstacle_drawbridge_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_drawbridge" id="rating_obstacle_drawbridge_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_drawbridge" id="rating_obstacle_drawbridge_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_drawbridge" id="rating_obstacle_drawbridge_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_drawbridge" id="rating_obstacle_drawbridge_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_obstacle_drawbridge_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_obstacle_low_bar">Low Bar:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_low_bar" id="rating_obstacle_low_bar_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_low_bar" id="rating_obstacle_low_bar_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_low_bar" id="rating_obstacle_low_bar_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_low_bar" id="rating_obstacle_low_bar_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_low_bar" id="rating_obstacle_low_bar_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_obstacle_low_bar_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_obstacle_moat">Moat:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_moat" id="rating_obstacle_moat_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_moat" id="rating_obstacle_moat_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_moat" id="rating_obstacle_moat_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_moat" id="rating_obstacle_moat_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_moat" id="rating_obstacle_moat_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_obstacle_moat_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_obstacle_portcullis">Portcullis:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_portcullis" id="rating_obstacle_portcullis_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_portcullis" id="rating_obstacle_portcullis_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_portcullis" id="rating_obstacle_portcullis_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_portcullis" id="rating_obstacle_portcullis_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_portcullis" id="rating_obstacle_portcullis_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_obstacle_portcullis_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_obstacle_ramparts">Ramparts:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_ramparts" id="rating_obstacle_ramparts_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_ramparts" id="rating_obstacle_ramparts_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_ramparts" id="rating_obstacle_ramparts_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_ramparts" id="rating_obstacle_ramparts_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_ramparts" id="rating_obstacle_ramparts_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_obstacle_ramparts_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_obstacle_rock_wall">Rock Wall:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_rock_wall" id="rating_obstacle_rock_wall_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_rock_wall" id="rating_obstacle_rock_wall_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_rock_wall" id="rating_obstacle_rock_wall_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_rock_wall" id="rating_obstacle_rock_wall_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_rock_wall" id="rating_obstacle_rock_wall_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_obstacle_rock_wall_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_obstacle_rough_terrain">Rough Terrain:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_rough_terrain" id="rating_obstacle_rough_terrain_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_rough_terrain" id="rating_obstacle_rough_terrain_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_rough_terrain" id="rating_obstacle_rough_terrain_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_rough_terrain" id="rating_obstacle_rough_terrain_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_rough_terrain" id="rating_obstacle_rough_terrain_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_obstacle_rough_terrain_auto" value="1">
+                      Auto
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_obstacle_sally_port">Sally Port:</label>
+                <div class="col-md-8">   
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_sally_port" id="rating_obstacle_sally_port_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_sally_port" id="rating_obstacle_sally_port_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_sally_port" id="rating_obstacle_sally_port_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_sally_port" id="rating_obstacle_sally_port_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_sally_port" id="rating_obstacle_sally_port_5" value="5" autocomplete="off">5</label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:15px;">
+                    <label>
+                      <input type="checkbox" name="rating_obstacle_sally_port_auto" value="1">
+                      Auto
+                    </label>
                   </div>
                 </div>
               </div>
 
             </div>
-            <div class="col-md-4">
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
 
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_other3">Other 3:</label>
-                <div class="col-md-8">   
-                  <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_other3" id="rating_other3_1" value="1" autocomplete="off">1</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other3" id="rating_other3_2" value="2" autocomplete="off">2</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other3" id="rating_other3_3" value="3" autocomplete="off">3</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other3" id="rating_other3_4" value="4" autocomplete="off">4</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_other3" id="rating_other3_5" value="5" autocomplete="off">5</label>
-                  </div>
+                <label class="col-md-2 control-label" for="rating_other_notes">Notes:</label>
+                <div class="col-md-9">                     
+                  <textarea id="rating_notes" class="form-control" style="height:150px;" name="rating_other_notes"></textarea>
                 </div>
               </div>
 
             </div>
           </div>
+
         </fieldset>
         <button id="submit" type="button" class="btn btn-primary btn-lg">Submit Scouting Report</button>
         <span id="error" class="help-block" style="color:red;font-weight:bold;"></span>
