@@ -74,12 +74,14 @@ ParadoxScout.DataService = function() {
     if (authData) {
       // try getting from cache first-child
       if(authData.provider == 'github') {
-        next({ email: authData.github.email, name: authData.github.displayName });
+        next({ key: cleanUserKey(authData.github.email), email: authData.github.email, name: authData.github.displayName });
       }
       else {
         var user_key = cleanUserKey(authData[provider].email);
         dbRef.child('users').child(user_key).once('value', function(userSnapshot) {
-            next(userSnapShot.val());
+          var user = userSnapshot.val();
+          user.key = userSnapshot.key();
+          next(user);
         });
       };
     }
@@ -225,12 +227,19 @@ ParadoxScout.DataService = function() {
     });
   },
 
-  getScoutingReportsByEvent = function(eventKey) {
-    return dbRef.child('/event_scouting_reports/' + eventKey).orderByKey().on('child_added')
-  },
+  _scoutingReportsRef = null,
+  onScoutingReportAdded = function(eventKey, teamKey, next, onError) {
+    // if ref already exists, turn off any exising 'child_added' handlers
+    if(typeof _scoutingReportsRef === 'object' && _scoutingReportsRef != null) _scoutingReportsRef.off('child_added');
 
-  getScoutingReportsByTeam = function(eventKey, teamKey, next) {
-    return dbRef.child('/event_scouting_reports/' + eventKey).orderByChild('team_id').on('child_added')
+    // update current ref
+    _scoutingReportsRef = dbRef.child('/event_scouting_reports/' + eventKey);
+    
+    // get all scouting reports if no key passed in; else query for only specific team
+    if(teamKey)
+      return _scoutingReportsRef.orderByChild('team_id').equalTo(teamKey).on('child_added', next, onError);
+    else
+      return _scoutingReportsRef.orderByKey().on('child_added', next, onError);
   },
 
   getEventScores = function(eventKey) {
@@ -246,9 +255,6 @@ ParadoxScout.DataService = function() {
   },
 
   addScoutingReport = function(eventKey, data, next) {
-    // clearn scored_by user_key
-    data.scored_by = cleanUserKey(data.scored_by);
-
     dbRef.child('/event_scouting_reports/' + eventKey).push(data)
     .then(next())
     .catch(function(error) {
@@ -284,6 +290,7 @@ ParadoxScout.DataService = function() {
     getTeams: getTeams,
     updateEventAndTeams: updateEventAndTeams,
 
+    onScoutingReportAdded: onScoutingReportAdded,
     getEventScoutingData: getEventScoutingData,
     updateEventScores: updateEventScores,
     addScoutingReport: addScoutingReport

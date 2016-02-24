@@ -1,0 +1,190 @@
+---
+layout: page
+title: Scouting Reports
+permalink: /scouting-reports/
+---
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <form id="reportForm" class="form-horizontal">
+        <fieldset>
+
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="form-group">
+                <div class="col-md-8">
+                  <select id="teams" name="team_id" class="form-control">
+                    <option value="-99">- Select which scouting reports you want to view -</option>
+                    <option value="-1">All Teams</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div id="reports" class="col-md-12"></div>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+$(function() {
+  // add new user scouting report
+  $("#teams").change("click", function(ev) {
+    // determine report to fetch
+    var selectedVal = this.value;
+
+    // if selecting the placeholder, just return
+    if(selectedVal === '-99') return;
+
+    // if a specific team is selected, update the teamKey to fetch the reports of just
+    // that team
+    var teamKey = selectedVal == '-1' ? null : selectedVal;
+
+    // clear dropdown
+    $('#reports').empty();
+
+    ParadoxScout.getScoutingReports(null, teamKey, function(reportSnapshot, prevReportKey) {
+      // if nothing returned
+      if(!reportSnapshot) return;
+
+      // build <div> for report and then append
+      var rpt = reportSnapshot.val();
+      rpt.rptKey = reportSnapshot.key();
+
+      var data = { data: rpt };
+
+      $('#reports').prepend(reportTemplate(data));
+    });
+  });
+
+
+  // on page load ... 
+  // 1. build teams dropdown
+  $('.loaderImage').show();
+  ParadoxScout.buildTeamsDropdown($('#teams'), '2016casd', function(error) {
+
+    $('.loaderImage').hide();
+
+    if (error) {
+      AppUtility.showErrorMsg("An error occurred!", error);
+    }
+    else {
+      // if a team key is included in querystring, select that team
+      var selectedTeamKey = AppUtility.getUrlParameter('team_id');
+      if(selectedTeamKey && $("#teams option[value='" + selectedTeamKey + "']").length > 0) {
+        $('#teams').val(selectedTeamKey);
+      }
+    }
+  });
+
+  // 2. prepare report _template
+  var reportTemplate = _.template($('#reportTemplate').html());
+
+  // 3. update relative time report was made every 5 seconds
+  setInterval(function() { 
+    $('.fb-ts').each(function() { 
+      var relativeTime = moment(new Date($(this).data('fb-ts'))).fromNow();
+      $(this).html(relativeTime); 
+    }) 
+  }, 5000)
+
+});
+</script>
+<script id="reportTemplate" type="text/template">
+  <div id='<%= data.rptKey %>' class='col-sm-12 ps-scouting-report'>
+    <h4>Team: <%= data.team_id.replace('frc', '') %><br>
+    <small><span class="fb-ts" data-fb-ts="<%= data.scored_at %>"><%= moment(new Date(data.scored_at)).fromNow() %></span> by <%= data.scored_by.name %> </small></h4>
+    <h5>Overall: <span class="badge"><%= data.rating_overall || 'N/A' %></span></h5>
+    <div class="col-sm-4">
+      <div class="table-responsive">
+        <table class="table">
+          <tr><th>Scoring Ability</th><th>&nbsp;</th><th>Autonomous?</th></tr>
+          <tr>
+            <td>High Goal:</td><td><%= data.rating_scoring_high_goal || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_scoring_high_goal_auto ? 'checked' : '') %> ></td>
+          </tr>
+          <tr>
+            <td>Low Goal:</td><td><%= data.rating_scoring_low_goal || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_scoring_low_goal_auto ? 'checked' : '') %> ></td>
+          </tr>
+          <tr>
+            <td>Tower Climb:</td><td><%= data.rating_scoring_tower_climb || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_scoring_tower_climb_auto ? 'checked' : '') %> ></td>
+          </tr>
+          <tr>
+            <td>Tower Capture:</td><td><%= data.rating_scoring_tower_capture || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_scoring_tower_capture_auto ? 'checked' : '') %> ></td>
+          </tr>
+        </table>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <tr><th>Other</th><th>&nbsp;</th></tr>
+          <tr><td>Robot Stability:</td><td><%= data.rating_overall_robot_stability || 'N/A' %></td></tr>
+          <tr><td>Alliance Cooperation/Teamwork:</td><td><%= data.rating_overall_alliance_coop || 'N/A' %></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="table-responsive">
+        <table class="table">
+          <tr><th>Obstacle</th><th>&nbsp;</th><th>Autonomous?</th></tr>
+          <tr>
+            <td>Cheval de Frise:</td><td><%= data.rating_obstacle_cheval_de_frise || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_obstacle_cheval_de_frise_auto ? 'checked' : '') %> ></td>
+          </tr>
+          <tr>
+            <td>Drawbridge:</td><td><%= data.rating_obstacle_drawbridge || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_obstacle_drawbridge_auto ? 'checked' : '') %> ></td>
+          </tr>
+            <td>Low Bar:</td><td><%= data.rating_obstacle_low_bar || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_obstacle_low_bar_auto ? 'checked' : '') %> ></td>
+          </tr>
+          <tr>
+            <td>Moat:</td><td><%= data.rating_obstacle_moat || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_obstacle_moat_auto ? 'checked' : '') %> ></td>
+          </tr>
+          <tr>
+            <td>Portcullis:</td><td><%= data.rating_obstacle_portcullis || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_obstacle_portcullis_auto ? 'checked' : '') %> ></td>
+          </tr>
+          <tr>
+            <td>Ramparts:</td><td><%= data.rating_obstacle_ramparts || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_obstacle_ramparts_auto ? 'checked' : '') %> ></td>
+          </tr>
+          <tr>
+            <td>Rock Wall:</td><td><%= data.rating_obstacle_rock_wall || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_obstacle_rock_wall_auto ? 'checked' : '') %> ></td>
+          </tr>
+          <tr>  
+            <td>Rough Terrain:</td><td><%= data.rating_obstacle_rough_terrain || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_obstacle_rough_terrain_auto ? 'checked' : '') %> ></td>
+          </tr>
+          <tr>
+            <td>Sally Port:</td><td><%= data.rating_obstacle_sally_port || 'N/A' %></td>
+            <td><input type="checkbox" value="" disabled <%= (data.rating_obstacle_sally_port_auto ? 'checked' : '') %> ></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h6 class="panel-title">Notes:</h6>
+        </div>
+        <div class="panel-body">
+          <span class="panel"><%= _.escape(data.rating_other_notes).replace(/(\r\n|\n\r|\r|\n)/g, "<br>") %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr style="width:100%;border-color:#fff;">
+</script>
+

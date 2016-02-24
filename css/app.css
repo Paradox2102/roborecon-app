@@ -59,6 +59,8 @@
     white-space: nowrap;
 }
 
+.ps-scouting-report input[type='checkbox'] { transform: scale(1.4, 1.4); }
+
 
 /*** RESPONSIVE CSS ***/
 

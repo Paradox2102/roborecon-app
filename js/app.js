@@ -148,10 +148,15 @@ ParadoxScout.getEventScoutingData = function(eventKey, next) {
   ParadoxScout.DataService.getEventScoutingData(eventKey, next);
 };
 
-ParadoxScout.getTeamScoutingData = function(eventKey, teamKey, next) {
+ParadoxScout.getScoutingReports = function(eventKey, teamKey, next) {
   eventKey = verifyEventKey(eventKey);
 
-  ParadoxScout.DataService.getTeamScoutingData(eventKey, teamKey, next);
+  ParadoxScout.DataService.onScoutingReportAdded(eventKey, teamKey, function(childSnap, prevChildKey) {
+    next(childSnap, prevChildKey);
+  }, function(error) {
+    AppUtility.showErrorMsg(error);
+    next(null, null);
+  });
 };
 
 // update db with all current match scoring data from TBA
@@ -210,8 +215,8 @@ ParadoxScout.addScoutingReport = function(data, next) {
   var user = ParadoxScout.DataService.getCurrentUser(function(u) {
     // add in scouting metadata
     data.event_id = eventKey;
-    data.scored_at = new Date().getTime();
-    data.scored_by = u.email;
+    data.scored_at = Firebase.ServerValue.TIMESTAMP; // new Date().getTime() -> e.g., 1456101425447 -or- (new Date()).toString();
+    data.scored_by = { user_key: u.key, name: u.name, email: u.email };
 
     // console.log(data);
     ParadoxScout.DataService.addScoutingReport(eventKey, data, next)
