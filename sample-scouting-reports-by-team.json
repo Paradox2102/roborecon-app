@@ -1,0 +1,77 @@
+{
+  "-KBEXtk6NBAC3E4FGMsX" : {
+    "event_id" : "2015casd",
+    "rating_other_notes" : "asdf\r\n\r\nasdf\r\n\r\nasdf",
+    "rating_scoring_high_goal" : "5",
+    "rating_scoring_low_goal" : "5",
+    "rating_scoring_tower_climb" : "4",
+    "scored_at" : 1456254721073,
+    "scored_by" : {
+      "email" : "wgilliam@ohmeow.com",
+      "name" : "Wayde Gilliam",
+      "user_key" : "wgilliam@ohmeow%2Ecom"
+    },
+    "team_id" : "frc399"
+  },
+  "-KBFbr3eLSalLm-uB8lt" : {
+    "event_id" : "2015casd",
+    "rating_obstacle_cheval_de_frise" : "4",
+    "rating_obstacle_low_bar" : "3",
+    "rating_obstacle_moat" : "3",
+    "rating_obstacle_portcullis" : "4",
+    "rating_obstacle_rough_terrain" : "3",
+    "rating_obstacle_rough_terrain_auto" : "1",
+    "rating_obstacle_sally_port" : "1",
+    "rating_obstacle_sally_port_auto" : "1",
+    "rating_other_notes" : "<script>alert('hi');</script>",
+    "rating_overall" : "4",
+    "rating_scoring_high_goal" : "5",
+    "rating_scoring_low_goal" : "5",
+    "scored_at" : 1456272798038,
+    "scored_by" : {
+      "email" : "wgilliam@ohmeow.com",
+      "name" : "Wayde Gilliam",
+      "user_key" : "wgilliam@ohmeow%2Ecom"
+    },
+    "team_id" : "frc399"
+  },
+  "-KBFlW-oRhWldTNq0Yuj" : {
+    "event_id" : "2015casd",
+    "rating_other_notes" : "this is\r\n\r\nREALLYT net",
+    "rating_scoring_high_goal" : "5",
+    "rating_scoring_low_goal" : "5",
+    "rating_scoring_tower_climb" : "5",
+    "scored_at" : 1456275329130,
+    "scored_by" : {
+      "email" : "wgilliam@ohmeow.com",
+      "name" : "Wayde Gilliam",
+      "user_key" : "wgilliam@ohmeow%2Ecom"
+    },
+    "team_id" : "frc399"
+  },
+  "-KBFmKtWa41bU7qhqErb" : {
+    "event_id" : "2015casd",
+    "rating_other_notes" : "",
+    "rating_overall_alliance_coop" : "5",
+    "scored_at" : 1456275545744,
+    "scored_by" : {
+      "email" : "wgilliam@ohmeow.com",
+      "name" : "Wayde Gilliam",
+      "user_key" : "wgilliam@ohmeow%2Ecom"
+    },
+    "team_id" : "frc399"
+  },
+  "-KBGWvTAt5JTeKGI_p3v" : {
+    "event_id" : "2015casd",
+    "rating_other_notes" : "",
+    "rating_scoring_high_goal" : "5",
+    "rating_scoring_high_goal_auto" : "1",
+    "scored_at" : 1456288020436,
+    "scored_by" : {
+      "email" : "wgilliam@ohmeow.com",
+      "name" : "Wayde Gilliam",
+      "user_key" : "wgilliam@ohmeow%2Ecom"
+    },
+    "team_id" : "frc399"
+  }
+}

@@ -227,21 +227,6 @@ ParadoxScout.DataService = function() {
     });
   },
 
-  _scoutingReportsRef = null,
-  onScoutingReportAdded = function(eventKey, teamKey, next, onError) {
-    // if ref already exists, turn off any exising 'child_added' handlers
-    if(typeof _scoutingReportsRef === 'object' && _scoutingReportsRef != null) _scoutingReportsRef.off('child_added');
-
-    // update current ref
-    _scoutingReportsRef = dbRef.child('/event_scouting_reports/' + eventKey);
-    
-    // get all scouting reports if no key passed in; else query for only specific team
-    if(teamKey)
-      return _scoutingReportsRef.orderByChild('team_id').equalTo(teamKey).on('child_added', next, onError);
-    else
-      return _scoutingReportsRef.orderByKey().on('child_added', next, onError);
-  },
-
   getEventScores = function(eventKey) {
     // fetch match scores provided via TBA from FB
     return new Promise(function(resolve, reject) {
@@ -272,6 +257,43 @@ ParadoxScout.DataService = function() {
       });
   },
 
+  _teamScoresRef = null,
+  onTeamScoreAdded = function(eventKey, teamKey, eventListener, next, onError) {
+    // default event listener to 'child_added'
+    if(!eventListener) eventListener = 'child_added'
+
+    // if ref already exists, turn off any exising handlers for the specified event listener
+    if(typeof _teamScoresRef === 'object' && _teamScoresRef != null) _teamScoresRef.off(eventListener);
+
+    // get all match scores for a team if specified, else get all team's match scores for the event
+    if(teamKey) {
+      _teamScoresRef = dbRef.child('/event_scores/' + eventKey).child(teamKey + '/scores');
+      return _teamScoresRef.orderByChild('match_time').on(eventListener, next, onError);
+    }
+    else {
+      _teamScoresRef = dbRef.child('/event_scores/' + eventKey);
+      return _teamScoresRef.orderByKey().on(eventListener, next, onError);
+    }
+  },
+
+  _scoutingReportsRef = null,
+  onScoutingReportAdded = function(eventKey, teamKey, eventListener, next, onError) {
+    // default event listener to 'child_added'
+    if(!eventListener) eventListener = 'child_added'
+
+    // if ref already exists, turn off any exising handlers for the specified event listener
+    if(typeof _scoutingReportsRef === 'object' && _scoutingReportsRef != null) _scoutingReportsRef.off(eventListener);
+
+    // update current ref
+    _scoutingReportsRef = dbRef.child('/event_scouting_reports/' + eventKey);
+    
+    // get all reports for a team if specified, else get all reports for the event
+    if(teamKey)
+      return _scoutingReportsRef.orderByChild('team_id').equalTo(teamKey).on(eventListener, next, onError);
+    else
+      return _scoutingReportsRef.orderByKey().on(eventListener, next, onError);
+  },
+
 
   // ----------------------------------------------------------------------
   // UTILITY METHODS
@@ -291,6 +313,7 @@ ParadoxScout.DataService = function() {
     updateEventAndTeams: updateEventAndTeams,
 
     onScoutingReportAdded: onScoutingReportAdded,
+    onTeamScoreAdded: onTeamScoreAdded,
     getEventScoutingData: getEventScoutingData,
     updateEventScores: updateEventScores,
     addScoutingReport: addScoutingReport

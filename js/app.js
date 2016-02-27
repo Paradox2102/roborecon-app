@@ -148,12 +148,46 @@ ParadoxScout.getEventScoutingData = function(eventKey, next) {
   ParadoxScout.DataService.getEventScoutingData(eventKey, next);
 };
 
-ParadoxScout.getScoutingReports = function(eventKey, teamKey, next) {
+ParadoxScout.getScoutingReports = function(eventKey, teamKey, eventListener, next) {
   eventKey = verifyEventKey(eventKey);
 
-  ParadoxScout.DataService.onScoutingReportAdded(eventKey, teamKey, function(childSnap, prevChildKey) {
-    next(childSnap, prevChildKey);
-  }, function(error) {
+  var callback = null;
+  if(eventListener === 'value'){
+    callback = function(snap) {
+      next(snap);
+    };
+  }
+  else {
+    callback = function(childSnap, prevChildKey) {
+      next(childSnap, prevChildKey);
+    };
+  }
+  
+
+  ParadoxScout.DataService.onScoutingReportAdded(eventKey, teamKey, eventListener, callback, function(error) {
+    AppUtility.showErrorMsg(error);
+    next(null, null);
+  });
+};
+
+ParadoxScout.onTeamScoreAdded = function(eventKey, teamKey, eventListener, next) {
+  eventKey = verifyEventKey(eventKey);
+
+  // callback signature varies from 'value' to 'child_added' | 'child_changed' | 'child_removed'
+  var callback = null;
+  if(eventListener === 'value'){
+    callback = function(snap) {
+      next(snap);
+    };
+  }
+  else {
+    callback = function(childSnap, prevChildKey) {
+      next(childSnap, prevChildKey);
+    };
+  }
+  
+  // sets up the event listener to scoring changes
+  ParadoxScout.DataService.onTeamScoreAdded(eventKey, teamKey, eventListener, callback, function(error) {
     AppUtility.showErrorMsg(error);
     next(null, null);
   });
@@ -166,7 +200,7 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
   ParadoxScout.ApiService.getAllMatchDetails(eventKey, next)
     .done(function(matchData) {
       // get current datetime
-      var updatedAt = moment().format('YYYY-MM-DD, h:mm:ss a'); //'2016-01-12 2:50pm';
+      var updatedAt = Firebase.ServerValue.TIMESTAMP; // moment().format('YYYY-MM-DD, h:mm:ss a'); //'2016-01-12 2:50pm';
 
       // get all the match scores by team; 1 entry per team + match
       var teamScores = [];
@@ -187,7 +221,7 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
 
       $.each(teamScores, function(i, score) {
         var matchScore = score.scores;
-        matchScore.match_time = new Date(1000 * score.match_time).toString();
+        matchScore.match_time = score.match_time;
 
         if(score.teamKey in teamEventDetails) {
           teamEventDetails[score.teamKey].scores[score.matchKey] = matchScore;

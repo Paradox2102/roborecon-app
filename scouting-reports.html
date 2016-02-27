@@ -50,7 +50,7 @@ $(function() {
     // clear dropdown
     $('#reports').empty();
 
-    ParadoxScout.getScoutingReports(null, teamKey, function(reportSnapshot, prevReportKey) {
+    ParadoxScout.getScoutingReports(null, teamKey, null, function(reportSnapshot, prevReportKey) {
       // if nothing returned
       if(!reportSnapshot) return;
 
@@ -80,6 +80,7 @@ $(function() {
       var selectedTeamKey = AppUtility.getUrlParameter('team_id');
       if(selectedTeamKey && $("#teams option[value='" + selectedTeamKey + "']").length > 0) {
         $('#teams').val(selectedTeamKey);
+        $('#teams').change();
       }
     }
   });

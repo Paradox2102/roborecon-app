@@ -37,7 +37,10 @@ $(function() {
           columns: [
             { title: 'Team', data: 'team_key', 
               render: function(data,type,full,meta) { 
-                return '<span style="padding-right:15px;">' + data + '</span>[ <a style="color:#D5482A"href="{{ site.url }}/team-details?team_id=' + data + '"><i class="fa fa-search"></i></a> | <a style="color:#D59E2A;" href="{{ site.url }}/rate?team_id=' + data + '"><i class="fa fa-star-o"></i></a> ]' 
+                return '<span style="padding-right:15px;">' + data + '</span>' +
+                  '[ <a style="color:#D59E2A;" href="{{ site.url }}/rate?team_id=' + data + '"><i class="fa fa-star-o"></i></a> | ' +
+                  '<a style="color:#D5482A"href="{{ site.url }}/team-details?team_id=' + data + '"><i class="fa fa-info-circle"></i></a> | ' +
+                  '<a style="color:#D59E2A;" href="{{ site.url }}/scouting-reports?team_id=' + data + '"><i class="fa fa-files-o"></i></a> ]' 
               } 
             },
             { title: 'Total', data: 'total_points', orderSequence: ['desc', 'asc'] },
