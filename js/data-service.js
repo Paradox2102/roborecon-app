@@ -16,7 +16,14 @@ ParadoxScout.DataService = function() {
     var user_key = null;    
     var authData = null;
 
-    dbRef.authWithOAuthPopup(provider)
+    // IMPORTANT - must request user e-mail differently for each oauth provider to
+    // ensure it is sent
+    var options = {};
+    if(provider === 'google') options.scope = 'email';
+    if(provider === 'github') options.scope = 'user';
+
+    // dummy function() necessary as callback in order to specify oauth options
+    dbRef.authWithOAuthPopup(provider, function(){}, options)
       // see if user exists
       .then(function(auth) {
         user_key = cleanUserKey(auth[provider].email);
@@ -25,19 +32,20 @@ ParadoxScout.DataService = function() {
       })
       // insert new users else update the given provider info for existing user
       .then(function(u) {
-        var user_auth = {};
-        user_auth[authData.provider] = authData.uid;
+        // get user info
+        var name = authData[authData.provider].displayName || authData[authData.provider].email;
+        var email = authData[authData.provider].email;
+        var user_auth = {}; user_auth[authData.provider] = authData.uid;
 
         if (!u.exists()) {
-          var newUser = { 
-            name: authData[authData.provider].displayName || authData[authData.provider].email, 
-            email: authData[authData.provider].email, 
-            user_authentications: user_auth 
-          };
-          return dbUsersRef.child(user_key).set(newUser);
+          // add new user
+          return dbUsersRef.child(user_key).set({ name: name, email: email, user_authentications: user_auth });
         }
         else {
-          return dbUsersRef.child(user_key + '/user_authentications').set(user_auth);
+          // update existing user (both profile and authentications)
+          dbUsersRef.child(user_key).update({ name: name, email: email });
+          dbUsersRef.child(user_key + '/user_authentications/' + authData.provider).set(authData.uid);
+          return;
         }
       })
       // set the auth information under the user_authentications node as well
