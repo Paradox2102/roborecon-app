@@ -5,7 +5,7 @@ layout: page
   <div class="row">
     <div id="buttons" class="col-md-12 text-right" style="margin-bottom:10px;"></div>
     <div class="col-md-12">
-      <table id="dashboard" class="table table-striped table-bordered" cellspacing="0" width="100%">
+      <table id="dashboard" class="table table-striped table-bordered nowrap" cellspacing="0" width="100%">
       </table>
     </div>
   </div>
@@ -28,16 +28,26 @@ $(function() {
       else {
         // build dashboard
         var dashboard = $('#dashboard').DataTable({
-          responsive: true,
-          colReorder: true,
+          initComplete: function(settings, json) {
+            setTimeout(function() {$("#dashboard").DataTable().columns.adjust().draw(); }, 10);
+          },
+          // responsive: true,
+          scrollY:450,
+          scrollX:true,
+          // scrollCollapse: true,
+          fixedColumns: true,
+          colReorder: {
+              fixedColumnsLeft: 1
+          },
           order: [[ 1, "desc" ]], // default sort set to total_points | desc
-          pageLength: 25,
+          // pageLength: 25,
+          paging: false,
           buttons: [ 'print', { extend: 'excel', title: 'Excel' }, { extend: 'colvis', title: 'Columns' } ],
           data: teamData,
           columns: [
             { title: 'Team', data: 'team_key', 
               render: function(data,type,full,meta) { 
-                return '<span style="padding-right:15px;">' + data.replace('frc', 'Team ') + '</span>' +
+                return '<span style="padding-right:15px;width:200px;">' + data.replace('frc', 'Team ') + '</span>' +
                   '[ <a style="color:#D59E2A;" href="{{ site.url }}/rate?team_id=' + data + '"><i class="fa fa-star-o"></i></a> | ' +
                   '<a style="color:#D5482A"href="{{ site.url }}/team-details?team_id=' + data + '"><i class="fa fa-info-circle"></i></a> | ' +
                   '<a style="color:#D59E2A;" href="{{ site.url }}/scouting-reports?team_id=' + data + '"><i class="fa fa-files-o"></i></a> ]' 
@@ -92,7 +102,9 @@ $(function() {
         dashboard.buttons().container().appendTo( $('#buttons'));
 
         // make column header sticky
-        new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
+        // new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
+
+        
       }
     });
   }

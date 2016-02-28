@@ -13,7 +13,8 @@ ParadoxScout.DataService = function() {
   // ----------------------------------------------------------------------
   loginWithOAuth = function(provider, next) {
     // upsert user
-    var user_key = null;    var authData = null;
+    var user_key = null;    
+    var authData = null;
 
     dbRef.authWithOAuthPopup(provider)
       // see if user exists
@@ -28,7 +29,11 @@ ParadoxScout.DataService = function() {
         user_auth[authData.provider] = authData.uid;
 
         if (!u.exists()) {
-          var newUser = { name: authData.github.displayName, email: authData.github.email, user_authentications: user_auth };
+          var newUser = { 
+            name: authData[authData.provider].displayName || authData[authData.provider].email, 
+            email: authData[authData.provider].email, 
+            user_authentications: user_auth 
+          };
           return dbUsersRef.child(user_key).set(newUser);
         }
         else {
@@ -73,8 +78,8 @@ ParadoxScout.DataService = function() {
 
     if (authData) {
       // try getting from cache first-child
-      if(authData.provider == 'github') {
-        next({ key: cleanUserKey(authData.github.email), email: authData.github.email, name: authData.github.displayName });
+      if(authData.provider == 'github' || authData.provider == 'google') {
+        next({ key: cleanUserKey(authData[authData.provider].email), email: authData[authData.provider].email, name: authData[authData.provider].displayName });
       }
       else {
         var user_key = cleanUserKey(authData[provider].email);

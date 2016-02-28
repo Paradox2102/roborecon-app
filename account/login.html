@@ -6,8 +6,8 @@ permalink: /login/
 <div class="container">
   <div class="omb_login">
     <h3 class="omb_authTitle">Login</h3>
-    <div class="row omb_row-sm-offset-3 omb_socialButtons">
-      <div class="col-xs-4 col-sm-2">
+    <div class="row omb_socialButtons">
+      <!-- <div class="col-xs-4 col-sm-2">
         <a href="#" class="btn btn-md btn-block omb_btn-facebook">
           <i class="fa fa-facebook visible-xs"></i>
           <span class="hidden-xs"><i class="fa fa-facebook"></i> Facebook</span>
@@ -18,11 +18,17 @@ permalink: /login/
           <i class="fa fa-twitter visible-xs"></i>
           <span class="hidden-xs"><i class="fa fa-twitter"></i> Twitter</span>
         </a>
+      </div> -->
+      <div class="col-xs-6 col-sm-3 col-sm-offset-3">
+        <a id="google" href="#" class="btn btn-md btn-block omb_btn-google">
+          <i class="fa fa-google visible-xs fa-3x"></i>
+          <span class="hidden-xs"><i class="fa fa-google fa-2x"></i> Google</span>
+        </a>
       </div>
-      <div class="col-xs-3 col-sm-2">
+      <div class="col-xs-6 col-sm-3">
         <a id="github" href="#" class="btn btn-md btn-block omb_btn-github">
-          <i class="fa fa-github visible-xs"></i>
-          <span class="hidden-xs"><i class="fa fa-github"></i> Github</span>
+          <i class="fa fa-github visible-xs fa-3x"></i>
+          <span class="hidden-xs"><i class="fa fa-github fa-2x"></i> Github</span>
         </a>
       </div>
     </div>
@@ -34,7 +40,7 @@ permalink: /login/
       </div>
     </div>
 
-    <div class="row omb_row-sm-offset-3" style="display:none;">
+   <!--  <div class="row omb_row-sm-offset-3" style="display:none;">
       <div class="col-xs-12 col-sm-6">
         <div class="input-group">
           <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -54,7 +60,7 @@ permalink: /login/
         <button id="register" class="btn btn-md btn-primary btn-block" type="submit">Register</button>
         <span id="error" class="help-block" style="color:red;font-weight:bold;"></span>
       </div>
-    </div>
+    </div> -->
     <div class="row omb_row-sm-offset-3" style="display:none;">
       <div class="col-xs-12 col-sm-3">
         <label class="checkbox">
@@ -77,9 +83,12 @@ permalink: /login/
 <script>
 $(function() {
 
-  $("#github").on("click", function(ev) {
+  $("#github, #google").on("click", function(ev) {
     ev.preventDefault();
-    ParadoxScout.loginWithOAuth('github', function(error) {
+
+    var provider = $(this).closest('a').attr('id');
+
+    ParadoxScout.loginWithOAuth(provider, function(error) {
       if (error) {
         AppUtility.showErrorMsg(error.code, 'Reason: ' + error.message);
       }

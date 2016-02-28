@@ -54,8 +54,8 @@
   background-color: #2E3338 !important;
 }
 
-#dashboard th,
-#dashboard td {
+.dataTable th,
+.dataTable td {
     white-space: nowrap;
 }
 
@@ -72,15 +72,22 @@
 
 /*** 3rd party component overrides ***/
 
+.table.DTFC_Cloned  {background-color: #2E3338; }
+.table.DTFC_Cloned tr { background-color: inherit !important; }
+.table.DTFC_Cloned tr.odd { background-color: #353a41 !important; }
+
 /* tell datatables to use font awesome icons */
-table.dataTable thead th {
+.dataTables_scrollHeadInner table.dataTable thead th {
     position: relative;
     background-image: none !important;
 }
 
-table.dataTable thead th.sorting:after,
-table.dataTable thead th.sorting_asc:after,
-table.dataTable thead th.sorting_desc:after {
+.DTFC_LeftHeadWrapper table.dataTable thead th.sorting:after,
+.DTFC_LeftHeadWrapper table.dataTable thead th.sorting_asc:after,
+.DTFC_LeftHeadWrapper table.dataTable thead th.sorting_desc:after,
+.dataTables_scrollHeadInner table.dataTable thead th.sorting:after,
+.dataTables_scrollHeadInner table.dataTable thead th.sorting_asc:after,
+.dataTables_scrollHeadInner table.dataTable thead th.sorting_desc:after {
     position: absolute;
     top: 12px;
     right: 8px;
@@ -88,16 +95,19 @@ table.dataTable thead th.sorting_desc:after {
     font-family: FontAwesome;
 }
 
-table.dataTable thead th.sorting:after {
+.DTFC_LeftHeadWrapper table.dataTable thead th.sorting:after,
+.dataTables_scrollHeadInner table.dataTable thead th.sorting:after {
     content: "\f175\f176";
     color: #ddd;
     width: 14px;
     height: 16px;
 }
-table.dataTable thead th.sorting_asc:after {
+.DTFC_LeftHeadWrapper table.dataTable thead th.sorting_asc:after,
+.dataTables_scrollHeadInner table.dataTable thead th.sorting_asc:after {
     content: "\f160";
 }
-table.dataTable thead th.sorting_desc:after {
+.DTFC_LeftHeadWrapper table.dataTable thead th.sorting_desc:after,
+.dataTables_scrollHeadInner table.dataTable thead th.sorting_desc:after {
     content: "\f161";
 }
 
@@ -124,7 +134,7 @@ table.dataTable thead th.sorting_desc:after {
 .omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
 .omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
 .omb_login .omb_socialButtons .omb_btn-google {background: #c32f10;}
-.omb_login .omb_socialButtons .omb_btn-github {background: #c32f10;}
+.omb_login .omb_socialButtons .omb_btn-github {background: #fff; color: #000; }
 
 
 .omb_login .omb_loginOr {
