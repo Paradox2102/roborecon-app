@@ -200,9 +200,9 @@ ParadoxScout.DataService = function() {
               if ($.isNumeric(scoringCategoryValue)) {
                 teams[teamKey][scoringCategoryKey] += match[scoringCategoryKey];
               }
-              else if (typeof(JSON.parse(scoringCategoryValue)) == 'boolean') {
+              else if (scoringCategoryValue === 'true' || scoringCategoryValue === 'false') {
                 var currentVal = JSON.parse(teams[teamKey][scoringCategoryKey]);
-                var newVal = JSON.parse(match[scoringCategoryKey]);
+                var newVal = scoringCategoryValue === 'true' ? 1 : 0;
 
                 teams[teamKey][scoringCategoryKey] = currentVal + newVal;
               }

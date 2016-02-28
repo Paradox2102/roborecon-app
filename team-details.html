@@ -72,7 +72,19 @@ $(function() {
       var matchKeys = [];
       var scoringData = {};
 
-      var visualizedScores = { 'total_points' : { display_order: 1 }, 'container_points': { display_order: 2 } }; 
+      var visualizedScores = { 
+        'totalPoints' : { display_order: 1 }, 
+        'teleopPoints': { display_order: 2 }, 
+        'teleopBoulderPoints' : { display_order: 3 }, 
+        'teleopBouldersHigh': { display_order: 4 }, 
+        'teleopBouldersLow' : { display_order: 5 }, 
+        'teleopCrossingPoints': { display_order: 6 }, 
+        'autoPoints': { display_order: 7 },
+        'autoBoulderPoints' : { display_order: 8 }, 
+        'autoBouldersHigh': { display_order: 9 }, 
+        'autoBouldersLow' : { display_order: 10 }, 
+        'autoCrossingPoints': { display_order: 11 }, 
+      }; 
 
       $.each(scores, function(index, s) {
         // add timeKey to x-axis array
@@ -202,7 +214,7 @@ $(function() {
   // 1. configure scouting reports visualization
   var scoresVizOptions = {
     chart: {
-      renderTo: 'scores-viz', type: 'line'
+      renderTo: 'scores-viz', type: 'line', zoomType: 'xy'
     },
     title: {
       text: 'Cummulative Scoring', x: -20 //center
@@ -218,6 +230,8 @@ $(function() {
     },
     yAxis: {
       title: { text: 'Score' },
+      min: 0,
+      max: 2000,
       plotLines: [{ value: 0, width: 1, color: '#808080' }]
     },
     legend: {
@@ -231,7 +245,7 @@ $(function() {
       series: { connectNulls: true } 
     },
     tooltip: { 
-      formatter: function() { return this.series.name.replace('rating_', '').replace(/_/g, ' ') + ' avg.: ' + this.y;}
+      formatter: function() { return this.series.name.replace('rating_', '').replace(/_/g, ' ') + ': ' + this.y;}
     },
     series: []
   };
@@ -273,7 +287,7 @@ $(function() {
 
   // 2. build teams dropdown
   $('.loaderImage').show();
-  ParadoxScout.buildTeamsDropdown($('#teams'), '2016casd', function(error) {
+  ParadoxScout.buildTeamsDropdown($('#teams'), null, function(error) {
 
     $('.loaderImage').hide();
 

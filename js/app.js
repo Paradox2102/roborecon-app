@@ -7,7 +7,7 @@ ParadoxScout.start = function(next) {
   ParadoxScout.CompetitionYear = new Date().getFullYear();
 
   // default event key
-  ParadoxScout.CurrentEventKey = '2015casd';
+  ParadoxScout.CurrentEventKey = '2016scmb';
 
   // setup default notification options
   toastr.options = {
@@ -206,6 +206,18 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
       var teamScores = [];
 
       $.each(matchData, function(i, match) {
+        // if match isn't scored yet!
+        if(!match.score_breakdown) return;
+
+        // 2016 - combine obstacles names and crossings into ONE key
+        match.score_breakdown.blue[match.score_breakdown.blue.position2] = parseInt(match.score_breakdown.blue.position2crossings) || 0;
+        match.score_breakdown.blue[match.score_breakdown.blue.position3] = parseInt(match.score_breakdown.blue.position3crossings) || 0;
+        match.score_breakdown.blue[match.score_breakdown.blue.position4] = parseInt(match.score_breakdown.blue.position4crossings) || 0;
+
+        match.score_breakdown.red[match.score_breakdown.red.position2] = parseInt(match.score_breakdown.red.position2crossings) || 0;
+        match.score_breakdown.red[match.score_breakdown.red.position3] = parseInt(match.score_breakdown.red.position3crossings) || 0;
+        match.score_breakdown.red[match.score_breakdown.red.position4] = parseInt(match.score_breakdown.red.position4crossings) || 0;
+
         // add team/match data to array for each alliance
         $.each(match.alliances.blue.teams, function(i, team) {
           teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.blue });
