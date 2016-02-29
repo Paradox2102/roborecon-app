@@ -88,6 +88,11 @@ ParadoxScout.DataService = function() {
     var authData = dbRef.getAuth();
     var provider = authData == null ? null : authData.provider;
 
+    if(!authData[authData.provider].email) {
+      logout();
+      return;
+    }
+
     if (authData) {
       // try getting from cache first-child
       if(authData.provider == 'github' || authData.provider == 'google') {
