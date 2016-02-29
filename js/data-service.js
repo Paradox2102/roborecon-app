@@ -24,16 +24,23 @@ ParadoxScout.DataService = function() {
 
     // dummy function() necessary as callback in order to specify oauth options
     dbRef.authWithOAuthPopup(provider, function(){}, options)
-      // see if user exists
+      // 1. capture authentication info and validate email is whitelisted
       .then(function(auth) {
-        // verify we have an e-mail
-        if(!auth[provider].email) return new Error('No e-mail address specified!');
-
+        // email is required!
+        if(!auth || !auth[auth.provider].email) {
+          return new Error('No e-mail address specified!')
+        }
+        // clean the userKey and get auth object
         user_key = cleanUserKey(auth[provider].email);
         authData = auth;
+
+        return dbRef.child('user_whitelist/' + user_key).once('value');
+      })
+      // 2. see if user exists
+      .then(function(u) {
         return dbUsersRef.child(user_key).once('value');
       })
-      // insert new users else update the given provider info for existing user
+      // 3. insert new users else update the given provider info for existing user
       .then(function(u) {
         // get user info
         var name = authData[authData.provider].displayName || authData[authData.provider].email;
@@ -41,21 +48,25 @@ ParadoxScout.DataService = function() {
         var user_auth = {}; user_auth[authData.provider] = authData.uid;
 
         if (!u.exists()) {
-          // add new user
+          // 3a. add new user
           return dbUsersRef.child(user_key).set({ name: name, email: email, user_authentications: user_auth });
         }
         else {
-          // update existing user (both profile and authentications)
+          // 3b. update existing user (both profile and authentications)
           dbUsersRef.child(user_key).update({ name: name, email: email });
           dbUsersRef.child(user_key + '/user_authentications/' + authData.provider).set(authData.uid);
           return;
         }
       })
-      // set the auth information under the user_authentications node as well
+      // 4. set the auth information under the user_authentications node as well
       .then(function() {
         dbRef.child('user_authentications/' + authData.uid).set({ user_id: user_key }, next);
       })
       .catch(function(error) {
+        // destroy auth token
+        logout();
+
+        // if oauth pop-up was the problem, do a redirect ... else pass error to the callback
         if (error.code === 'TRANSPORT_UNAVAILABLE') {
           // fallback to browser redirects, and pick up the session
           // automatically when we come back to the origin page
@@ -317,7 +328,14 @@ ParadoxScout.DataService = function() {
   // UTILITY METHODS
   // ----------------------------------------------------------------------
   cleanUserKey = function (email) {
-    return email.replace('.', '%2E');
+    // firebase keys cannot include ., $, #, [, ], / characters
+    return email
+      .replace(/\./g, '%2E')
+      .replace(/\$/g, '%24')
+      .replace(/\#/g, '%23')
+      .replace(/\[/g, '%5B')
+      .replace(/\]/g, '%5D')
+      .replace(/\//g, '%2F');
   };
 
   // public api
