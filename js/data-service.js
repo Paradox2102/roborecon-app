@@ -88,12 +88,7 @@ ParadoxScout.DataService = function() {
     var authData = dbRef.getAuth();
     var provider = authData == null ? null : authData.provider;
 
-    if(!authData[authData.provider].email) {
-      logout();
-      return;
-    }
-
-    if (authData) {
+    if (authData && !authData[authData.provider].email) {
       // try getting from cache first-child
       if(authData.provider == 'github' || authData.provider == 'google') {
         next({ key: cleanUserKey(authData[authData.provider].email), email: authData[authData.provider].email, name: authData[authData.provider].displayName });
@@ -108,6 +103,7 @@ ParadoxScout.DataService = function() {
       };
     }
     else {
+      logout();
       next(null);
     }
   },
