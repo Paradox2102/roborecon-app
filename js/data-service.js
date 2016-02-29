@@ -27,8 +27,8 @@ ParadoxScout.DataService = function() {
       // see if user exists
       .then(function(auth) {
         // verify we have an e-mail
-        if(!auth[provider].email)) then return new Error('No e-mail address specified!');
-        
+        if(!auth[provider].email) then return new Error('No e-mail address specified!');
+
         user_key = cleanUserKey(auth[provider].email);
         authData = auth;
         return dbUsersRef.child(user_key).once('value');
