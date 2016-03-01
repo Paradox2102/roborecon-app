@@ -14,103 +14,110 @@ layout: page
 <script>
 $(function() {
 
-  function loadDashboard() {
-    $('.loaderImage').show();
-
-    // build the dashboard -- for testing use: $.getJSON("{{ site.url }}/sample-event-scores.json", function(teamData) {
-    ParadoxScout.getEventScoutingData(null, function(teamData, error) {
-      
-      $('.loaderImage').hide();
-
-      if(error) {
-        AppUtility.showErrorMsg("An error occurred!", error);
-      }
-      else {
-        // build dashboard
-        var dashboard = $('#dashboard').DataTable({
-          initComplete: function(settings, json) {
-            setTimeout(function() {$("#dashboard").DataTable().columns.adjust().draw(); }, 10);
-          },
-          // responsive: true,
-          scrollY:450,
-          scrollX:true,
-          // scrollCollapse: true,
-          fixedColumns: true,
-          colReorder: {
-              fixedColumnsLeft: 1
-          },
-          order: [[ 1, "desc" ]], // default sort set to total_points | desc
-          // pageLength: 25,
-          paging: false,
-          buttons: [ 'print', { extend: 'excel', title: 'Excel' }, { extend: 'colvis', title: 'Columns' } ],
-          data: teamData,
-          columns: [
-            { title: 'Team', data: 'team_key', 
-              render: function(data,type,full,meta) { 
-                return '<span style="padding-right:15px;width:200px;">' + data.replace('frc', 'Team ') + '</span>' +
-                  '[ <a style="color:#D59E2A;" href="{{ site.url }}/rate?team_id=' + data + '"><i class="fa fa-star-o"></i></a> | ' +
-                  '<a style="color:#D5482A"href="{{ site.url }}/team-details?team_id=' + data + '"><i class="fa fa-info-circle"></i></a> | ' +
-                  '<a style="color:#D59E2A;" href="{{ site.url }}/scouting-reports?team_id=' + data + '"><i class="fa fa-files-o"></i></a> ]' 
-              } 
-            },
-            { title: 'Total', data: 'totalPoints', orderSequence: ['desc', 'asc'] },
-            { title: 'Teleop Total', data: 'teleopPoints', orderSequence: ['desc', 'asc'] },
-            { title: 'Auto Total', data: 'autoPoints', orderSequence: ['desc', 'asc'] },
-            { title: 'Boulder Points', data: 'teleopBoulderPoints', orderSequence: ['desc', 'asc'], 
-              render: function(data,type,full,meta) { return full.autoBoulderPoints + full.teleopBoulderPoints } 
-            },
-            { title: 'High Goal', data: 'teleopBouldersHigh', orderSequence: ['desc', 'asc'], 
-              render: function(data,type,full,meta) { return full.autoBouldersHigh + full.teleopBouldersHigh } 
-            },
-            { title: 'Low Goal', data: 'teleopBouldersLow', orderSequence: ['desc', 'asc'], 
-              render: function(data,type,full,meta) { return full.autoBouldersLow + full.teleopBouldersLow } 
-            },
-            { title: 'Crossing Points', data: 'teleopChallengePoints', orderSequence: ['desc', 'asc'], 
-              render: function(data,type,full,meta) { return full.autoCrossingPoints + full.teleopCrossingPoints } 
-            },
-
-            { title: 'Pos.1 X Count', data: 'position1crossings', orderSequence: ['desc', 'asc'], defaultContent:0 },
-            { title: 'ChevalDeFrise X Count', data: 'A_ChevalDeFrise', orderSequence: ['desc', 'asc'], defaultContent:0 },
-            { title: 'Drawbridge X Count', data: 'C_Drawbridge', orderSequence: ['desc', 'asc'], defaultContent:0 },
-            { title: 'Moat Count X Count', data: 'B_Moat', orderSequence: ['desc', 'asc'], defaultContent:0 },
-            { title: 'Portcullis X Count', data: 'A_Portcullis', orderSequence: ['desc', 'asc'], defaultContent:0 },
-            { title: 'Ramparts X Count', data: 'B_Ramparts', orderSequence: ['desc', 'asc'], defaultContent:0 },
-            { title: 'RockWall X Count', data: 'D_RockWall', orderSequence: ['desc', 'asc'], defaultContent:0 },
-            { title: 'RoughTerrain X Count', data: 'D_RoughTerrain', orderSequence: ['desc', 'asc'], defaultContent:0 },
-            { title: 'SallyPort X Count', data: 'C_SallyPort', orderSequence: ['desc', 'asc'], defaultContent:0 },
-
-            { title: 'Auto Reach Points', data: 'autoReachPoints', orderSequence: ['desc', 'asc'] },
-            { title: 'Teleop Challenge Points', data: 'teleopChallengePoints', orderSequence: ['desc', 'asc'] },
-            { title: 'Teleop Scale Points', data: 'teleopScalePoints', orderSequence: ['desc', 'asc'] },
-            { title: 'Teleop Defenses Breached', data: 'teleopDefensesBreached', orderSequence: ['desc', 'asc'] },
-            { title: 'Teleop Tower Captured', data: 'teleopTowerCaptured', orderSequence: ['desc', 'asc'] },
-            { title: 'Breach Points', data: 'breachPoints', orderSequence: ['desc', 'asc'] },
-            { title: 'CapturePoints', data: 'capturePoints', orderSequence: ['desc', 'asc'] },
-            { title: 'Tower End Strength', data: 'towerEndStrength', orderSequence: ['desc', 'asc'] },
-            { title: 'Adjust Points', data: 'adjustPoints', orderSequence: ['desc', 'asc'] },
-            { title: 'Foul Points', data: 'foulPoints', orderSequence: ['desc', 'asc'] },
-            { title: 'Foul Count', data: 'foulCount', orderSequence: ['desc', 'asc'] },
-            { title: 'Tech Foul Count', data: 'techFoulCount', orderSequence: ['desc', 'asc'] },
-          ],
-          'columnDefs': [{
-            'defaultContent': '-',
-            'targets': '_all'
-          }]
-        });
-
-        // add print, excel, column visibility buttons
-        dashboard.buttons().container().appendTo( $('#buttons'));
-
-        // make column header sticky
-        // new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
-
-        
-      }
-    });
-  }
-  
-
   // on page load ... 
-  loadDashboard();
+  // build dashboard
+  var dashboard = $('#dashboard').DataTable({
+    initComplete: function(settings, json) {
+      setTimeout(function() {$("#dashboard").DataTable().columns.adjust().draw(); }, 10);
+    },
+    ajax: function(data, callback, settings) {
+      // build the dashboard -- for testing use: $.getJSON("{{ site.url }}/sample-event-scores.json", function(teamData) {
+      $('.loaderImage').show();
+
+      ParadoxScout.getEventScoutingData(null, function(teamData, error) {
+        
+        $('.loaderImage').hide();
+
+        if(error) {
+          AppUtility.showErrorMsg("An error occurred!", error);
+        }
+        else {
+          callback({
+            data: teamData, 
+            destroy: true,
+            initComplete: function(settings, json) {
+              setTimeout(function() {$("#dashboard").DataTable().columns.adjust().draw(); }, 10);
+            }
+          });
+        }
+      });
+    },
+    // responsive: true,
+    scrollY:450,
+    scrollX:true,
+    scrollCollapse: true,
+    fixedColumns: true,
+    colReorder: {
+        fixedColumnsLeft: 1
+    },
+    order: [[ 1, "desc" ]], // default sort set to total_points | desc
+    // pageLength: 25,
+    paging: false,
+    buttons: [ 'print', { extend: 'excel', title: 'Excel' }, { extend: 'colvis', title: 'Columns' } ],
+    columns: [
+      { title: 'Team', data: 'team_key', 
+        render: function(data,type,full,meta) { 
+          return '<span style="padding-right:15px;width:200px;">' + data.replace('frc', 'Team ') + '</span>' +
+            '[ <a style="color:#D59E2A;" href="{{ site.url }}/rate?team_id=' + data + '"><i class="fa fa-star-o"></i></a> | ' +
+            '<a style="color:#D5482A"href="{{ site.url }}/team-details?team_id=' + data + '"><i class="fa fa-info-circle"></i></a> | ' +
+            '<a style="color:#D59E2A;" href="{{ site.url }}/scouting-reports?team_id=' + data + '"><i class="fa fa-files-o"></i></a> ]' 
+        } 
+      },
+      { title: 'Total', data: 'totalPoints', orderSequence: ['desc', 'asc'] },
+      { title: 'Teleop Total', data: 'teleopPoints', orderSequence: ['desc', 'asc'] },
+      { title: 'Auto Total', data: 'autoPoints', orderSequence: ['desc', 'asc'] },
+      { title: 'Boulder Points', data: 'teleopBoulderPoints', orderSequence: ['desc', 'asc'], 
+        render: function(data,type,full,meta) { return full.autoBoulderPoints + full.teleopBoulderPoints } 
+      },
+      { title: 'High Goal', data: 'teleopBouldersHigh', orderSequence: ['desc', 'asc'], 
+        render: function(data,type,full,meta) { return full.autoBouldersHigh + full.teleopBouldersHigh } 
+      },
+      { title: 'Low Goal', data: 'teleopBouldersLow', orderSequence: ['desc', 'asc'], 
+        render: function(data,type,full,meta) { return full.autoBouldersLow + full.teleopBouldersLow } 
+      },
+      { title: 'Crossing Points', data: 'teleopChallengePoints', orderSequence: ['desc', 'asc'], 
+        render: function(data,type,full,meta) { return full.autoCrossingPoints + full.teleopCrossingPoints } 
+      },
+
+      { title: 'Pos.1 X Count', data: 'position1crossings', orderSequence: ['desc', 'asc'], defaultContent:0 },
+      { title: 'ChevalDeFrise X Count', data: 'A_ChevalDeFrise', orderSequence: ['desc', 'asc'], defaultContent:0 },
+      { title: 'Drawbridge X Count', data: 'C_Drawbridge', orderSequence: ['desc', 'asc'], defaultContent:0 },
+      { title: 'Moat Count X Count', data: 'B_Moat', orderSequence: ['desc', 'asc'], defaultContent:0 },
+      { title: 'Portcullis X Count', data: 'A_Portcullis', orderSequence: ['desc', 'asc'], defaultContent:0 },
+      { title: 'Ramparts X Count', data: 'B_Ramparts', orderSequence: ['desc', 'asc'], defaultContent:0 },
+      { title: 'RockWall X Count', data: 'D_RockWall', orderSequence: ['desc', 'asc'], defaultContent:0 },
+      { title: 'RoughTerrain X Count', data: 'D_RoughTerrain', orderSequence: ['desc', 'asc'], defaultContent:0 },
+      { title: 'SallyPort X Count', data: 'C_SallyPort', orderSequence: ['desc', 'asc'], defaultContent:0 },
+
+      { title: 'Auto Reach Points', data: 'autoReachPoints', orderSequence: ['desc', 'asc'] },
+      { title: 'Teleop Challenge Points', data: 'teleopChallengePoints', orderSequence: ['desc', 'asc'] },
+      { title: 'Teleop Scale Points', data: 'teleopScalePoints', orderSequence: ['desc', 'asc'] },
+      { title: 'Teleop Defenses Breached', data: 'teleopDefensesBreached', orderSequence: ['desc', 'asc'] },
+      { title: 'Teleop Tower Captured', data: 'teleopTowerCaptured', orderSequence: ['desc', 'asc'] },
+      { title: 'Breach Points', data: 'breachPoints', orderSequence: ['desc', 'asc'] },
+      { title: 'CapturePoints', data: 'capturePoints', orderSequence: ['desc', 'asc'] },
+      { title: 'Tower End Strength', data: 'towerEndStrength', orderSequence: ['desc', 'asc'] },
+      { title: 'Adjust Points', data: 'adjustPoints', orderSequence: ['desc', 'asc'] },
+      { title: 'Foul Points', data: 'foulPoints', orderSequence: ['desc', 'asc'] },
+      { title: 'Foul Count', data: 'foulCount', orderSequence: ['desc', 'asc'] },
+      { title: 'Tech Foul Count', data: 'techFoulCount', orderSequence: ['desc', 'asc'] },
+    ],
+    'columnDefs': [{
+      'defaultContent': '-',
+      'targets': '_all'
+    }]
+  });
+
+  // add print, excel, column visibility buttons
+  dashboard.buttons().container().appendTo( $('#buttons'));
+
+  // make column header sticky
+  //new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
+
+
+  setInterval( function () {
+    console.log('here');
+    dashboard.ajax.reload( null, false ); // user paging is not reset on reload
+  }, 30000 );
 });
 </script>

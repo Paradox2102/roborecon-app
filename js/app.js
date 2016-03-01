@@ -9,6 +9,13 @@ ParadoxScout.start = function(next) {
   // default event key
   ParadoxScout.CurrentEventKey = '2016scmb';
 
+  // default minutes to check TBA for scoring updates
+  ParadoxScout.ScoringUpdateIntervalInMinutes = 5;
+
+  setInterval(function() {
+    ParadoxScout.updateEventScores(null, function(){ console.log('done'); })
+  }, ParadoxScout.ScoringUpdateIntervalInMinutes * 60000);
+
   // setup default notification options
   toastr.options = {
     "closeButton": true,
@@ -197,59 +204,80 @@ ParadoxScout.onTeamScoreAdded = function(eventKey, teamKey, eventListener, next)
 ParadoxScout.updateEventScores = function(eventKey, next) {
   eventKey = verifyEventKey(eventKey);
 
-  ParadoxScout.ApiService.getAllMatchDetails(eventKey, next)
-    .done(function(matchData) {
-      // get current datetime
-      var updatedAt = Firebase.ServerValue.TIMESTAMP; // moment().format('YYYY-MM-DD, h:mm:ss a'); //'2016-01-12 2:50pm';
+  if(!ParadoxScout.DataService.isAuthenticated()) return;
 
-      // get all the match scores by team; 1 entry per team + match
-      var teamScores = [];
+  // ONLY call API and update db if last scoring update > 5 mins ago
+  ParadoxScout.DataService.getEvent(eventKey, function(eventSnapshot) {
+    var e = eventSnapshot.val();
 
-      $.each(matchData, function(i, match) {
-        // if match isn't scored yet!
-        if(!match.score_breakdown) return;
+    var today = new Date();
+    var eventStart = new Date(e.start_date.replace(/-/g,"/"));
+    var eventEnd = new Date(e.end_date.replace(/-/g,"/"));
 
-        // 2016 - combine obstacles names and crossings into ONE key
-        match.score_breakdown.blue[match.score_breakdown.blue.position2] = parseInt(match.score_breakdown.blue.position2crossings) || 0;
-        match.score_breakdown.blue[match.score_breakdown.blue.position3] = parseInt(match.score_breakdown.blue.position3crossings) || 0;
-        match.score_breakdown.blue[match.score_breakdown.blue.position4] = parseInt(match.score_breakdown.blue.position4crossings) || 0;
+    var scoresLastUpdatedAt = e.scores_updated_at ? new Date(e.scores_updated_at) : eventStart;
+    var minutesSinceScoresUpdatedAt = Math.round((today.getTime() -scoresLastUpdatedAt.getTime()) / 60000); 
 
-        match.score_breakdown.red[match.score_breakdown.red.position2] = parseInt(match.score_breakdown.red.position2crossings) || 0;
-        match.score_breakdown.red[match.score_breakdown.red.position3] = parseInt(match.score_breakdown.red.position3crossings) || 0;
-        match.score_breakdown.red[match.score_breakdown.red.position4] = parseInt(match.score_breakdown.red.position4crossings) || 0;
+    if(today < eventStart || today > eventEnd.setDate(eventEnd.getDate() + 1) || (minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) ) {
+    // if(minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) {
+      next();
+      return;
+    }
+    
+    // fetch scores from TBA and update db
+    ParadoxScout.ApiService.getAllMatchDetails(eventKey, next)
+      .done(function(matchData) {
+        // get current datetime
+        var updatedAt = Firebase.ServerValue.TIMESTAMP; // moment().format('YYYY-MM-DD, h:mm:ss a'); //'2016-01-12 2:50pm';
 
-        // add team/match data to array for each alliance
-        $.each(match.alliances.blue.teams, function(i, team) {
-          teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.blue });
+        // get all the match scores by team; 1 entry per team + match
+        var teamScores = [];
+
+        $.each(matchData, function(i, match) {
+          // if match isn't scored yet!
+          if(!match.score_breakdown) return;
+
+          // 2016 - combine obstacles names and crossings into ONE key
+          match.score_breakdown.blue[match.score_breakdown.blue.position2] = parseInt(match.score_breakdown.blue.position2crossings) || 0;
+          match.score_breakdown.blue[match.score_breakdown.blue.position3] = parseInt(match.score_breakdown.blue.position3crossings) || 0;
+          match.score_breakdown.blue[match.score_breakdown.blue.position4] = parseInt(match.score_breakdown.blue.position4crossings) || 0;
+
+          match.score_breakdown.red[match.score_breakdown.red.position2] = parseInt(match.score_breakdown.red.position2crossings) || 0;
+          match.score_breakdown.red[match.score_breakdown.red.position3] = parseInt(match.score_breakdown.red.position3crossings) || 0;
+          match.score_breakdown.red[match.score_breakdown.red.position4] = parseInt(match.score_breakdown.red.position4crossings) || 0;
+
+          // add team/match data to array for each alliance
+          $.each(match.alliances.blue.teams, function(i, team) {
+            teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.blue });
+          });
+
+          $.each(match.alliances.red.teams, function(i, team) {
+            teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.red });
+          });
         });
 
-        $.each(match.alliances.red.teams, function(i, team) {
-          teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.red });
+        // format the team scoring json into a format suitable for our db
+        var teamEventDetails = {};
+
+        $.each(teamScores, function(i, score) {
+          var matchScore = score.scores;
+          matchScore.match_time = score.match_time;
+
+          if(score.teamKey in teamEventDetails) {
+            teamEventDetails[score.teamKey].scores[score.matchKey] = matchScore;
+          }
+          else {
+            var firstMatch = {};
+            firstMatch[score.matchKey] = matchScore
+            teamEventDetails[score.teamKey] = { competition_id: ParadoxScout.CompetitionYear, updated_at: updatedAt, scores: firstMatch };
+          }
         });
+
+        // update db
+        ParadoxScout.DataService.updateEventScores(eventKey, teamEventDetails, next);
+      })
+      .fail(function(error) {
+        next(error)
       });
-
-      // format the team scoring json into a format suitable for our db
-      var teamEventDetails = {};
-
-      $.each(teamScores, function(i, score) {
-        var matchScore = score.scores;
-        matchScore.match_time = score.match_time;
-
-        if(score.teamKey in teamEventDetails) {
-          teamEventDetails[score.teamKey].scores[score.matchKey] = matchScore;
-        }
-        else {
-          var firstMatch = {};
-          firstMatch[score.matchKey] = matchScore
-          teamEventDetails[score.teamKey] = { competition_id: ParadoxScout.CompetitionYear, updated_at: updatedAt, scores: firstMatch };
-        }
-      });
-
-      // update db
-      ParadoxScout.DataService.updateEventScores(eventKey, teamEventDetails, next);
-    })
-    .fail(function(error) {
-      next(error)
     });
 };
 

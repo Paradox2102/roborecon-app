@@ -122,6 +122,10 @@ ParadoxScout.DataService = function() {
   // ----------------------------------------------------------------------
   // EVENT and TEAM methods
   // ----------------------------------------------------------------------
+  getEvent = function(eventKey, next) {
+    dbRef.child('/events/' + eventKey).once('value', next);
+  },
+
   getTeams = function(eventKey, next) {
     var cacheKey = 'paradox-scout:' + eventKey + ':teams';
 
@@ -227,10 +231,10 @@ ParadoxScout.DataService = function() {
               if(scoringCategoryKey == 'team_key' || scoringCategoryKey == 'match_time') return true;
 
               if ($.isNumeric(scoringCategoryValue)) {
-                teams[teamKey][scoringCategoryKey] += match[scoringCategoryKey];
+                teams[teamKey][scoringCategoryKey] = (teams[teamKey][scoringCategoryKey] || 0) + match[scoringCategoryKey];
               }
               else if (scoringCategoryValue === 'true' || scoringCategoryValue === 'false') {
-                var currentVal = JSON.parse(teams[teamKey][scoringCategoryKey]);
+                var currentVal = JSON.parse(teams[teamKey][scoringCategoryKey] );
                 var newVal = scoringCategoryValue === 'true' ? 1 : 0;
 
                 teams[teamKey][scoringCategoryKey] = currentVal + newVal;
@@ -278,7 +282,12 @@ ParadoxScout.DataService = function() {
   },
 
   updateEventScores = function(eventKey, scoringData, next) {
+    // update all scoring data
     dbRef.child('/event_scores/' + eventKey).set(scoringData)
+      // set last time scoring updated from TBA 
+      .then(function() {
+        dbRef.child('/events/' + eventKey + '/scores_updated_at').set(Firebase.ServerValue.TIMESTAMP);
+      })
       .then(next)
       .catch(function(error) {
         console.log.bind(console);
@@ -345,6 +354,7 @@ ParadoxScout.DataService = function() {
     isAuthenticated: isAuthenticated,
     getCurrentUser: getCurrentUser,
 
+    getEvent: getEvent,
     getTeams: getTeams,
     updateEventAndTeams: updateEventAndTeams,
 
