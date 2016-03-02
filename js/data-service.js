@@ -244,6 +244,9 @@ ParadoxScout.DataService = function() {
           else {
             teams[teamKey] = match;
             teams[teamKey].team_key = teamKey;
+            teams[teamKey].oprs = teamDetails.oprs;
+            teams[teamKey].ccwms = teamDetails.ccwms;
+            teams[teamKey].dprs = teamDetails.dprs;
           }
         });
       });
@@ -305,8 +308,8 @@ ParadoxScout.DataService = function() {
 
     // get all match scores for a team if specified, else get all team's match scores for the event
     if(teamKey) {
-      _teamScoresRef = dbRef.child('/event_scores/' + eventKey).child(teamKey + '/scores');
-      return _teamScoresRef.orderByChild('match_time').on(eventListener, next, onError);
+      _teamScoresRef = dbRef.child('/event_scores/' + eventKey).child(teamKey);
+      return _teamScoresRef.on(eventListener, next, onError);
     }
     else {
       _teamScoresRef = dbRef.child('/event_scores/' + eventKey);

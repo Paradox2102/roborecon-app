@@ -225,7 +225,10 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
     
     // fetch scores from TBA and update db
     ParadoxScout.ApiService.getAllMatchDetails(eventKey, next)
-      .done(function(matchData) {
+      .done(function(matchDetails, statsDetails) {
+        var matchData = matchDetails[0];
+        var statsData = statsDetails[0];
+
         // get current datetime
         var updatedAt = Firebase.ServerValue.TIMESTAMP; // moment().format('YYYY-MM-DD, h:mm:ss a'); //'2016-01-12 2:50pm';
 
@@ -268,7 +271,14 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
           else {
             var firstMatch = {};
             firstMatch[score.matchKey] = matchScore
-            teamEventDetails[score.teamKey] = { competition_id: ParadoxScout.CompetitionYear, updated_at: updatedAt, scores: firstMatch };
+            teamEventDetails[score.teamKey] = { 
+              competition_id: ParadoxScout.CompetitionYear, 
+              updated_at: updatedAt, 
+              scores: firstMatch,
+              oprs: statsData.oprs[score.teamKey.replace('frc','')] || 0,
+              ccwms: statsData.ccwms[score.teamKey.replace('frc','')] || 0,
+              dprs: statsData.dprs[score.teamKey.replace('frc','')] || 0 
+            };
           }
         });
 

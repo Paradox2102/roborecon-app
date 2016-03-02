@@ -10,13 +10,20 @@ permalink: /team-details/
         <fieldset>
 
           <div class="row">
-            <div class="col-md-6">
-
+            <div class="col-md-12">
               <div class="form-group">
-                <div class="col-md-8">
+                <div class="col-md-4">
                   <select id="teams" name="team_id" class="form-control">
                     <option value="-99">- Select a team -</option>
                   </select>
+                </div>
+                <div class="col-md-8 panel panel-default" style="margin:0;">
+                  <div class="panel-body" style="padding:8px;">
+                    <h4 class="pull-left" style="margin:0px 15px 5px 0px;">Points/Match: <span id="team-avg-points" class="label label-default"></span></h4>
+                    <h4 class="pull-left" style="margin:0px 15px 5px 0px;" data-toggle="tooltip" data-placement="top" title="Offensive Power Rating: expected points contribution per match">OPRS: <span id="team-oprs" class="label label-default"></span></h4>
+                    <h4 class="pull-left" style="margin:0px 15px 5px 0px;" data-toggle="tooltip" data-placement="top" title="Calculated Contribution to Winning Margin">CCWMS: <span id="team-ccwms" class="label label-default"></span></h4>
+                    <h4 class="pull-left" style="margin:0px 15px 5px 0px;" data-toggle="tooltip" data-placement="top" title="Defensive Power Rating">DPRS: <span id="team-dprs" class="label label-default"></span></h4>
+                  </div>
                 </div>
               </div>
             </div>
@@ -42,7 +49,8 @@ permalink: /team-details/
 
 <script>
 $(function() {
-  
+  $('[data-toggle="tooltip"]').tooltip()
+
   // fetch team data
   $("#teams").change("click", function(ev) {
     // determine report to fetch
@@ -55,7 +63,8 @@ $(function() {
       // if nothing returned
       if(!teamScoresSnapshot) return;
 
-      var data = teamScoresSnapshot.val();
+      var team = teamScoresSnapshot.val();
+      var data = team.scores;
 
       //$.getJSON("{{ site.url }}/sample-event-scores-by-team.json", function(data) {
       // add  match_key to each match score object and add to array
@@ -71,6 +80,7 @@ $(function() {
 
       var matchKeys = [];
       var scoringData = {};
+      var scoringDataCumulative = {}
 
       var visualizedScores = { 
         'totalPoints' : { display_order: 1 }, 
@@ -95,10 +105,19 @@ $(function() {
           var category = visualizedScores[k];
           if (!category) return;
 
-          if(!(k in scoringData)) scoringData[k] = { name: k, data: [], display_order: category.display_order };
+          if(!(k in scoringData)) {
+            scoringData[k] = { name: k, data: [], display_order: category.display_order };
+            scoringDataCumulative[k] = { name: k, data: [], display_order: category.display_order };
+          }
 
-          var currentData = scoringData[k].data[scoringData[k].data.length - 1] || 0;
-          scoringData[k].data.push(currentData + v);
+          // option 1: next 2 lines will show data accumulation over time
+          // var currentData = scoringData[k].data[scoringData[k].data.length - 1] || 0;
+          // scoringData[k].data.push(currentData + v);
+
+          // option 2: show average over time
+          var currentSum = scoringDataCumulative[k].data[scoringDataCumulative[k].data.length - 1] || 0
+          scoringDataCumulative[k].data.push(currentSum + v);
+          scoringData[k].data.push(Math.round((currentSum + v)/(index + 1) *100)/100);
         })
       });
 
@@ -107,13 +126,21 @@ $(function() {
         return parseFloat(a.display_order) - parseFloat(b.display_order);
       });
 
-      console.log(matchKeys);
-      console.log(scoringData);
-      console.log(series);
+      // console.log(matchKeys);
+      // console.log(scoringData);
+      // console.log(series);
 
       scoresVizOptions.xAxis.categories = matchKeys;
       scoresVizOptions.series = series;
       var chart = new Highcharts.Chart(scoresVizOptions);
+
+      // summarize key metrics: get point averages
+      var pointsPerMatch = scoringDataCumulative.totalPoints.data[scoringDataCumulative.totalPoints.data.length-1] / scores.length;
+
+      $('#team-avg-points').text(Math.round(pointsPerMatch *100)/100);
+      $('#team-oprs').text(Math.round(team.oprs *100)/100);
+      $('#team-ccwms').text(Math.round(team.ccwms *100)/100);
+      $('#team-dprs').text(Math.round(team.dprs *100)/100);
     });
 
 
@@ -217,7 +244,7 @@ $(function() {
       renderTo: 'scores-viz', type: 'line', zoomType: 'xy'
     },
     title: {
-      text: 'Cummulative Scoring', x: -20 //center
+      text: 'Scoring Trend Analysis', x: -20 //center
     },
     xAxis: {
       categories: [],
@@ -231,7 +258,7 @@ $(function() {
     yAxis: {
       title: { text: 'Score' },
       min: 0,
-      max: 2000,
+      max: 125,
       plotLines: [{ value: 0, width: 1, color: '#808080' }]
     },
     legend: {
@@ -255,7 +282,7 @@ $(function() {
       renderTo: 'scouting-viz', type: 'line'
     },
     title: {
-      text: 'Scouting Report Ratings', x: -20 //center
+      text: 'Scouting Report Rating Analysis', x: -20 //center
     },
     xAxis: {
       categories: [],
