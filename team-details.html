@@ -49,6 +49,7 @@ permalink: /team-details/
 
 <script>
 $(function() {
+  // build bootstrap tooltips
   $('[data-toggle="tooltip"]').tooltip()
 
   // fetch team data
@@ -59,6 +60,7 @@ $(function() {
     // if selecting the placeholder, just return
     if(selectedVal === '-99') return;
 
+    // fetch scoring data
     ParadoxScout.onTeamScoreAdded(null, selectedVal, 'value', function(teamScoresSnapshot) {
       // if nothing returned
       if(!teamScoresSnapshot) return;
@@ -66,7 +68,7 @@ $(function() {
       var team = teamScoresSnapshot.val();
       var data = team.scores;
 
-      //$.getJSON("{{ site.url }}/sample-event-scores-by-team.json", function(data) {
+      //$.getJSON("{{ site.url }}/test-data/sample-event-scores-by-team.json", function(data) {
       // add  match_key to each match score object and add to array
       var scores = $.map(data, function(v, k) {
         v.match_key = k
@@ -83,17 +85,17 @@ $(function() {
       var scoringDataCumulative = {}
 
       var visualizedScores = { 
-        'totalPoints' : { display_order: 1 }, 
-        'teleopPoints': { display_order: 2 }, 
-        'teleopBoulderPoints' : { display_order: 3 }, 
+        'totalPoints' : { display_order: 1, visible: true }, 
+        'teleopPoints': { display_order: 2, visible: true }, 
+        'teleopBoulderPoints' : { display_order: 3, visible: true }, 
         'teleopBouldersHigh': { display_order: 4 }, 
         'teleopBouldersLow' : { display_order: 5 }, 
-        'teleopCrossingPoints': { display_order: 6 }, 
-        'autoPoints': { display_order: 7 },
-        'autoBoulderPoints' : { display_order: 8 }, 
+        'teleopCrossingPoints': { display_order: 6, visible: true }, 
+        'autoPoints': { display_order: 7, visible: true },
+        'autoBoulderPoints' : { display_order: 8, visible: true }, 
         'autoBouldersHigh': { display_order: 9 }, 
         'autoBouldersLow' : { display_order: 10 }, 
-        'autoCrossingPoints': { display_order: 11 }, 
+        'autoCrossingPoints': { display_order: 11, visible: true }, 
       }; 
 
       $.each(scores, function(index, s) {
@@ -106,21 +108,23 @@ $(function() {
           if (!category) return;
 
           if(!(k in scoringData)) {
-            scoringData[k] = { name: k, data: [], display_order: category.display_order };
+            var isVisibleByDefault = category.visible || false;
+
+            scoringData[k] = { name: k, data: [], display_order: category.display_order, visible: isVisibleByDefault };
             scoringDataCumulative[k] = { name: k, data: [], display_order: category.display_order };
           }
 
-          // option 1: next 2 lines will show data accumulation over time
-          // var currentData = scoringData[k].data[scoringData[k].data.length - 1] || 0;
-          // scoringData[k].data.push(currentData + v);
-
-          // option 2: show average over time
+          // show average over time
           var currentSum = scoringDataCumulative[k].data[scoringDataCumulative[k].data.length - 1] || 0
           scoringDataCumulative[k].data.push(currentSum + v);
           scoringData[k].data.push(Math.round((currentSum + v)/(index + 1) *100)/100);
+
+          // fyi - to instead show data accumulation over time
+          // scoringData[k].data.push(currentSum + v);
         })
       });
 
+      // prepare serries array
       var series = $.map(scoringData, function(v, k) { return v; });
       series.sort(function(a, b) {
         return parseFloat(a.display_order) - parseFloat(b.display_order);
@@ -130,6 +134,7 @@ $(function() {
       // console.log(scoringData);
       // console.log(series);
 
+      // update chart
       scoresVizOptions.xAxis.categories = matchKeys;
       scoresVizOptions.series = series;
       var chart = new Highcharts.Chart(scoresVizOptions);
@@ -143,7 +148,7 @@ $(function() {
       $('#team-dprs').text(Math.round(team.dprs *100)/100);
     });
 
-
+    // fetch scouting data
     ParadoxScout.getScoutingReports(null, selectedVal, 'value', function(teamReportsSnapshot) {
       // if nothing returned
       if(!teamReportsSnapshot) return;
@@ -152,8 +157,7 @@ $(function() {
       //console.log(reports);
 
       // get scouting data for selected team
-      //$.getJSON("{{ site.url }}/sample-scouting-reports-by-team.json", function(data) {
-      // push each report into array
+      //$.getJSON("{{ site.url }}/test-data/sample-scouting-reports-by-team.json", function(data) {
       var scores = {};
 
       // 1. aggregate results by HOUR
@@ -212,7 +216,10 @@ $(function() {
         // add score aggregation to y-axis array
         $.each(s, function(k, v) {
           if(!k.startsWith('rating')) return;
-          if(!(k in scoreAggregations)) scoreAggregations[k] = { name: k, data: [], display_order: v.display_order };
+
+          var visibleByDefault = k.startsWith('rating_overall') || k.startsWith('rating_scoring');
+
+          if(!(k in scoreAggregations)) scoreAggregations[k] = { name: k, data: [], display_order: v.display_order, visible:visibleByDefault };
 
           scoreAggregations[k].data.push(v.count == 0 ? null : v.score/v.count);
         })
@@ -236,9 +243,9 @@ $(function() {
   });
 
 
-  // *** onload **
+  // *** onload ***
   
-  // 1. configure scouting reports visualization
+  // 1. configure scoring visualization
   var scoresVizOptions = {
     chart: {
       renderTo: 'scores-viz', type: 'line', zoomType: 'xy'
@@ -277,6 +284,7 @@ $(function() {
     series: []
   };
 
+  // 2. configure scouting reports visualization
   var scoutingVizOptions = {
     chart: {
       renderTo: 'scouting-viz', type: 'line'
@@ -312,8 +320,9 @@ $(function() {
     series: []
   };
 
-  // 2. build teams dropdown
+  // 3. build teams dropdown
   $('.loaderImage').show();
+  
   ParadoxScout.buildTeamsDropdown($('#teams'), null, function(error) {
 
     $('.loaderImage').hide();

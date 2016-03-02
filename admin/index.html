@@ -25,7 +25,6 @@ permalink: /admin/
 
 <script>
 $(function() {
-  
   // handle event selection
   $( "#add_event" ).click(function(ev) {
     ev.preventDefault();
@@ -47,6 +46,9 @@ $(function() {
       }
     });
   });
+
+
+  // *** onload ***
 
   // load this year's events on load
   ParadoxScout.buildEventsDropdown($('#events'));

@@ -35,9 +35,9 @@ permalink: /scouting-reports/
 
 <script>
 $(function() {
-  // add new user scouting report
+  // display scouting reports based on selected team or all teams from dropdown
   $("#teams").change("click", function(ev) {
-    // determine report to fetch
+    // determine team reports to fetch
     var selectedVal = this.value;
 
     // if selecting the placeholder, just return
@@ -65,9 +65,11 @@ $(function() {
   });
 
 
-  // on page load ... 
+  // *** onload ***
+  
   // 1. build teams dropdown
   $('.loaderImage').show();
+
   ParadoxScout.buildTeamsDropdown($('#teams'), null, function(error) {
 
     $('.loaderImage').hide();
@@ -98,6 +100,7 @@ $(function() {
 
 });
 </script>
+
 <script id="reportTemplate" type="text/template">
   <div id='<%= data.rptKey %>' class='col-sm-12 ps-scouting-report'>
     <h4>Team: <%= data.team_id.replace('frc', '') %><br>

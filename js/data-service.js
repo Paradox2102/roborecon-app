@@ -36,7 +36,7 @@ ParadoxScout.DataService = function() {
 
         return dbRef.child('user_whitelist/' + user_key).once('value');
       })
-      // 2. see if user exists
+      // 2. see if whitelisted user exists
       .then(function(u) {
         return dbUsersRef.child(user_key).once('value');
       })
@@ -94,13 +94,12 @@ ParadoxScout.DataService = function() {
   // dbRef.offAuth(function(authData) {});
 
   getCurrentUser = function(next) {
-    // always do a server-side verification as a successful oauth login does not necessarily mean
-    // the user is verified in the application
+    // get auth and provider data
     var authData = dbRef.getAuth();
     var provider = authData == null ? null : authData.provider;
 
     if (authData && authData[authData.provider].email) {
-      // try getting from cache first-child
+      // try getting from cache first
       if(authData.provider == 'github' || authData.provider == 'google') {
         next({ key: cleanUserKey(authData[authData.provider].email), email: authData[authData.provider].email, name: authData[authData.provider].displayName });
       }
@@ -251,7 +250,7 @@ ParadoxScout.DataService = function() {
         });
       });
 
-      // conver teams object into an array for datatables
+      // convert teams object into an array for datatables
       var teamsArray = $.map(teams, function(item) { return item; });
 
       // cache and then return

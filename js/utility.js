@@ -23,6 +23,22 @@ AppUtility = function() {
     localStorage.setItem(cacheKey, JSON.stringify(obj));
   },
 
+  invalidateCache = function() {
+    // remove localStorage 
+    $.each(localStorage, function(key, value) {
+      if(key.startsWith('paradox-scout')) localStorage.removeItem(key);
+    });
+
+    // remove cookies
+    var cookies = document.cookie.split(";");
+    for(var i=0; i < cookies.length; i++) {
+        var equals = cookies[i].indexOf("=");
+        var name = equals > -1 ? cookies[i].substr(0, equals) : cookies[i];
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+  },
+
+
   showErrorMsg = function(title, text) {
     toastr["error"](text, title, { timeOut: '5000' });
   },
@@ -30,6 +46,7 @@ AppUtility = function() {
   showSuccessMsg = function(title, text, next) {
     toastr["success"](text, title, { onShown: next } );
   },
+
 
   getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -44,35 +61,18 @@ AppUtility = function() {
         return sParameterName[1] === undefined ? true : sParameterName[1];
       }
     }
-  },
-
-  invalidateCache = function() {
-    // remove localStorage 
-    $.each(localStorage, function(key, value) {
-      if(key.startsWith('paradox-scout')) localStorage.removeItem(key);
-    });
-
-    // remove cookies
-    var cookies = document.cookie.split(";");
-    for(var i=0; i < cookies.length; i++) {
-        var equals = cookies[i].indexOf("=");
-        var name = equals > -1 ? cookies[i].substr(0, equals) : cookies[i];
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
   };
-
 
   // public api
   return {
     getCacheData: getCacheData,
     setCacheData: setCacheData,
+    invalidateCache: invalidateCache,
 
     showErrorMsg: showErrorMsg,
     showSuccessMsg: showSuccessMsg,
 
-    getUrlParameter: getUrlParameter,
-
-    invalidateCache: invalidateCache
+    getUrlParameter: getUrlParameter
   };
 
 }();

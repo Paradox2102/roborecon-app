@@ -1,21 +1,3 @@
-/*** misc ***/
-.loaderImage {
-  margin: 0px; 
-  padding: 0px; 
-  position: fixed; 
-  right: 0px; 
-  top: 0px; 
-  width: 100%; 
-  height: 100%; 
-  background-color: rgb(102, 102, 102); 
-  z-index: 30001; 
-  opacity: 0.8;
-  display: none;
-}
-.loaderImage > div {
-  position:absolute; top:50%; left:50%; margin-left: -75px; margin-top: -75px;
-}
-
 /*** main HEADER styles ***/
 #main-header {
   display:flex;align-items:center;font-size:36px;height:75px;color:#000;background-color:#D59E2A;
@@ -49,6 +31,29 @@
   border-style: none !important;
 }
 
+/*** SCOUTING-REPORTs ***/
+.ps-scouting-report input[type='checkbox'] { transform: scale(1.4, 1.4); }
+
+/*** MISC ***/
+.loaderImage {
+  margin: 0px; 
+  padding: 0px; 
+  position: fixed; 
+  right: 0px; 
+  top: 0px; 
+  width: 100%; 
+  height: 100%; 
+  background-color: rgb(102, 102, 102); 
+  z-index: 30001; 
+  opacity: 0.8;
+  display: none;
+}
+.loaderImage > div {
+  position:absolute; top:50%; left:50%; margin-left: -75px; margin-top: -75px;
+}
+
+/*** 3rd party component overrides ***/
+
 /*** DASHBOARD table styles ***/
 .dataTable.fixedHeader-floating {
   background-color: #2E3338 !important;
@@ -58,20 +63,6 @@
 .dataTable td {
     white-space: nowrap;
 }
-
-.ps-scouting-report input[type='checkbox'] { transform: scale(1.4, 1.4); }
-
-
-/*** RESPONSIVE CSS ***/
-
-/* media based styles for any elements that need adjusting when screen is < 992px */
-@media (max-width: 991px) {
-    #main-header {font-size: 22px;}
-}
-
-
-/*** 3rd party component overrides ***/
-
 .table.DTFC_Cloned  {background-color: #2E3338; }
 .table.DTFC_Cloned tr { background-color: inherit !important; }
 .table.DTFC_Cloned tr.odd { background-color: #353a41 !important; }
@@ -102,10 +93,12 @@
     width: 14px;
     height: 16px;
 }
+
 .DTFC_LeftHeadWrapper table.dataTable thead th.sorting_asc:after,
 .dataTables_scrollHeadInner table.dataTable thead th.sorting_asc:after {
     content: "\f160";
 }
+
 .DTFC_LeftHeadWrapper table.dataTable thead th.sorting_desc:after,
 .dataTables_scrollHeadInner table.dataTable thead th.sorting_desc:after {
     content: "\f161";
@@ -176,3 +169,13 @@
     margin-top:10px;
   }
 }
+
+
+/*** RESPONSIVE CSS ***/
+
+/* media based styles for any elements that need adjusting when screen is < 992px */
+@media (max-width: 991px) {
+  #main-header {font-size: 22px;}
+}
+
+

@@ -13,15 +13,16 @@ layout: page
 
 <script>
 $(function() {
+  // *** onload ***
 
-  // on page load ... 
   // build dashboard
   var dashboard = $('#dashboard').DataTable({
     initComplete: function(settings, json) {
+      // required due to incompatiblity with fixedcolumns and scroller extensions
       setTimeout(function() {$("#dashboard").DataTable().columns.adjust().draw(); }, 10);
     },
     ajax: function(data, callback, settings) {
-      // build the dashboard -- for testing use: $.getJSON("{{ site.url }}/sample-event-scores.json", function(teamData) {
+      // load the data -- for testing use: $.getJSON("{{ site.url }}/test-data/sample-event-scores.json", function(teamData) {
       $('.loaderImage').show();
 
       ParadoxScout.getEventScoutingData(null, function(teamData, error) {
@@ -43,6 +44,8 @@ $(function() {
       });
     },
     // responsive: true,
+    // pageLength: 25,
+    paging: false,
     scrollY:450,
     scrollX:true,
     scrollCollapse: true,
@@ -50,9 +53,7 @@ $(function() {
     colReorder: {
         fixedColumnsLeft: 1
     },
-    order: [[ 1, "desc" ]], // default sort set to total_points | desc
-    // pageLength: 25,
-    paging: false,
+    order: [[ 1, "desc" ]], // default sort set to total_points | desc 
     buttons: [ 'print', { extend: 'excel', title: 'Excel' }, { extend: 'colvis', title: 'Columns' } ],
     columns: [
       { title: 'Team', data: 'team_key', 
@@ -63,12 +64,15 @@ $(function() {
             '<a style="color:#D59E2A;" href="{{ site.url }}/scouting-reports?team_id=' + data + '"><i class="fa fa-files-o"></i></a> ]' 
         } 
       },
+      // totals
       { title: 'Total', data: 'totalPoints', orderSequence: ['desc', 'asc'] },
       { title: 'Teleop Total', data: 'teleopPoints', orderSequence: ['desc', 'asc'] },
       { title: 'Auto Total', data: 'autoPoints', orderSequence: ['desc', 'asc'] },
+      // statistical rankings
       { title: 'OPRS', data: 'oprs', orderSequence: ['desc', 'asc'], render: function(data) { return Math.round(data*100)/100; } },
       { title: 'CCWMS', data: 'ccwms', orderSequence: ['desc', 'asc'], render: function(data) { return Math.round(data*100)/100; } },
       { title: 'DPRS', data: 'dprs', orderSequence: ['desc', 'asc'], render: function(data) { return Math.round(data*100)/100; } },
+      // offense
       { title: 'Boulder Points', data: 'teleopBoulderPoints', orderSequence: ['desc', 'asc'], 
         render: function(data,type,full,meta) { return full.autoBoulderPoints + full.teleopBoulderPoints } 
       },
@@ -81,7 +85,7 @@ $(function() {
       { title: 'Crossing Points', data: 'teleopChallengePoints', orderSequence: ['desc', 'asc'], 
         render: function(data,type,full,meta) { return full.autoCrossingPoints + full.teleopCrossingPoints } 
       },
-
+      // obstacles
       { title: 'Pos.1 X Count', data: 'position1crossings', orderSequence: ['desc', 'asc'], defaultContent:0 },
       { title: 'ChevalDeFrise X Count', data: 'A_ChevalDeFrise', orderSequence: ['desc', 'asc'], defaultContent:0 },
       { title: 'Drawbridge X Count', data: 'C_Drawbridge', orderSequence: ['desc', 'asc'], defaultContent:0 },
@@ -91,7 +95,7 @@ $(function() {
       { title: 'RockWall X Count', data: 'D_RockWall', orderSequence: ['desc', 'asc'], defaultContent:0 },
       { title: 'RoughTerrain X Count', data: 'D_RoughTerrain', orderSequence: ['desc', 'asc'], defaultContent:0 },
       { title: 'SallyPort X Count', data: 'C_SallyPort', orderSequence: ['desc', 'asc'], defaultContent:0 },
-
+      // other
       { title: 'Auto Reach Points', data: 'autoReachPoints', orderSequence: ['desc', 'asc'] },
       { title: 'Teleop Challenge Points', data: 'teleopChallengePoints', orderSequence: ['desc', 'asc'] },
       { title: 'Teleop Scale Points', data: 'teleopScalePoints', orderSequence: ['desc', 'asc'] },
@@ -117,10 +121,10 @@ $(function() {
   // make column header sticky
   //new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
 
-
+  // look for updated event scores every 30 sec.
   setInterval( function () {
-    console.log('here');
     dashboard.ajax.reload( null, false ); // user paging is not reset on reload
   }, 30000 );
+
 });
 </script>
