@@ -101,7 +101,11 @@ ParadoxScout.DataService = function() {
     if (authData && authData[authData.provider].email) {
       // try getting from cache first
       if(authData.provider == 'github' || authData.provider == 'google') {
-        next({ key: cleanUserKey(authData[authData.provider].email), email: authData[authData.provider].email, name: authData[authData.provider].displayName });
+        next({ 
+          key: cleanUserKey(authData[authData.provider].email), 
+          email: authData[authData.provider].email, 
+          name: authData[authData.provider].displayName || authData[authData.provider].email
+        });
       }
       else {
         var user_key = cleanUserKey(authData[provider].email);
