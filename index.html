@@ -54,7 +54,7 @@ $(function() {
         fixedColumnsLeft: 1
     },
     order: [[ 1, "desc" ]], // default sort set to total_points | desc 
-    buttons: [ 'print', { extend: 'excel', title: 'Excel' }, { extend: 'colvis', title: 'Columns' } ],
+    buttons: [ { extend: 'colvis', title: 'Columns' },'print', { extend: 'excel', title: 'Excel' } ],
     columns: [
       { title: 'Team', data: 'team_key', 
         render: function(data,type,full,meta) { 

@@ -51,6 +51,7 @@ ParadoxScout.start = function(next) {
 // REGISTRATION, LOGIN/LOGOUT, personalization methods
 // ----------------------------------------------------------------------
 ParadoxScout.loginWithOAuth = function(provider, next) {
+  ParadoxScout.DataService.logout();
   ParadoxScout.DataService.loginWithOAuth(provider, next);
 };
 
