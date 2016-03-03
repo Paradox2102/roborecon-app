@@ -163,8 +163,7 @@ $(function() {
       // 1. aggregate results by HOUR
       $.each(data, function(rptKey, r) {
         // get timestamp by whole hour, this will be the key for the x-axis
-        var timeKey = new Date(moment(new Date(r.scored_at)).format('MM-DD-YYYY, h:00:00 a')).getTime().toString();
-        alert(timeKey);
+        var timeKey = new Date(moment(new Date(r.scored_at)).format('MM/DD/YYYY, h:00:00 a')).getTime().toString();
 
         // add timeKey if does not exist and set up ratings to visualize
         if(!(timeKey in scores)) {
