@@ -18,6 +18,9 @@ $(function() {
   // build dashboard
   var dashboard = $('#dashboard').DataTable({
     initComplete: function(settings, json) {
+      // add print, excel, column visibility buttons
+      $("#dashboard").DataTable().buttons().container().appendTo( $('#buttons'));
+      
       // required due to incompatiblity with fixedcolumns and scroller extensions
       setTimeout(function() {$("#dashboard").DataTable().columns.adjust().draw(); }, 10);
     },
@@ -54,7 +57,7 @@ $(function() {
         fixedColumnsLeft: 1
     },
     order: [[ 1, "desc" ]], // default sort set to total_points | desc 
-    buttons: ['colvis','print', 'excel'],
+    buttons: [ { extend: 'colvis', title: 'Columns' },'print', { extend: 'excel', title: 'Excel' } ],
     columns: [
       { title: 'Team', data: 'team_key', 
         render: function(data,type,full,meta) { 
@@ -114,9 +117,6 @@ $(function() {
       'targets': '_all'
     }]
   });
-
-  // add print, excel, column visibility buttons
-  dashboard.buttons().container().appendTo( $('#buttons'));
 
   // make column header sticky
   //new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
