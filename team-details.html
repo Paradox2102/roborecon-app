@@ -164,6 +164,7 @@ $(function() {
       $.each(data, function(rptKey, r) {
         // get timestamp by whole hour, this will be the key for the x-axis
         var timeKey = new Date(moment(new Date(r.scored_at)).format('MM-DD-YYYY, h:00:00 a')).getTime().toString();
+        alert(timeKey);
 
         // add timeKey if does not exist and set up ratings to visualize
         if(!(timeKey in scores)) {
@@ -295,7 +296,9 @@ $(function() {
     xAxis: {
       categories: [],
       labels: {
-        formatter: function() { return moment(new Date(parseFloat(this.value))).format('MMM Do hh:mm[-]hh[:59] a');}
+        formatter: function() { 
+          return moment(new Date(parseFloat(this.value))).format('MMM Do hh:mm[-]hh[:59] a');
+        }
       }
     },
     yAxis: {
