@@ -19,7 +19,12 @@ permalink: /team-details/
                 </div>
                 <div class="col-md-8 panel panel-default" style="margin:0;">
                   <div class="panel-body" style="padding:8px;">
+                    <h4 class="pull-left" style="margin:0px 15px 5px 0px;">Matches Played: <span id="team-play-count" class="label label-default"></span></h4>
                     <h4 class="pull-left" style="margin:0px 15px 5px 0px;">Points/Match: <span id="team-avg-points" class="label label-default"></span></h4>
+                    <h4 class="pull-left" style="margin:0px 15px 5px 0px;">Rank: <span id="team-rank" class="label label-default"></span></h4>
+                    <h4 class="pull-left" style="margin:0px 15px 5px 0px;">Ranking Score: <span id="team-rankscore" class="label label-default"></span></h4>
+                    <h4 class="pull-left" style="margin:0px 15px 5px 0px;">Scale/Challenge: <span id="team-scalechallenge" class="label label-default"></span></h4>
+                    <h4 class="pull-left" style="margin:0px 15px 5px 0px;">Goals: <span id="team-goals" class="label label-default"></span></h4>
                     <h4 class="pull-left" style="margin:0px 15px 5px 0px;" data-toggle="tooltip" data-placement="top" title="Offensive Power Rating: expected points contribution per match">OPRS: <span id="team-oprs" class="label label-default"></span></h4>
                     <h4 class="pull-left" style="margin:0px 15px 5px 0px;" data-toggle="tooltip" data-placement="top" title="Calculated Contribution to Winning Margin">CCWMS: <span id="team-ccwms" class="label label-default"></span></h4>
                     <h4 class="pull-left" style="margin:0px 15px 5px 0px;" data-toggle="tooltip" data-placement="top" title="Defensive Power Rating">DPRS: <span id="team-dprs" class="label label-default"></span></h4>
@@ -146,6 +151,11 @@ $(function() {
       $('#team-oprs').text(Math.round(team.oprs *100)/100);
       $('#team-ccwms').text(Math.round(team.ccwms *100)/100);
       $('#team-dprs').text(Math.round(team.dprs *100)/100);
+      $('#team-rank').text(team.ranking);
+      $('#team-rankscore').text(team.rankingScore);
+      $('#team-scalechallenge').text(team.rankingScaleChallenge);
+      $('#team-goals').text(team.rankingGoals);
+      $('#team-play-count').text(team.rankingPlayed);
     });
 
     // fetch scouting data
