@@ -63,7 +63,7 @@ $(function() {
     // fetch scoring data
     ParadoxScout.onTeamScoreAdded(null, selectedVal, 'value', function(teamScoresSnapshot) {
       // if nothing returned
-      if(!teamScoresSnapshot) return;
+      if(!teamScoresSnapshot.exists()) return;
 
       var team = teamScoresSnapshot.val();
       var data = team.scores;

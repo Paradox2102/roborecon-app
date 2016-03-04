@@ -7,7 +7,7 @@ ParadoxScout.start = function(next) {
   ParadoxScout.CompetitionYear = new Date().getFullYear();
 
   // default event key
-  ParadoxScout.CurrentEventKey = '2016scmb';
+  ParadoxScout.CurrentEventKey = '2016casd';
 
   // default minutes to check TBA for scoring updates
   ParadoxScout.ScoringUpdateIntervalInMinutes = 5;
