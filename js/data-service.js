@@ -250,7 +250,13 @@ ParadoxScout.DataService = function() {
             teams[teamKey].oprs = teamDetails.oprs;
             teams[teamKey].ccwms = teamDetails.ccwms;
             teams[teamKey].dprs = teamDetails.dprs;
-            teams[teamKey].ranking = teamDetails.ranking;
+            teams[teamKey].ranking = teamDetails.ranking || 0;
+            teams[teamKey].rankingScore = teamDetails.rankingScore || 0;
+            teams[teamKey].rankingAuto = teamDetails.rankingAuto || 0;
+            teams[teamKey].rankingScaleChallenge = teamDetails.rankingScaleChallenge || 0;
+            teams[teamKey].rankingGoals = teamDetails.rankingGoals || 0;
+            teams[teamKey].rankingDef = teamDetails.rankingDef || 0;
+            teams[teamKey].rankingPlayed = teamDetails.rankingPlayed || 0;
           }
         });
       });

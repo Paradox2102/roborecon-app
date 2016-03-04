@@ -40,7 +40,7 @@ $(function() {
             data: teamData, 
             destroy: true,
             initComplete: function(settings, json) {
-              setTimeout(function() {$("#dashboard").DataTable().columns.adjust().draw(); }, 10);
+              setTimeout(function() {$("#dashboard").DataTable().columns.adjust().draw(); }, 500);
             }
           });
         }
@@ -73,7 +73,11 @@ $(function() {
       { title: 'Auto Total', data: 'autoPoints', orderSequence: ['desc', 'asc'] },
       // ranking info
       { title: 'Rank', data: 'ranking', orderSequence: ['desc', 'asc'] },
-
+      { title: 'Ranking Score', data: 'rankingScore', orderSequence: ['desc', 'asc'] },
+      { title: 'Auto', data: 'rankingAuto', orderSequence: ['desc', 'asc'] }, 
+      { title: 'Scale Challenge', data: 'rankingScaleChallenge', orderSequence: ['desc', 'asc'] },
+      { title: 'Goals', data: 'rankingGoals', orderSequence: ['desc', 'asc'] },
+      { title: 'Def.', data: 'rankingDef', orderSequence: ['desc', 'asc'] }, 
 
       // statistical rankings
       { title: 'OPRS', data: 'oprs', orderSequence: ['desc', 'asc'], render: function(data) { return Math.round(data*100)/100; } },
