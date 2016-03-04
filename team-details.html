@@ -227,7 +227,8 @@ $(function() {
         $.each(s, function(k, v) {
           if(!k.startsWith('rating')) return;
 
-          var visibleByDefault = k.startsWith('rating_overall') || k.startsWith('rating_scoring');
+          // Connor wanted this and he always gets what he wants
+          var visibleByDefault = true; //k.startsWith('rating_overall') || k.startsWith('rating_scoring');
 
           if(!(k in scoreAggregations)) scoreAggregations[k] = { name: k, data: [], display_order: v.display_order, visible:visibleByDefault };
 
