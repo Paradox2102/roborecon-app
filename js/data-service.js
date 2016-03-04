@@ -250,6 +250,7 @@ ParadoxScout.DataService = function() {
             teams[teamKey].oprs = teamDetails.oprs;
             teams[teamKey].ccwms = teamDetails.ccwms;
             teams[teamKey].dprs = teamDetails.dprs;
+            teams[teamKey].ranking = teamDetails.ranking;
           }
         });
       });

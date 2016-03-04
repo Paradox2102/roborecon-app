@@ -71,6 +71,10 @@ $(function() {
       { title: 'Total', data: 'totalPoints', orderSequence: ['desc', 'asc'] },
       { title: 'Teleop Total', data: 'teleopPoints', orderSequence: ['desc', 'asc'] },
       { title: 'Auto Total', data: 'autoPoints', orderSequence: ['desc', 'asc'] },
+      // ranking info
+      { title: 'Rank', data: 'ranking', orderSequence: ['desc', 'asc'] },
+
+
       // statistical rankings
       { title: 'OPRS', data: 'oprs', orderSequence: ['desc', 'asc'], render: function(data) { return Math.round(data*100)/100; } },
       { title: 'CCWMS', data: 'ccwms', orderSequence: ['desc', 'asc'], render: function(data) { return Math.round(data*100)/100; } },

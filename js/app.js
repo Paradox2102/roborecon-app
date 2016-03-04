@@ -228,9 +228,10 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
     
     // fetch scores from TBA and update db
     ParadoxScout.ApiService.getAllMatchDetails(eventKey, next)
-      .done(function(matchDetails, statsDetails) {
+      .done(function(matchDetails, statsDetails, rankingDetails) {
         var matchData = matchDetails[0];
         var statsData = statsDetails[0];
+        var rankingData = rankingDetails[0];
 
         // get current datetime
         var updatedAt = Firebase.ServerValue.TIMESTAMP; // moment().format('YYYY-MM-DD, h:mm:ss a'); //'2016-01-12 2:50pm';
@@ -280,8 +281,29 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
               scores: firstMatch,
               oprs: statsData ? statsData.oprs[score.teamKey.replace('frc','')] || 0 : 0,
               ccwms: statsData ? statsData.ccwms[score.teamKey.replace('frc','')] || 0 : 0,
-              dprs: statsData  ? statsData.dprs[score.teamKey.replace('frc','')] || 0: 0
+              dprs: statsData  ? statsData.dprs[score.teamKey.replace('frc','')] || 0: 0,
+              ranking: 0,
+              rankingScore: 0,
+              rankingAuto: 0,
+              rankingScaleChallenge: 0,
+              rankingGoals: 0,
+              rankingDef: 0,
+              rankingPlayed: 0,
             };
+
+            $.each(rankingData, function(index, arr) { 
+              var k = score.teamKey.replace('frc','')
+              if(arr[1] == k) {
+                teamEventDetails[score.teamKey].ranking = arr[0];
+                teamEventDetails[score.teamKey].rankingScore = arr[2];
+                teamEventDetails[score.teamKey].rankingAuto = arr[3];
+                teamEventDetails[score.teamKey].rankingScaleChallenge = arr[4];
+                teamEventDetails[score.teamKey].rankingGoals = arr[5];
+                teamEventDetails[score.teamKey].rankingDef = arr[6];
+                teamEventDetails[score.teamKey].rankingPlayed = arr[8];
+              }
+              
+            });
           }
         });
 
