@@ -278,9 +278,9 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
               competition_id: ParadoxScout.CompetitionYear, 
               updated_at: updatedAt, 
               scores: firstMatch,
-              oprs: statsData.oprs[score.teamKey.replace('frc','')] || 0,
-              ccwms: statsData.ccwms[score.teamKey.replace('frc','')] || 0,
-              dprs: statsData.dprs[score.teamKey.replace('frc','')] || 0 
+              oprs: statsData ? statsData.oprs[score.teamKey.replace('frc','')] || 0 : 0,
+              ccwms: statsData ? statsData.ccwms[score.teamKey.replace('frc','')] || 0 : 0,
+              dprs: statsData  ? statsData.dprs[score.teamKey.replace('frc','')] || 0: 0
             };
           }
         });
