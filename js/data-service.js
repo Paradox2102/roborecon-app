@@ -1,9 +1,10 @@
-
+// will create app namespace *unless* it already exists because another .js
+// file using the same namespace was loaded first
 var ParadoxScout = ParadoxScout || {};
 
-ParadoxScout.DataService = function() {
+ParadoxScout.DataService = (function() {
   // private attributes
-  dbRootUrl = 'https://brilliant-torch-6506.firebaseio.com/',
+  var dbRootUrl = 'https://brilliant-torch-6506.firebaseio.com/',
   dbRef = new Firebase(dbRootUrl),   // init firebase db
   dbUsersRef = dbRef.child('users'),
 
@@ -19,15 +20,15 @@ ParadoxScout.DataService = function() {
     // IMPORTANT - must request user e-mail differently for each oauth provider to
     // ensure it is sent
     var options = {};
-    if(provider === 'google') options.scope = 'email';
-    if(provider === 'github') options.scope = 'user';
+    if (provider === 'google') options.scope = 'email';
+    if (provider === 'github') options.scope = 'user';
 
     // dummy function() necessary as callback in order to specify oauth options
     dbRef.authWithOAuthPopup(provider, function(){}, options)
       // 1. capture authentication info and validate email is whitelisted
       .then(function(auth) {
         // email is required!
-        if(!auth || !auth[auth.provider].email) {
+        if (!auth || !auth[auth.provider].email) {
           return new Error('No e-mail address specified!')
         }
         // clean the userKey and get auth object
@@ -86,7 +87,7 @@ ParadoxScout.DataService = function() {
 
   isAuthenticated = function() {
     var auth = dbRef.getAuth();
-    return auth != null && auth[auth.provider].email != null
+    return auth != null && auth[auth.provider].email != null;
   },
 
   // init firebase authenticatin events; useful in SPAs
@@ -100,7 +101,7 @@ ParadoxScout.DataService = function() {
 
     if (authData && authData[authData.provider].email) {
       // try getting from cache first
-      if(authData.provider == 'github' || authData.provider == 'google') {
+      if (authData.provider == 'github' || authData.provider == 'google') {
         next({ 
           key: cleanUserKey(authData[authData.provider].email), 
           email: authData[authData.provider].email, 
@@ -134,7 +135,7 @@ ParadoxScout.DataService = function() {
 
     // check cache first
     var cachedData = AppUtility.getCacheData(cacheKey);
-    if(cachedData) {
+    if (cachedData) {
       next(cachedData);
       return;
     }
@@ -155,9 +156,9 @@ ParadoxScout.DataService = function() {
       var validTeams = snapshots[0].val();
       var teams = snapshots[1].val();
 
-      $.each(teams, function(teamKey, team) {
+      $.each (teams, function(teamKey, team) {
         if (teamKey in validTeams) {
-          teamsData.push({ team_key: teamKey, team_number: team.team_number, team_name: team.team_number + ' - ' + team.nickname });
+          teamsData.push({ team_key: teamKey, team_number: team.team_number, team_name: team.team_number + ' - ' + team.nickname, team_website: team.website });
         }
       });
 
@@ -212,64 +213,74 @@ ParadoxScout.DataService = function() {
     var cacheKey = 'paradox-scout:' + eventKey + ':event-scouting-data';
 
     var cachedData = AppUtility.getCacheData(cacheKey);
-    if(cachedData) {
+    if (cachedData) {
       next(cachedData);
       return;
     }
 
-    getEventScores(eventKey).then(function(teamData) {
-      // build an object that contains one record per team
-      var teams = {};
+    getTeams(eventKey, function(teamsData) {
 
-      $.each(teamData, function(teamKey, teamDetails) {
-        // get list of matches
-        var matches = teamDetails.scores;
+      getEventScores(eventKey).then(function(teamData) {
+        // build an object that contains one record per team
+        var teams = {};
 
-        $.each(matches, function(matchKey, match) {
+        $.each (teamData, function(teamKey, teamDetails) {
+          // get list of matches
+          var matches = teamDetails.scores;
 
-          if(teams.hasOwnProperty(teamKey)) {
-            // if team exists in 'teams', sum existing scoring category values
-            $.each(match, function(scoringCategoryKey, scoringCategoryValue) {
-              // if looking at teamKey or matchTime, continue to next item
-              if(scoringCategoryKey == 'team_key' || scoringCategoryKey == 'match_time') return true;
+          $.each (matches, function(matchKey, match) {
 
-              if ($.isNumeric(scoringCategoryValue)) {
-                teams[teamKey][scoringCategoryKey] = (teams[teamKey][scoringCategoryKey] || 0) + match[scoringCategoryKey];
-              }
-              else if (scoringCategoryValue === 'true' || scoringCategoryValue === 'false') {
-                var currentVal = JSON.parse(teams[teamKey][scoringCategoryKey] );
-                var newVal = scoringCategoryValue === 'true' ? 1 : 0;
+            if (teams.hasOwnProperty(teamKey)) {
+              // if team exists in 'teams', sum existing scoring category values
+              $.each (match, function(scoringCategoryKey, scoringCategoryValue) {
+                // if looking at teamKey or matchTime, continue to next item
+                if (scoringCategoryKey == 'team_key' || scoringCategoryKey == 'match_time') return true;
 
-                teams[teamKey][scoringCategoryKey] = currentVal + newVal;
-              }
-            });
-          }
-          else {
-            teams[teamKey] = match;
-            teams[teamKey].team_key = teamKey;
-            teams[teamKey].oprs = teamDetails.oprs;
-            teams[teamKey].ccwms = teamDetails.ccwms;
-            teams[teamKey].dprs = teamDetails.dprs;
-            teams[teamKey].ranking = teamDetails.ranking || 0;
-            teams[teamKey].rankingScore = teamDetails.rankingScore || 0;
-            teams[teamKey].rankingAuto = teamDetails.rankingAuto || 0;
-            teams[teamKey].rankingScaleChallenge = teamDetails.rankingScaleChallenge || 0;
-            teams[teamKey].rankingGoals = teamDetails.rankingGoals || 0;
-            teams[teamKey].rankingDef = teamDetails.rankingDef || 0;
-            teams[teamKey].rankingPlayed = teamDetails.rankingPlayed || 0;
-          }
+                if ($.isNumeric(scoringCategoryValue)) {
+                  teams[teamKey][scoringCategoryKey] = (teams[teamKey][scoringCategoryKey] || 0) + match[scoringCategoryKey];
+                }
+                else if (scoringCategoryValue === 'true' || scoringCategoryValue === 'false') {
+                  var currentVal = JSON.parse(teams[teamKey][scoringCategoryKey] );
+                  var newVal = scoringCategoryValue === 'true' ? 1 : 0;
+
+                  teams[teamKey][scoringCategoryKey] = currentVal + newVal;
+                }
+              });
+            }
+            else {
+              // get team details
+              var t = teamsData.find(function(record) {
+                return record['team_key'] === teamKey;
+              });
+
+              teams[teamKey] = match;
+              teams[teamKey].team_key = teamKey;
+              teams[teamKey].team_number = parseInt(t.team_number);
+              teams[teamKey].team_name = t.team_name; 
+              teams[teamKey].oprs = teamDetails.oprs;
+              teams[teamKey].ccwms = teamDetails.ccwms;
+              teams[teamKey].dprs = teamDetails.dprs;
+              teams[teamKey].ranking = teamDetails.ranking || 0;
+              teams[teamKey].rankingScore = teamDetails.rankingScore || 0;
+              teams[teamKey].rankingAuto = teamDetails.rankingAuto || 0;
+              teams[teamKey].rankingScaleChallenge = teamDetails.rankingScaleChallenge || 0;
+              teams[teamKey].rankingGoals = teamDetails.rankingGoals || 0;
+              teams[teamKey].rankingDef = teamDetails.rankingDef || 0;
+              teams[teamKey].rankingPlayed = teamDetails.rankingPlayed || 0;
+            }
+          });
         });
+
+        // convert teams object into an array for datatables
+        var teamsArray = $.map(teams, function(item) { return item; });
+
+        // cache and then return
+        AppUtility.setCacheData(cacheKey, teamsArray);
+        return next(teamsArray);
+      })
+      .catch(function(error) {
+        next(null, error);
       });
-
-      // convert teams object into an array for datatables
-      var teamsArray = $.map(teams, function(item) { return item; });
-
-      // cache and then return
-      AppUtility.setCacheData(cacheKey, teamsArray);
-      return next(teamsArray);
-    })
-    .catch(function(error) {
-      next(null, error);
     });
   },
 
@@ -330,16 +341,16 @@ ParadoxScout.DataService = function() {
   _scoutingReportsRef = null,
   onScoutingReportAdded = function(eventKey, teamKey, eventListener, next, onError) {
     // default event listener to 'child_added'
-    if(!eventListener) eventListener = 'child_added'
+    if (!eventListener) eventListener = 'child_added'
 
     // if ref already exists, turn off any exising handlers for the specified event listener
-    if(typeof _scoutingReportsRef === 'object' && _scoutingReportsRef != null) _scoutingReportsRef.off(eventListener);
+    if (typeof _scoutingReportsRef === 'object' && _scoutingReportsRef != null) _scoutingReportsRef.off(eventListener);
 
     // update current ref
     _scoutingReportsRef = dbRef.child('/event_scouting_reports/' + eventKey);
     
     // get all reports for a team if specified, else get all reports for the event
-    if(teamKey)
+    if (teamKey)
       return _scoutingReportsRef.orderByChild('team_id').equalTo(teamKey).on(eventListener, next, onError);
     else
       return _scoutingReportsRef.orderByKey().on(eventListener, next, onError);
@@ -378,4 +389,4 @@ ParadoxScout.DataService = function() {
     addScoutingReport: addScoutingReport
   };
 
-}();
+})();

@@ -59,12 +59,17 @@ $(function() {
     order: [[ 1, "desc" ]], // default sort set to total_points | desc 
     buttons: [ { extend: 'colvis', title: 'Columns' },'print', { extend: 'excel', title: 'Excel' } ],
     columns: [
-      { title: 'Team', data: 'team_key', 
+      { title: 'Team', data: 'team_number', 
         render: function(data,type,full,meta) { 
-          return '<span style="padding-right:15px;width:200px;">' + data.replace('frc', 'Team ') + '</span>' +
-            '[ <a style="color:#D59E2A;" href="{{ site.url }}/rate?team_id=' + data + '"><i class="fa fa-star-o"></i></a> | ' +
-            '<a style="color:#D5482A"href="{{ site.url }}/team-details?team_id=' + data + '"><i class="fa fa-info-circle"></i></a> | ' +
-            '<a style="color:#D59E2A;" href="{{ site.url }}/scouting-reports?team_id=' + data + '"><i class="fa fa-files-o"></i></a> ]' 
+          if (type === 'display') {
+            return '<span style="padding-right:15px;width:200px;">' + full.team_name + '</span>' +
+              '[ <a style="color:#D59E2A;" href="{{ site.url }}/rate?team_id=' + full.team_key + '"><i class="fa fa-star-o"></i></a> | ' +
+              '<a style="color:#D5482A"href="{{ site.url }}/team-details?team_id=' + full.team_key + '"><i class="fa fa-info-circle"></i></a> | ' +
+              '<a style="color:#D59E2A;" href="{{ site.url }}/scouting-reports?team_id=' + full.team_key + '"><i class="fa fa-files-o"></i></a> ]' 
+          }
+          else {
+            return data;
+          }
         } 
       },
       // totals

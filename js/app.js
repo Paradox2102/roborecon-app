@@ -14,7 +14,7 @@ ParadoxScout.start = function(next) {
 
   // look for new scoring data every 5 mins
   setInterval(function() {
-    ParadoxScout.updateEventScores(null, function(){ console.log('done'); })
+    ParadoxScout.updateEventScores(null, function(){ console.log('done'); });
   }, ParadoxScout.ScoringUpdateIntervalInMinutes * 60000);
 
   // setup default notification options
@@ -37,7 +37,7 @@ ParadoxScout.start = function(next) {
   };
 
   // if user is not authenticated, invalidate cache and route to /login as needed
-  if(!ParadoxScout.DataService.isAuthenticated()) {
+  if (!ParadoxScout.DataService.isAuthenticated()) {
     AppUtility.invalidateCache();
 
     if (location.pathname.indexOf('/login') < 0) return location.href = siteUrl + '/login'
@@ -74,7 +74,7 @@ ParadoxScout.buildEventsDropdown = function(el) {
 
     // build dd options
     var options = [];
-    $.each(data, function(i, item) {
+    $.each (data, function(i, item) {
       options.push($("<option></option>").attr("value", item.key).text(item.name + ' - ' + item.start_date ).prop("outerHTML"));
       //eventsDD.append($("<option/>", { value: item.key, text: item.name + ' - ' + item.start_date }));
     });
@@ -96,7 +96,7 @@ ParadoxScout.buildTeamsDropdown = function(el, eventKey, next) {
 
     // build dd options
     var options = [];
-    $.each(data, function(i, item) {
+    $.each (data, function(i, item) {
       options.push($("<option></option>").attr("value", item.team_key).text(item.team_name).prop("outerHTML"));
     });
 
@@ -125,7 +125,7 @@ ParadoxScout.updateEventAndTeams = function(eventKey, next) {
     // build teams & event-teams json
     var teams = {}, eventTeams = {};
 
-    $.each(teamsData[0], function(i, item) {
+    $.each (teamsData[0], function(i, item) {
       eventTeams[item.key] = true;
 
       teams[item.key] = {
@@ -162,7 +162,7 @@ ParadoxScout.getScoutingReports = function(eventKey, teamKey, eventListener, nex
 
   // callback signature varies from 'value' to 'child_added' | 'child_changed' | 'child_removed'
   var callback = null;
-  if(eventListener === 'value'){
+  if (eventListener === 'value'){
     callback = function(snap) {
       next(snap);
     };
@@ -185,7 +185,7 @@ ParadoxScout.onTeamScoreAdded = function(eventKey, teamKey, eventListener, next)
 
   // callback signature varies from 'value' to 'child_added' | 'child_changed' | 'child_removed'
   var callback = null;
-  if(eventListener === 'value'){
+  if (eventListener === 'value'){
     callback = function(snap) {
       next(snap);
     };
@@ -207,7 +207,7 @@ ParadoxScout.onTeamScoreAdded = function(eventKey, teamKey, eventListener, next)
 ParadoxScout.updateEventScores = function(eventKey, next) {
   eventKey = verifyEventKey(eventKey);
 
-  if(!ParadoxScout.DataService.isAuthenticated()) return;
+  if (!ParadoxScout.DataService.isAuthenticated()) return;
 
   ParadoxScout.DataService.getEvent(eventKey, function(eventSnapshot) {
     var e = eventSnapshot.val();
@@ -220,8 +220,11 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
     var minutesSinceScoresUpdatedAt = Math.round((today.getTime() -scoresLastUpdatedAt.getTime()) / 60000); 
 
     // ONLY call API and update db if last scoring update > 5 mins ago AND event is happening!!!
-    if(today < eventStart || today > eventEnd.setDate(eventEnd.getDate() + 1) || (minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) ) {
     // if(minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) {
+    if (today < eventStart 
+        || today > eventEnd.setDate(eventEnd.getDate() + 1) 
+        || (minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) ) {
+    
       next();
       return;
     }
@@ -239,9 +242,9 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
         // get all the match scores by team; 1 entry per team + match
         var teamScores = [];
 
-        $.each(matchData, function(i, match) {
+        $.each (matchData, function(i, match) {
           // if match isn't scored yet!
-          if(!match.score_breakdown) return;
+          if (!match.score_breakdown) return;
 
           // 2016 - combine obstacles names and crossings into ONE key
           match.score_breakdown.blue[match.score_breakdown.blue.position2] = parseInt(match.score_breakdown.blue.position2crossings) || 0;
@@ -253,11 +256,11 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
           match.score_breakdown.red[match.score_breakdown.red.position4] = parseInt(match.score_breakdown.red.position4crossings) || 0;
 
           // add team/match data to array for each alliance
-          $.each(match.alliances.blue.teams, function(i, team) {
+          $.each (match.alliances.blue.teams, function(i, team) {
             teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.blue });
           });
 
-          $.each(match.alliances.red.teams, function(i, team) {
+          $.each (match.alliances.red.teams, function(i, team) {
             teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.red });
           });
         });
@@ -265,11 +268,11 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
         // format the team scoring json into a format suitable for our db
         var teamEventDetails = {};
 
-        $.each(teamScores, function(i, score) {
+        $.each (teamScores, function(i, score) {
           var matchScore = score.scores;
           matchScore.match_time = score.match_time;
 
-          if(score.teamKey in teamEventDetails) {
+          if (score.teamKey in teamEventDetails) {
             teamEventDetails[score.teamKey].scores[score.matchKey] = matchScore;
           }
           else {
@@ -291,7 +294,7 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
               rankingPlayed: 0,
             };
 
-            $.each(rankingData, function(index, arr) { 
+            $.each (rankingData, function(index, arr) { 
               var k = score.teamKey.replace('frc','')
               if(arr[1] == k) {
                 teamEventDetails[score.teamKey].ranking = arr[0];

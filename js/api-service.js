@@ -1,9 +1,11 @@
-
+// will create app namespace *unless* it already exists because another .js
+// file using the same namespace was loaded first
 var ParadoxScout = ParadoxScout || {};
 
-ParadoxScout.ApiService = function() {
+// made into IIFE since only need one module
+ParadoxScout.ApiService = (function() {
   // private attributes
-  rootApiUrl = 'https://www.thebluealliance.com',
+  var rootApiUrl = 'https://www.thebluealliance.com',
   eventsUrl = rootApiUrl + '/api/v2/events/{year}',
   eventUrl = rootApiUrl + '/api/v2/event/{event_key}',
   teamsUrl = rootApiUrl + '/api/v2/event/{event_key}/teams',
@@ -17,41 +19,38 @@ ParadoxScout.ApiService = function() {
       beforeSend: function(request) {
         request.setRequestHeader('X-TBA-App-Id', 'frc2102:scouting-system:v01');
       },
-      url: apiUrl
+      url: apiUrl 
     });
   },
 
-  getEvents = function(year) {
-    return getDataFromBlueAlliance(eventsUrl.replace('{year}', year));
-  },
+  // public api - anything here is accessible to client.  much easier than creating private funcitons and then
+  //              have to remember to also return them in the "return" statement below!
+  publicApi = {
+    getEvents: function(year) {
+      return getDataFromBlueAlliance(eventsUrl.replace('{year}', year));
+    },
 
-  getEvent = function(eventKey) {
-    return getDataFromBlueAlliance(eventUrl.replace('{event_key}', eventKey));
-  },
+    getEvent: function(eventKey) {
+      return getDataFromBlueAlliance(eventUrl.replace('{event_key}', eventKey));
+    },
 
-  getTeamsForEvent = function(eventKey) {
-    return getDataFromBlueAlliance(teamsUrl.replace('{event_key}', eventKey));
-  },
+    getTeamsForEvent: function(eventKey) {
+      return getDataFromBlueAlliance(teamsUrl.replace('{event_key}', eventKey));
+    },
 
-  getEventAndTeams = function(eventKey) {
-    return $.when(getEvent(eventKey), getTeamsForEvent(eventKey))
-  },
+    getEventAndTeams: function(eventKey) {
+      return $.when(getEvent(eventKey), getTeamsForEvent(eventKey))
+    },
 
-  getAllMatchDetails = function(eventKey) {
-    return $.when(
-      getDataFromBlueAlliance(matchesUrl.replace('{event_key}', eventKey)), 
-      getDataFromBlueAlliance(statsUrl.replace('{event_key}', eventKey)),
-      getDataFromBlueAlliance(rankingsUrl.replace('{event_key}', eventKey))
-    );
+    getAllMatchDetails: function(eventKey) {
+      return $.when(
+        getDataFromBlueAlliance(matchesUrl.replace('{event_key}', eventKey)), 
+        getDataFromBlueAlliance(statsUrl.replace('{event_key}', eventKey)),
+        getDataFromBlueAlliance(rankingsUrl.replace('{event_key}', eventKey))
+      );
+    }
   };
 
-  // public api
-  return {
-    getEvents: getEvents,
-    getEvent: getEvent,
-    getTeamsForEvent: getTeamsForEvent,
-    getEventAndTeams: getEventAndTeams,
-    getAllMatchDetails: getAllMatchDetails
-  };
+  return publicApi;
 
-}();
+})();
