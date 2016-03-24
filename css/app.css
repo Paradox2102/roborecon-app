@@ -104,6 +104,17 @@
     content: "\f161";
 }
 
+
+#matches table { margin:0; }
+#matches > tbody > tr > td { padding: 0; }
+.matches-alliance-blue { background-color:#2295C7 !important; width: 100%; }
+.matches-alliance-blue td, .matches-alliance-red td { width: 33%; }
+.matches-alliance-red { background-color:#D44829 !important; width: 100%; }
+.matches-winning-alliance, .matches-winning-alliance a { font-weight: bold; color:yellow; }
+
+
+
+
 /* styles for bootsnips login ui */
 @media (min-width: 768px) {
   .omb_row-sm-offset-3 div:first-child[class*="col-"] {

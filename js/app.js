@@ -150,6 +150,12 @@ ParadoxScout.updateEventAndTeams = function(eventKey, next) {
 // ----------------------------------------------------------------------
 // MATCH & SCORING methods
 // ----------------------------------------------------------------------
+ParadoxScout.getMatches = function(eventKey, next) { 
+  eventKey = verifyEventKey(eventKey);
+  
+  ParadoxScout.DataService.getMatches(eventKey, next);
+};
+
 // combines event scores with user ratings
 ParadoxScout.getEventScoutingData = function(eventKey, next) { 
   eventKey = verifyEventKey(eventKey);
@@ -242,6 +248,9 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
         // get all the match scores by team; 1 entry per team + match
         var teamScores = [];
 
+        // high level match information here (e.g. alliances, alliance scores, etc...)
+        var matches = {};
+
         $.each (matchData, function(i, match) {
           // if match isn't scored yet!
           if (!match.score_breakdown) return;
@@ -263,6 +272,16 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
           $.each (match.alliances.red.teams, function(i, team) {
             teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.red });
           });
+
+          // add match alliance data
+          matches[match.key] = {
+            comp_level: match.comp_level,
+            number: match.match_number,
+            time: match.time,
+            set_number: match.set_number,
+            alliances: match.alliances
+          };
+
         });
 
         // format the team scoring json into a format suitable for our db
@@ -311,7 +330,7 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
         });
 
         // update db
-        ParadoxScout.DataService.updateEventScores(eventKey, teamEventDetails, next);
+        ParadoxScout.DataService.updateEventScoresAndMatchDetails(eventKey, teamEventDetails, matches, next);
       })
       .fail(function(error) {
         next(error)

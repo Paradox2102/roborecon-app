@@ -18,6 +18,7 @@ permalink: /scouting-reports/
                     <option value="-99">- Select which scouting reports you want to view -</option>
                     <option value="-1">All Teams</option>
                   </select>
+                  <a id="details-link" style="color:#ccc;font-weight:bold;font-size:18px;float:right;display:none;" href="#"><i class="fa fa-files-o"> View Details & Stats for this team</i></a>
                 </div>
               </div>
             </div>
@@ -49,10 +50,14 @@ $(function() {
 
     // clear dropdown
     $('#reports').empty();
+    $('details-link').hide();
 
     ParadoxScout.getScoutingReports(null, teamKey, null, function(reportSnapshot, prevReportKey) {
       // if nothing returned
       if(!reportSnapshot) return;
+
+      $('#details-link').attr('href', '{{ site.url }}/team-details?team_id=' + selectedVal);
+      $('#details-link').show();
 
       // build <div> for report and then append
       var rpt = reportSnapshot.val();

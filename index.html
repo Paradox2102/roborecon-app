@@ -56,7 +56,7 @@ $(function() {
     colReorder: {
         fixedColumnsLeft: 1
     },
-    order: [[ 1, "desc" ]], // default sort set to total_points | desc 
+    order: [[ 1, "asc" ], [3, "desc"], [10, "desc"]], // default sort set to total_points | desc 
     buttons: [ { extend: 'colvis', title: 'Columns' },'print', { extend: 'excel', title: 'Excel' } ],
     columns: [
       { title: 'Team', data: 'team_number', 
@@ -71,36 +71,35 @@ $(function() {
           }
         } 
       },
-      // totals
-      { title: 'Total', data: 'totalPoints', orderSequence: ['desc', 'asc'] },
-      { title: 'Teleop Total', data: 'teleopPoints', orderSequence: ['desc', 'asc'] },
-      { title: 'Auto Total', data: 'autoPoints', orderSequence: ['desc', 'asc'] },
-      // ranking info
-      { title: 'Rank', data: 'ranking', orderSequence: ['desc', 'asc'] },
-      { title: 'Ranking Score', data: 'rankingScore', orderSequence: ['desc', 'asc'] },
-      { title: 'Auto', data: 'rankingAuto', orderSequence: ['desc', 'asc'] }, 
-      { title: 'Scale Challenge', data: 'rankingScaleChallenge', orderSequence: ['desc', 'asc'] },
-      { title: 'Goals', data: 'rankingGoals', orderSequence: ['desc', 'asc'] },
-      { title: 'Def.', data: 'rankingDef', orderSequence: ['desc', 'asc'] }, 
-
-      // statistical rankings
+      // major statistical cats
+      { title: 'Rank', data: 'ranking', orderSequence: ['asc', 'desc'] },
+      { title: 'RS', data: 'rankingScore', orderSequence: ['desc', 'asc'] },
       { title: 'OPRS', data: 'oprs', orderSequence: ['desc', 'asc'], render: function(data) { return Math.round(data*100)/100; } },
       { title: 'CCWMS', data: 'ccwms', orderSequence: ['desc', 'asc'], render: function(data) { return Math.round(data*100)/100; } },
       { title: 'DPRS', data: 'dprs', orderSequence: ['desc', 'asc'], render: function(data) { return Math.round(data*100)/100; } },
-      // offense
-      { title: 'Boulder Points', data: 'teleopBoulderPoints', orderSequence: ['desc', 'asc'], 
-        render: function(data,type,full,meta) { return full.autoBoulderPoints + full.teleopBoulderPoints } 
-      },
-      { title: 'High Goal', data: 'teleopBouldersHigh', orderSequence: ['desc', 'asc'], 
+      // offense #s and points
+      { title: 'High Goals', data: 'teleopBouldersHigh', orderSequence: ['desc', 'asc'], 
         render: function(data,type,full,meta) { return full.autoBouldersHigh + full.teleopBouldersHigh } 
       },
-      { title: 'Low Goal', data: 'teleopBouldersLow', orderSequence: ['desc', 'asc'], 
+      { title: 'Low Goals', data: 'teleopBouldersLow', orderSequence: ['desc', 'asc'], 
         render: function(data,type,full,meta) { return full.autoBouldersLow + full.teleopBouldersLow } 
+      },
+      { title: 'Boulder Points', data: 'teleopBoulderPoints', orderSequence: ['desc', 'asc'], 
+        render: function(data,type,full,meta) { return full.autoBoulderPoints + full.teleopBoulderPoints } 
       },
       { title: 'Crossing Points', data: 'teleopChallengePoints', orderSequence: ['desc', 'asc'], 
         render: function(data,type,full,meta) { return full.autoCrossingPoints + full.teleopCrossingPoints } 
       },
-      // obstacles
+      // totals
+      { title: 'Total Points', data: 'totalPoints', orderSequence: ['desc', 'asc'] },
+      { title: 'Teleop Points', data: 'teleopPoints', orderSequence: ['desc', 'asc'] },
+      { title: 'Auto Points', data: 'autoPoints', orderSequence: ['desc', 'asc'] },
+      // other ranking info
+      { title: 'Auto', data: 'rankingAuto', orderSequence: ['desc', 'asc'] }, 
+      { title: 'Scale Challenge', data: 'rankingScaleChallenge', orderSequence: ['desc', 'asc'] },
+      { title: 'Goals', data: 'rankingGoals', orderSequence: ['desc', 'asc'] },
+      { title: 'Def.', data: 'rankingDef', orderSequence: ['desc', 'asc'] }, 
+      // obstacles crossing details
       { title: 'Pos.1 X Count', data: 'position1crossings', orderSequence: ['desc', 'asc'], defaultContent:0 },
       { title: 'ChevalDeFrise X Count', data: 'A_ChevalDeFrise', orderSequence: ['desc', 'asc'], defaultContent:0 },
       { title: 'Drawbridge X Count', data: 'C_Drawbridge', orderSequence: ['desc', 'asc'], defaultContent:0 },

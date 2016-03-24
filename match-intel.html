@@ -1,0 +1,40 @@
+---
+layout: page
+---
+<div class="container">
+  <div class="row">
+    <div class="col-md-12" style="padding-left:0;">
+      <h3>Match: <span id="match-name"></span></h3>
+    </div>
+  </div>
+  <div class="row" style="background-color:#2295C7;">
+    <div class="col-md-4">
+      Blue 1
+    </div>
+    <div class="col-md-4">
+      Blue 2
+    </div>
+    <div class="col-md-4">
+      Blue 3
+    </div>
+  </div>
+  <div class="row" style="background-color:#D44829;">
+    <div class="col-md-4">
+      Red 1
+    </div>
+    <div class="col-md-4">
+      Red 2
+    </div>
+    <div class="col-md-4">
+      Red 3
+    </div>
+  </div>
+</div>
+
+<script>
+$(function() {
+  // *** onload ***
+  var matchName = AppUtility.getUrlParameter('m');
+  $('#match-name').html(matchName);
+});
+</script>

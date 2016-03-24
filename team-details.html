@@ -16,6 +16,7 @@ permalink: /team-details/
                   <select id="teams" name="team_id" class="form-control">
                     <option value="-99">- Select a team -</option>
                   </select>
+                  <a id="details-link" style="color:#ccc;font-weight:bold;font-size:18px;float:right;display:none;" href="#"><i class="fa fa-files-o"> View Scouting Reports for this team</i></a>
                 </div>
                 <div class="col-md-8 panel panel-default" style="margin:0;">
                   <div class="panel-body" style="padding:8px;">
@@ -65,10 +66,15 @@ $(function() {
     // if selecting the placeholder, just return
     if(selectedVal === '-99') return;
 
+    $('details-link').hide();
+
     // fetch scoring data
     ParadoxScout.onTeamScoreAdded(null, selectedVal, 'value', function(teamScoresSnapshot) {
       // if nothing returned
       if(!teamScoresSnapshot.exists()) return;
+
+      $('#details-link').attr('href', '{{ site.url }}/scouting-reports?team_id=' + selectedVal);
+      $('#details-link').show();
 
       var team = teamScoresSnapshot.val();
       var data = team.scores;
@@ -275,8 +281,8 @@ $(function() {
     },
     yAxis: {
       title: { text: 'Score' },
-      min: 0,
-      max: 125,
+      // min: 0,
+      // max: 125,
       plotLines: [{ value: 0, width: 1, color: '#808080' }]
     },
     legend: {

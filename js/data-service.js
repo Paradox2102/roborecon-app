@@ -208,6 +208,57 @@ ParadoxScout.DataService = (function() {
   // ----------------------------------------------------------------------
   // MATCH & SCORING methods
   // ----------------------------------------------------------------------
+  getMatches = function(eventKey, next) {
+    // check cache first
+    var cacheKey = 'paradox-scout:' + eventKey + ':matches';
+
+    var cachedData = AppUtility.getCacheData(cacheKey);
+    if (cachedData) {
+      next(cachedData);
+      return;
+    }
+
+    dbRef.child('/event_matches/' + eventKey).orderByChild('time').once('value')
+      .then(function(matchDataSnapshot) {
+        var matches = [];
+
+        // use forEach to ensure order by time
+        matchDataSnapshot.forEach(function(matchSnapshot) {
+          var match = matchSnapshot.val();
+          var matchKey = matchSnapshot.key();
+          
+          // console.log(match.time + ' ' + matchSnapshot.key());
+          matches.push({ 
+            match_key: matchKey,  
+            match_comp_level: match.comp_level,
+            match_number: match.number,
+            match_set_number: match.set_number,
+            match_time: match.time,
+            blue_alliance_0: match.alliances.blue.teams[0],
+            blue_alliance_1: match.alliances.blue.teams[1],
+            blue_alliance_2: match.alliances.blue.teams[2],
+            blue_score: match.alliances.blue.score || 0,
+            red_alliance_0: match.alliances.red.teams[0],
+            red_alliance_1: match.alliances.red.teams[1],
+            red_alliance_2: match.alliances.red.teams[2],
+            red_score: match.alliances.red.score || 0,
+          });
+        });
+
+        // cache and then return
+        AppUtility.setCacheData(cacheKey, matches);
+        next(matches);
+      })
+      // handle exceptions
+      .catch(function(error) {
+        next(null, error);
+      });
+  },
+
+  getMatchIntelligence = function(eventKey, matchKey) {
+    return null;
+  },
+
   getEventScoutingData = function(eventKey, next) {
     // check cache first
     var cacheKey = 'paradox-scout:' + eventKey + ':event-scouting-data';
@@ -305,9 +356,13 @@ ParadoxScout.DataService = (function() {
     });
   },
 
-  updateEventScores = function(eventKey, scoringData, next) {
+  updateEventScoresAndMatchDetails = function(eventKey, scoringData, matchData, next) {
     // update all scoring data
     dbRef.child('/event_scores/' + eventKey).set(scoringData)
+      // update all scheduled match data
+      .then(function() {
+        dbRef.child('/event_matches/' + eventKey).set(matchData)
+      })
       // set last time scoring updated from TBA 
       .then(function() {
         dbRef.child('/events/' + eventKey + '/scores_updated_at').set(Firebase.ServerValue.TIMESTAMP);
@@ -380,12 +435,13 @@ ParadoxScout.DataService = (function() {
 
     getEvent: getEvent,
     getTeams: getTeams,
+    getMatches: getMatches,
     updateEventAndTeams: updateEventAndTeams,
 
     onScoutingReportAdded: onScoutingReportAdded,
     onTeamScoreAdded: onTeamScoreAdded,
     getEventScoutingData: getEventScoutingData,
-    updateEventScores: updateEventScores,
+    updateEventScoresAndMatchDetails: updateEventScoresAndMatchDetails,
     addScoutingReport: addScoutingReport
   };
 

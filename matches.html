@@ -1,0 +1,117 @@
+---
+layout: page
+---
+<div class="container-fluid">
+  <div class="row">
+    <div id="buttons" class="col-md-12 text-right" style="margin-bottom:10px;"></div>
+    <div class="col-md-12">
+      <table id="matches" class="table table-striped table-bordered " cellspacing="0" width="100%">
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+$(function() {
+  // *** onload ***
+
+  // build dashboard
+  var dashboard = $('#matches').DataTable({
+    initComplete: function(settings, json) {
+      // add print, excel, column visibility buttons
+      $("#matches").DataTable().buttons().container().appendTo( $('#buttons'));
+      
+      // required due to incompatiblity with fixedcolumns and scroller extensions
+      setTimeout(function() {$("#matches").DataTable().columns.adjust().draw(); }, 10);
+    },
+    ajax: function(data, callback, settings) {
+      // load the data -- for testing use: $.getJSON("{{ site.url }}/test-data/sample-event-scores.json", function(teamData) {
+      $('.loaderImage').show();
+
+      ParadoxScout.getMatches(null, function(matches, error) {
+        
+        $('.loaderImage').hide();
+
+        if(error) {
+          AppUtility.showErrorMsg("An error occurred!", error);
+        }
+        else {
+          callback({
+            data: matches, 
+            destroy: true,
+            initComplete: function(settings, json) {
+              setTimeout(function() {$("#matches").DataTable().columns.adjust().draw(); }, 500);
+            }
+          });
+        }
+      });
+    },
+    // responsive: true,
+    paging: false,
+    buttons: [ 'print', { extend: 'excel', title: 'Excel' } ],
+    columns: [
+      // match name
+      { title: 'Match', data: 'match_key', 
+        render: function(data,type,full,meta) { 
+          var matchName;
+
+          switch (full.match_comp_level) {
+            case 'qm': 
+              matchName = 'Quals ' + full.match_number;
+              break;
+            case 'qf': 
+              matchName = 'Quarters ' + full.match_number + ' Match ' + full.match_set_number;
+              break;
+            case 'sf': 
+              matchName = 'Semis ' + full.match_number + ' Match ' + full.match_set_number;
+              break;
+            case 'f': 
+              matchName= 'Finals ' + full.match_number;
+              break;
+          }
+
+          var blueTeams = 'b0=' + full.blue_alliance_0 + '&b1=' + full.blue_alliance_1 + '&b2=' + full.blue_alliance_2;
+          var redTeams = 'r0=' + full.red_alliance_0 + '&r1=' + full.red_alliance_1 + '&r2=' + full.red_alliance_2;
+          return '<a href="{{ site.url }}/match-intel?m=' + matchName + '&' + blueTeams + '&' + redTeams + '">'+ matchName + '</a>'
+        } 
+      },
+
+      // alliance teams
+      { title: 'Blue Alliance', data: 'blue_alliance_0', render: function(data, type, full, meta) { 
+        var tdClass= full.blue_score > full.red_score ? 'class="matches-winning-alliance"' : '';
+
+        return '<table class="table table-bordered matches-alliance-blue" ><tr>' +
+                  '<td ' + tdClass + '><a href="{{ site.url }}/team-details?team_id=' + data + '">'+ data.replace('frc', '') + '</a></td>' +
+                  '<td ' + tdClass + '><a href="{{ site.url }}/team-details?team_id=' + full.blue_alliance_1 + '">'+ full.blue_alliance_1.replace('frc', '') + '</a></td>' + 
+                  '<td ' + tdClass + '><a href="{{ site.url }}/team-details?team_id=' + full.blue_alliance_2 + '">'+ full.blue_alliance_2.replace('frc', '') + '</a></td>' +
+                '</tr></table>'; } 
+      },
+      { title: 'Red Alliance', data: 'red_alliance_0', render: function(data, type, full, meta) { 
+        var tdClass= full.red_score > full.blue_score ? 'class="matches-winning-alliance"' : '';
+
+        return '<table class="table table-bordered matches-alliance-red"><tr>' +
+                  '<td ' + tdClass + '><a href="{{ site.url }}/team-details?team_id=' + data + '">'+ data.replace('frc', '') + '</a></td>' +
+                  '<td ' + tdClass + '><a href="{{ site.url }}/team-details?team_id=' + full.red_alliance_1 + '">'+ full.red_alliance_1.replace('frc', '') + '</a></td>' +
+                  '<td ' + tdClass + '><a href="{{ site.url }}/team-details?team_id=' + full.red_alliance_2 + '">'+ full.red_alliance_2.replace('frc', '') + '</a></td>' +
+                '</tr></table>'; } 
+      },
+      { title: 'Scores', data: 'blue_score', render: function(data, type, full, meta) { 
+        var blueClass = full.blue_score > full.red_score ? 'class="matches-winning-alliance"' : '';
+        var redClass = full.red_score > full.blue_score ? 'class="matches-winning-alliance"' : '';
+
+        return '<table class="table table-bordered" width="100%"><tr>' +
+                  '<td width="50%" ' + blueClass + ' style="background-color:#2295C7;">'+ data + '</td>' + 
+                  '<td width="50%" ' + redClass + ' style="background-color:#D44829;">'+ full.red_score + '</td>' +
+                '</tr></table>'; } 
+      }
+    ],
+    'columnDefs': [{
+      'orderable': false,
+      'defaultContent': '-',
+      'targets': '_all'
+    }],
+    "aaSorting": []
+  });
+
+});
+</script>
