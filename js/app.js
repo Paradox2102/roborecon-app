@@ -7,7 +7,7 @@ ParadoxScout.start = function(next) {
   ParadoxScout.CompetitionYear = new Date().getFullYear();
 
   // default event key
-  ParadoxScout.CurrentEventKey = '2016casd';
+  ParadoxScout.CurrentEventKey = '2016cada';
 
   // default minutes to check TBA for scoring updates
   ParadoxScout.ScoringUpdateIntervalInMinutes = 5;
@@ -252,6 +252,15 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
         var matches = {};
 
         $.each (matchData, function(i, match) {
+          // add match alliance data
+          matches[match.key] = {
+            comp_level: match.comp_level,
+            number: match.match_number,
+            time: match.time,
+            set_number: match.set_number,
+            alliances: match.alliances
+          };
+
           // if match isn't scored yet!
           if (!match.score_breakdown) return;
 
@@ -272,16 +281,6 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
           $.each (match.alliances.red.teams, function(i, team) {
             teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.red });
           });
-
-          // add match alliance data
-          matches[match.key] = {
-            comp_level: match.comp_level,
-            number: match.match_number,
-            time: match.time,
-            set_number: match.set_number,
-            alliances: match.alliances
-          };
-
         });
 
         // format the team scoring json into a format suitable for our db

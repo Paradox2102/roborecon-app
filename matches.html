@@ -100,8 +100,8 @@ $(function() {
         var redClass = full.red_score > full.blue_score ? 'class="matches-winning-alliance"' : '';
 
         return '<table class="table table-bordered" width="100%"><tr>' +
-                  '<td width="50%" ' + blueClass + ' style="background-color:#2295C7;">'+ data + '</td>' + 
-                  '<td width="50%" ' + redClass + ' style="background-color:#D44829;">'+ full.red_score + '</td>' +
+                  '<td width="50%" ' + blueClass + ' style="background-color:#2295C7;">'+ (data == -1 ? '&nbsp;' : data) + '</td>' + 
+                  '<td width="50%" ' + redClass + ' style="background-color:#D44829;">'+ (full.red_score == -1 ? '&nbsp;' : full.red_score) + '</td>' +
                 '</tr></table>'; } 
       }
     ],

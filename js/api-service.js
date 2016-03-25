@@ -25,32 +25,36 @@ ParadoxScout.ApiService = (function() {
 
   // public api - anything here is accessible to client.  much easier than creating private funcitons and then
   //              have to remember to also return them in the "return" statement below!
-  publicApi = {
-    getEvents: function(year) {
-      return getDataFromBlueAlliance(eventsUrl.replace('{year}', year));
-    },
+  getEvents = function(year) {
+    return getDataFromBlueAlliance(eventsUrl.replace('{year}', year));
+  },
 
-    getEvent: function(eventKey) {
-      return getDataFromBlueAlliance(eventUrl.replace('{event_key}', eventKey));
-    },
+  getEvent = function(eventKey) {
+    return getDataFromBlueAlliance(eventUrl.replace('{event_key}', eventKey));
+  },
 
-    getTeamsForEvent: function(eventKey) {
-      return getDataFromBlueAlliance(teamsUrl.replace('{event_key}', eventKey));
-    },
+  getTeamsForEvent = function(eventKey) {
+    return getDataFromBlueAlliance(teamsUrl.replace('{event_key}', eventKey));
+  },
 
-    getEventAndTeams: function(eventKey) {
-      return $.when(getEvent(eventKey), getTeamsForEvent(eventKey))
-    },
+  getEventAndTeams = function(eventKey) {
+    return $.when(getEvent(eventKey), getTeamsForEvent(eventKey))
+  },
 
-    getAllMatchDetails: function(eventKey) {
-      return $.when(
-        getDataFromBlueAlliance(matchesUrl.replace('{event_key}', eventKey)), 
-        getDataFromBlueAlliance(statsUrl.replace('{event_key}', eventKey)),
-        getDataFromBlueAlliance(rankingsUrl.replace('{event_key}', eventKey))
-      );
-    }
+  getAllMatchDetails = function(eventKey) {
+    return $.when(
+      getDataFromBlueAlliance(matchesUrl.replace('{event_key}', eventKey)), 
+      getDataFromBlueAlliance(statsUrl.replace('{event_key}', eventKey)),
+      getDataFromBlueAlliance(rankingsUrl.replace('{event_key}', eventKey))
+    );
   };
 
-  return publicApi;
+  return {
+    getEvents: getEvents,
+    getEvent: getEvent,
+    getTeamsForEvent: getTeamsForEvent,
+    getEventAndTeams: getEventAndTeams,
+    getAllMatchDetails: getAllMatchDetails
+  };
 
 })();
