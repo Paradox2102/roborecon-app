@@ -190,6 +190,14 @@ ParadoxScout.DataService = (function() {
     */
   },
 
+  getTeamScoringDetails = function(eventKey, teamKey) {
+    return dbRef.child('/event_scores/' + eventKey).child(teamKey).once('value');
+  },
+
+  getTeamScoutingReports = function(eventKey, teamKey) {
+    return dbRef.child('/event_scouting_reports/' + eventKey).orderByChild('team_id').equalTo(teamKey).once('value');
+  },
+
   updateEventAndTeams = function(eventKey, eventData, teamsData, eventTeamsData, next) {
     dbRef.child('/events/' + eventKey).set(eventData)
       .then(function() {
@@ -255,8 +263,26 @@ ParadoxScout.DataService = (function() {
       });
   },
 
-  getMatchIntelligence = function(eventKey, matchKey) {
-    return null;
+  getMatchIntelligence = function(eventKey, blueTeams, redTeams, next) {
+
+    Promise.all([ 
+      getTeamScoringDetails(eventKey, blueTeams[0]), 
+      getTeamScoringDetails(eventKey, blueTeams[1]), 
+      getTeamScoringDetails(eventKey, blueTeams[2]), 
+      getTeamScoringDetails(eventKey, redTeams[0]), 
+      getTeamScoringDetails(eventKey, redTeams[1]), 
+      getTeamScoringDetails(eventKey, redTeams[2]) ])
+      .then(function(snapshots) {
+        var blueData1 = snapshots[0].val();
+        var blueData2 = snapshots[1].val();
+        var blueData3 = snapshots[2].val();
+
+        var redData1 = snapshots[0].val();
+        var redData2 = snapshots[1].val();
+        var redData3 = snapshots[2].val();
+
+        console.log(blueData3);
+      });
   },
 
   getEventScoutingData = function(eventKey, next) {
@@ -436,6 +462,7 @@ ParadoxScout.DataService = (function() {
     getEvent: getEvent,
     getTeams: getTeams,
     getMatches: getMatches,
+    getMatchIntelligence: getMatchIntelligence,
     updateEventAndTeams: updateEventAndTeams,
 
     onScoutingReportAdded: onScoutingReportAdded,

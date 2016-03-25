@@ -36,5 +36,11 @@ $(function() {
   // *** onload ***
   var matchName = AppUtility.getUrlParameter('m');
   $('#match-name').html(matchName);
+
+  var blueAlliance = [ AppUtility.getUrlParameter('b0'), AppUtility.getUrlParameter('b1'), AppUtility.getUrlParameter('b2') ];
+  var redAlliance = [ AppUtility.getUrlParameter('r0'), AppUtility.getUrlParameter('r1'), AppUtility.getUrlParameter('r2') ];
+
+  ParadoxScout.getMatchIntelligence(null, blueAlliance, redAlliance);
+
 });
 </script>

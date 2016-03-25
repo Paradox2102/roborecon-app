@@ -30,4 +30,29 @@
   <script src="{{ site.url }}/js/data-service.js"></script>
   <script src="{{ site.url }}/js/api-service.js"></script>
   <script src="{{ site.url }}/js/app.js"></script>
+  
+  <script>
+    var siteUrl = '{{ site.url }}';
+
+    $(function() {
+      // start app
+      ParadoxScout.start();
+
+      // setup sticky navbar
+      var menu = $('#main-menu');
+      var origOffsetY = menu.offset().top;
+
+      function scroll() {
+       if ($(window).scrollTop() >= origOffsetY) {
+         $('#main-menu').addClass('navbar-fixed-top');
+         $('#main-body').addClass('menu-padding');
+       }
+       else {
+         $('#main-menu').removeClass('navbar-fixed-top');
+         $('#main-body').removeClass('menu-padding');
+       }
+      }
+      document.onscroll = scroll;
+    });
+  </script>
 </head>

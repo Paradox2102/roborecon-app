@@ -156,6 +156,14 @@ ParadoxScout.getMatches = function(eventKey, next) {
   ParadoxScout.DataService.getMatches(eventKey, next);
 };
 
+ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams) {
+  eventKey = verifyEventKey(eventKey);
+
+  ParadoxScout.DataService.getMatchIntelligence(eventKey, blueTeams, redTeams, function() {
+
+  });
+};
+
 // combines event scores with user ratings
 ParadoxScout.getEventScoutingData = function(eventKey, next) { 
   eventKey = verifyEventKey(eventKey);
@@ -223,7 +231,7 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
     var eventEnd = new Date(e.end_date.replace(/-/g,"/"));
 
     var scoresLastUpdatedAt = e.scores_updated_at ? new Date(e.scores_updated_at) : eventStart;
-    var minutesSinceScoresUpdatedAt = Math.round((today.getTime() -scoresLastUpdatedAt.getTime()) / 60000); 
+    var minutesSinceScoresUpdatedAt = Math.round((today.getTime() - scoresLastUpdatedAt.getTime()) / 60000); 
 
     // ONLY call API and update db if last scoring update > 5 mins ago AND event is happening!!!
     // if(minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) {
@@ -300,9 +308,9 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
               competition_id: ParadoxScout.CompetitionYear, 
               updated_at: updatedAt, 
               scores: firstMatch,
-              oprs: statsData ? statsData.oprs[score.teamKey.replace('frc','')] || 0 : 0,
-              ccwms: statsData ? statsData.ccwms[score.teamKey.replace('frc','')] || 0 : 0,
-              dprs: statsData  ? statsData.dprs[score.teamKey.replace('frc','')] || 0: 0,
+              oprs: (statsData && statsData.oprs) ? statsData.oprs[score.teamKey.replace('frc','')] || 0 : 0,
+              ccwms: (statsData && statsData.ccwms) ? statsData.ccwms[score.teamKey.replace('frc','')] || 0 : 0,
+              dprs: (statsData && statsData.dprs) ? statsData.dprs[score.teamKey.replace('frc','')] || 0: 0,
               ranking: 0,
               rankingScore: 0,
               rankingAuto: 0,
