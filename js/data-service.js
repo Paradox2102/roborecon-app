@@ -21,6 +21,8 @@ ParadoxScout.DataService = (function() {
     // IMPORTANT - must request user e-mail differently for each oauth provider to
     // ensure it is sent
     var options = {};
+    options.remember = 'sessionOnly';
+    
     if (provider === 'google') options.scope = 'email';
     if (provider === 'github') options.scope = 'user';
 
