@@ -1,3 +1,4 @@
+'use strict';
 // will create app namespace *unless* it already exists because another .js
 // file using the same namespace was loaded first
 var ParadoxScout = ParadoxScout || {};
@@ -6,7 +7,7 @@ ParadoxScout.DataService = (function() {
   // private attributes
   var dbRootUrl = 'https://brilliant-torch-6506.firebaseio.com/',
   dbRef = new Firebase(dbRootUrl),   // init firebase db
-  dbUsersRef = dbRef.child('users'),
+  dbUsersRef = dbRef.child('users'), 
 
   // private methods
   // ----------------------------------------------------------------------
@@ -29,7 +30,7 @@ ParadoxScout.DataService = (function() {
       .then(function(auth) {
         // email is required!
         if (!auth || !auth[auth.provider].email) {
-          return new Error('No e-mail address specified!')
+          return new Error('No e-mail address specified!');
         }
         // clean the userKey and get auth object
         user_key = cleanUserKey(auth[provider].email);
@@ -87,7 +88,7 @@ ParadoxScout.DataService = (function() {
 
   isAuthenticated = function() {
     var auth = dbRef.getAuth();
-    return auth != null && auth[auth.provider].email != null;
+    return auth !== null && auth[auth.provider].email !== null;
   },
 
   // init firebase authenticatin events; useful in SPAs
@@ -97,11 +98,11 @@ ParadoxScout.DataService = (function() {
   getCurrentUser = function(next) {
     // get auth and provider data
     var authData = dbRef.getAuth();
-    var provider = authData == null ? null : authData.provider;
+    var provider = authData === null ? null : authData.provider;
 
     if (authData && authData[authData.provider].email) {
       // try getting from cache first
-      if (authData.provider == 'github' || authData.provider == 'google') {
+      if (authData.provider === 'github' || authData.provider === 'google') {
         next({ 
           key: cleanUserKey(authData[authData.provider].email), 
           email: authData[authData.provider].email, 
@@ -115,7 +116,7 @@ ParadoxScout.DataService = (function() {
           user.key = userSnapshot.key();
           next(user);
         });
-      };
+      }
     }
     else {
       logout();
@@ -134,8 +135,8 @@ ParadoxScout.DataService = (function() {
     var cacheKey = 'paradox-scout:' + eventKey + ':teams';
 
     // check cache first
-    var cachedData = AppUtility.getCacheData(cacheKey);
-    if (cachedData) {
+    var cachedData = AppUtility.getCacheData(cacheKey); 
+    if (cachedData) { 
       next(cachedData);
       return;
     }
@@ -201,10 +202,10 @@ ParadoxScout.DataService = (function() {
   updateEventAndTeams = function(eventKey, eventData, teamsData, eventTeamsData, next) {
     dbRef.child('/events/' + eventKey).set(eventData)
       .then(function() {
-        return dbRef.child('/teams').update(teamsData)
+        return dbRef.child('/teams').update(teamsData);
       })
       .then(function() {
-        return dbRef.child('/event_teams/' + eventKey).set(eventTeamsData)
+        return dbRef.child('/event_teams/' + eventKey).set(eventTeamsData);
       })
       .then(next)
       .catch(function(error) {
@@ -264,25 +265,43 @@ ParadoxScout.DataService = (function() {
   },
 
   getMatchIntelligence = function(eventKey, blueTeams, redTeams, next) {
-
+    // wtg 4/22/16 - there is probably a better way via redesigning the FB db
     Promise.all([ 
-      getTeamScoringDetails(eventKey, blueTeams[0]), 
-      getTeamScoringDetails(eventKey, blueTeams[1]), 
-      getTeamScoringDetails(eventKey, blueTeams[2]), 
-      getTeamScoringDetails(eventKey, redTeams[0]), 
-      getTeamScoringDetails(eventKey, redTeams[1]), 
-      getTeamScoringDetails(eventKey, redTeams[2]) ])
-      .then(function(snapshots) {
-        var blueData1 = snapshots[0].val();
-        var blueData2 = snapshots[1].val();
-        var blueData3 = snapshots[2].val();
+      getTeamScoringDetails(eventKey, blueTeams[0]), getTeamScoutingReports(eventKey, blueTeams[0]),
+      getTeamScoringDetails(eventKey, blueTeams[1]), getTeamScoutingReports(eventKey, blueTeams[1]),
+      getTeamScoringDetails(eventKey, blueTeams[2]), getTeamScoutingReports(eventKey, blueTeams[2]), 
+      getTeamScoringDetails(eventKey, redTeams[0]), getTeamScoutingReports(eventKey, redTeams[0]), 
+      getTeamScoringDetails(eventKey, redTeams[1]), getTeamScoutingReports(eventKey, redTeams[1]), 
+      getTeamScoringDetails(eventKey, redTeams[2]), getTeamScoutingReports(eventKey, redTeams[2])
+    ])
+    .then(function(snapshots) {
+      var blueScoring0 = snapshots[0].val();
+      var blueScouting0 = snapshots[1].val();
 
-        var redData1 = snapshots[0].val();
-        var redData2 = snapshots[1].val();
-        var redData3 = snapshots[2].val();
+      var blueScoring1 = snapshots[2].val();
+      var blueScouting1 = snapshots[3].val();
 
-        console.log(blueData3);
+      var blueScoring2 = snapshots[4].val();
+      var blueScouting2 = snapshots[5].val();
+
+      var redScoring0 = snapshots[6].val();
+      var redScouting0 = snapshots[7].val();
+
+      var redScoring1 = snapshots[8].val();
+      var redScouting1 = snapshots[9].val();
+
+      var redScoring2 = snapshots[10].val();
+      var redScouting2 = snapshots[11].val();
+
+      next({
+        blue0: { team_key: blueTeams[0], scores: blueScoring0, reports: blueScouting0 }, 
+        blue1: { team_key: blueTeams[1], scores: blueScoring1, reports: blueScouting1 }, 
+        blue2: { team_key: blueTeams[2], scores: blueScoring2, reports: blueScouting2 }, 
+        red0: { team_key: redTeams[0], scores: redScoring0, reports: redScouting0 }, 
+        red1: { team_key: redTeams[1], scores: redScoring1, reports: redScouting1 }, 
+        red2: { team_key: redTeams[2], scores: redScoring2, reports: redScouting2 } 
       });
+    });
   },
 
   getEventScoutingData = function(eventKey, next) {
@@ -311,7 +330,7 @@ ParadoxScout.DataService = (function() {
               // if team exists in 'teams', sum existing scoring category values
               $.each (match, function(scoringCategoryKey, scoringCategoryValue) {
                 // if looking at teamKey or matchTime, continue to next item
-                if (scoringCategoryKey == 'team_key' || scoringCategoryKey == 'match_time') return true;
+                if (scoringCategoryKey === 'team_key' || scoringCategoryKey === 'match_time') return true;
 
                 if ($.isNumeric(scoringCategoryValue)) {
                   teams[teamKey][scoringCategoryKey] = (teams[teamKey][scoringCategoryKey] || 0) + match[scoringCategoryKey];
@@ -327,7 +346,7 @@ ParadoxScout.DataService = (function() {
             else {
               // get team details
               var t = teamsData.find(function(record) {
-                return record['team_key'] === teamKey;
+                return record.team_key === teamKey;
               });
 
               teams[teamKey] = match;
@@ -376,7 +395,7 @@ ParadoxScout.DataService = (function() {
   addScoutingReport = function(eventKey, data, next) {
     dbRef.child('/event_scouting_reports/' + eventKey).push(data)
     .then(next())
-    .catch(function(error) {
+    .catch(function(error) { 
       console.log.bind(console);
       next(error);
     });
@@ -387,26 +406,26 @@ ParadoxScout.DataService = (function() {
     dbRef.child('/event_scores/' + eventKey).set(scoringData)
       // update all scheduled match data
       .then(function() {
-        dbRef.child('/event_matches/' + eventKey).set(matchData)
+        dbRef.child('/event_matches/' + eventKey).set(matchData);
       })
       // set last time scoring updated from TBA 
       .then(function() {
         dbRef.child('/events/' + eventKey + '/scores_updated_at').set(Firebase.ServerValue.TIMESTAMP);
       })
       .then(next)
-      .catch(function(error) {
-        console.log.bind(console);
-        next(error);
+      .catch(function(error) { 
+        console.log.bind(console);  
+        next(error); 
       });
   },
 
   _teamScoresRef = null,
   onTeamScoreAdded = function(eventKey, teamKey, eventListener, next, onError) {
     // default event listener to 'child_added'
-    if(!eventListener) eventListener = 'child_added'
+    if(!eventListener) eventListener = 'child_added';
 
     // if ref already exists, turn off any exising handlers for the specified event listener
-    if(typeof _teamScoresRef === 'object' && _teamScoresRef != null) _teamScoresRef.off(eventListener);
+    if(typeof _teamScoresRef === 'object' && _teamScoresRef !== null) _teamScoresRef.off(eventListener);
 
     // get all match scores for a team if specified, else get all team's match scores for the event
     if(teamKey) {
@@ -422,10 +441,10 @@ ParadoxScout.DataService = (function() {
   _scoutingReportsRef = null,
   onScoutingReportAdded = function(eventKey, teamKey, eventListener, next, onError) {
     // default event listener to 'child_added'
-    if (!eventListener) eventListener = 'child_added'
+    if (!eventListener) eventListener = 'child_added';
 
     // if ref already exists, turn off any exising handlers for the specified event listener
-    if (typeof _scoutingReportsRef === 'object' && _scoutingReportsRef != null) _scoutingReportsRef.off(eventListener);
+    if (typeof _scoutingReportsRef === 'object' && _scoutingReportsRef !== null) _scoutingReportsRef.off(eventListener);
 
     // update current ref
     _scoutingReportsRef = dbRef.child('/event_scouting_reports/' + eventKey);

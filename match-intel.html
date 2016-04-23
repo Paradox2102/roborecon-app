@@ -8,25 +8,19 @@ layout: page
     </div>
   </div>
   <div class="row" style="background-color:#2295C7;">
-    <div class="col-md-4">
-      Blue 1
+    <div id="blue0" class="col-md-4 ps-match-intel-team">
     </div>
-    <div class="col-md-4">
-      Blue 2
+    <div id="blue1" class="col-md-4 ps-match-intel-team">
     </div>
-    <div class="col-md-4">
-      Blue 3
+    <div id="blue2" class="col-md-4 ps-match-intel-team">
     </div>
   </div>
   <div class="row" style="background-color:#D44829;">
-    <div class="col-md-4">
-      Red 1
+    <div id="red0" class="col-md-4 ps-match-intel-team">
     </div>
-    <div class="col-md-4">
-      Red 2
+    <div id="red1" class="col-md-4 ps-match-intel-team">
     </div>
-    <div class="col-md-4">
-      Red 3
+    <div id="red2" class="col-md-4 ps-match-intel-team">
     </div>
   </div>
 </div>
@@ -40,7 +34,109 @@ $(function() {
   var blueAlliance = [ AppUtility.getUrlParameter('b0'), AppUtility.getUrlParameter('b1'), AppUtility.getUrlParameter('b2') ];
   var redAlliance = [ AppUtility.getUrlParameter('r0'), AppUtility.getUrlParameter('r1'), AppUtility.getUrlParameter('r2') ];
 
-  ParadoxScout.getMatchIntelligence(null, blueAlliance, redAlliance);
+  ParadoxScout.getMatchIntelligence(null, blueAlliance, redAlliance, function(teamData) {
+    // iterate each team's info from TBA & scouting reports
+    $.each(teamData, function(k,v) {
+      // gather statistical data if available
+      var oprs = Math.round(v.oprs *100)/100;
+      var ccwms = Math.round(v.ccwms *100)/100;
+      var avgTotal = Math.round((v.total_points/v.matches_played) *100)/100;
+      var avgChallenge = Math.round((v.challenge_scale_points/v.matches_played) *100)/100;
+      var avgCrossing = Math.round((v.crossing_points/v.matches_played) *100)/100;
+      var avgHighGoals = Math.round((v.high_goals_count/v.matches_played) *100)/100;
+      var avgLowGoals = Math.round((v.low_goals_count/v.matches_played) *100)/100;
+
+      // fetch overall, teamwork, and high/low goal ratings
+      var avgOverallRating = v.hasOwnProperty('rating_overall') ? 
+                          Math.round((v.rating_overall.score/v.rating_overall.count) *100)/100 : -1;
+      var avgTeamworkRating = v.hasOwnProperty('rating_overall_alliance_coop') ? 
+                          Math.round((v.rating_overall_alliance_coop.score/v.rating_overall_alliance_coop.count) *100)/100 : -1;
+      var avgStabilityRating = v.hasOwnProperty('rating_overall_robot_stability') ? 
+                          Math.round((v.rating_overall_robot_stability.score/v.rating_overall_robot_stability.count) *100)/100 : -1;
+      var avgHighGoalRating = v.hasOwnProperty('rating_scoring_high_goal') ? 
+                          Math.round((v.rating_scoring_high_goal.score/v.rating_scoring_high_goal.count) *100)/100 : -1;
+      var avgLowGoalRating = v.hasOwnProperty('rating_scoring_low_goal') ? 
+                          Math.round((v.rating_scoring_low_goal.score/v.rating_scoring_low_goal.count) *100)/100 : -1;
+      var avgCaptureRating = v.hasOwnProperty('rating_scoring_tower_capture') ? 
+                          Math.round((v.rating_scoring_tower_capture.score/v.rating_scoring_tower_capture.count) *100)/100 : -1;
+
+      // fetch obstacle ratings that exist for team
+      var obstacleRatings = [];
+      if(v.hasOwnProperty('rating_obstacle_low_bar')) 
+        obstacleRatings.push({ name: 'Low Bar', val: Math.round((v.rating_obstacle_low_bar.score/v.rating_obstacle_low_bar.count) *100)/100 });
+      if(v.hasOwnProperty('rating_obstacle_cheval_de_frise')) 
+        obstacleRatings.push({ name: 'Cheval De Frise', val: Math.round((v.rating_obstacle_cheval_de_frise.score/v.rating_obstacle_cheval_de_frise.count) *100)/100 });
+      if(v.hasOwnProperty('rating_obstacle_drawbridge')) 
+        obstacleRatings.push({ name: 'Drawbridge', val: Math.round((v.rating_obstacle_drawbridge.score/v.rating_obstacle_drawbridge.count) *100)/100 });
+      if(v.hasOwnProperty('rating_obstacle_moat')) 
+        obstacleRatings.push({ name: 'Moat', val: Math.round((v.rating_obstacle_moat.score/v.rating_obstacle_moat.count) *100)/100 });
+      if(v.hasOwnProperty('rating_obstacle_portcullis')) 
+        obstacleRatings.push({ name: 'Portcullis', val: Math.round((v.rating_obstacle_portcullis.score/v.rating_obstacle_portcullis.count) *100)/100 });
+      if(v.hasOwnProperty('rating_obstacle_ramparts')) 
+        obstacleRatings.push({ name: 'Ramparts', val: Math.round((v.rating_obstacle_ramparts.score/v.rating_obstacle_ramparts.count) *100)/100 });
+      if(v.hasOwnProperty('rating_obstacle_rock_wall')) 
+        obstacleRatings.push({ name: 'Rock Wall', val: Math.round((v.rating_obstacle_rock_wall.score/v.rating_obstacle_rock_wall.count) *100)/100 });
+      if(v.hasOwnProperty('rating_obstacle_rough_terrain')) 
+        obstacleRatings.push({ name: 'Rough Terrain', val: Math.round((v.rating_obstacle_rough_terrain.score/v.rating_obstacle_rough_terrain.count) *100)/100 });
+      if(v.hasOwnProperty('rating_obstacle_sally_port')) 
+        obstacleRatings.push({ name: 'Sally Port', val: Math.round((v.rating_obstacle_sally_port.score/v.rating_obstacle_sally_port.count) *100)/100 });
+
+      // sort obstacle ratings in asc. order (weakest to strongest)
+      obstacleRatings.sort(function(a, b){ return a.val - b.val; });
+
+      // get top/bottom most 3 obstacles
+      var bottom3obstacles = $.grep(obstacleRatings, function (el) { return  el.val <= 3.0; }).slice(0,3);
+      if (bottom3obstacles.length < 1) bottom3obstacles.push({ name: 'N/A', val:'' });
+
+      var top3obstacles = $.grep(obstacleRatings, function (el) { return  el.val >= 3.5; }).slice(-3).reverse();
+      if (top3obstacles.length < 1) top3obstacles.push({ name: 'N/A', val:'' });
+
+      var $el = $('#' + k);
+      $el
+        .append('<h4>Team: ' + v.team_key.replace(/frc/i, '') + '</h4>')
+        .append('<p class="pull-left" style="margin:0px 15px 5px 0px;">OPRS: <span class="label label-default" style="font-size:14px;">' + oprs + '</span></p>')
+        .append('<p class="pull-left" style="margin:0px 15px 5px 0px;">CCWMS: <span class="label label-default" style="font-size:14px;">' + ccwms + '</span></p>')
+        .append('<p class="pull-left" style="margin:0px 15px 5px 0px;">Avg.: <span class="label label-default" style="font-size:14px;">' + avgTotal + '</span></p>')
+        .append('<table style="width:100%;">' + 
+          '<tr><td>Avg. High Goals:</td><td>' + avgHighGoals + '</td></tr>' +
+          '<tr><td>Avg. Low Goals:</td><td>' + avgLowGoals + '</td></tr>' +
+          '<tr><td>Avg. Crossing Points:</td><td>' + avgCrossing + '</td></tr>' +
+          '<tr><td>Avg. Challenge/Scale Points:</td><td>' + avgChallenge + '</td></tr>' +
+          '</table>');
+
+      var $weakTbl = $('<table style="width:100%;">');
+      $.each(bottom3obstacles, function (i, e) {
+        $weakTbl.append('<tr><td>' + e.name + '</td><td class="match-intel-rating-val">' + e.val + '</td></tr>');
+      });
+      $weakTbl.append('</table>');
+
+      var $strengthTbl = $('<table style="width:100%;">');
+      $.each(top3obstacles, function (i,e) {
+        $strengthTbl.append('<tr><td>' + e.name + '</td><td class="match-intel-rating-val">' + e.val + '</td></tr>');
+      });
+      $strengthTbl.append('</table>');
+
+      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">OVERALL TEAM RATINGS</p>');
+      $el.append('<table style="width:100%;">' + 
+          '<tr><td>Overall:</td><td class="match-intel-rating-val">' + (avgOverallRating === -1 ? 'N/A' : avgOverallRating) + '</td></tr>' +
+          '<tr><td>Teamwork:</td><td class="match-intel-rating-val">' + (avgTeamworkRating === -1 ? 'N/A' : avgTeamworkRating) + '</td></tr>' +
+          '<tr><td>Robot Stability:</td><td class="match-intel-rating-val">' + (avgStabilityRating === -1 ? 'N/A' : avgStabilityRating) + '</td></tr>' +
+          '<tr><td>High Goal Ability:</td><td class="match-intel-rating-val">' + (avgHighGoalRating === -1 ? 'N/A' : avgHighGoalRating) + '</td></tr>' +
+          '<tr><td>Low Goal Ability:</td><td class="match-intel-rating-val">' + (avgLowGoalRating === -1 ? 'N/A' : avgLowGoalRating) + '</td></tr>' +
+          '<tr><td>Challenge/Scale Ability:</td><td class="match-intel-rating-val">' + (avgCaptureRating === -1 ? 'N/A' : avgCaptureRating) + '</td></tr>' +
+          '</table>');
+
+      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">TOP 3 WEAKNESSES</p>');
+      $el.append($weakTbl);
+
+      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">TOP 3 STRENGTHS</p>');
+      $el.append($strengthTbl);
+    });
+    
+    // stylize ratings (< 3 then red and >=4 is green)
+    $('td.match-intel-rating-val').filter(function(el){ return parseFloat($(this).text()) > 4.0; }).css('color', '#6EFF74');
+    $('td.match-intel-rating-val').filter(function(el){ return parseFloat($(this).text()) <= 3.0; }).css('color', '#FF0000');
+  });
 
 });
 </script>

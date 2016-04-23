@@ -1,8 +1,11 @@
+'use strict';
+
 // will create app namespace *unless* it already exists because another .js
 // file using the same namespace was loaded first
 var ParadoxScout = ParadoxScout || {};
 
 ParadoxScout.start = function(next) {
+  
   // the 4 digit year functions as they competition key!
   ParadoxScout.CompetitionYear = new Date().getFullYear();
 
@@ -40,7 +43,7 @@ ParadoxScout.start = function(next) {
   if (!ParadoxScout.DataService.isAuthenticated()) {
     AppUtility.invalidateCache();
 
-    if (location.pathname.indexOf('/login') < 0) return location.href = siteUrl + '/login'
+    if (location.pathname.indexOf('/login') < 0) return (location.href = siteUrl + '/login');
   }
 
   // update ui with current user info
@@ -58,7 +61,7 @@ ParadoxScout.loginWithOAuth = function(provider, next) {
 ParadoxScout.logout = function(next) {
   ParadoxScout.DataService.logout();
   AppUtility.invalidateCache();
-  next;
+  next();
 };
 
 // ----------------------------------------------------------------------
@@ -120,7 +123,7 @@ ParadoxScout.updateEventAndTeams = function(eventKey, next) {
       name: eventData[0].name,
       start_date: eventData[0].start_date,
       venue_address: eventData[0].venue_address,
-    }
+    };
 
     // build teams & event-teams json
     var teams = {}, eventTeams = {};
@@ -156,11 +159,53 @@ ParadoxScout.getMatches = function(eventKey, next) {
   ParadoxScout.DataService.getMatches(eventKey, next);
 };
 
-ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams) {
+ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams, next) {
   eventKey = verifyEventKey(eventKey);
+  ParadoxScout.DataService.getMatchIntelligence(eventKey, blueTeams, redTeams, function(data) {
+    //console.log(data);
+    var summary = {};
 
-  ParadoxScout.DataService.getMatchIntelligence(eventKey, blueTeams, redTeams, function() {
+    $.each(data, function(k,v) {
+      // get arrays of individual match scores and scouting reports
+      var matchScores = $.map(v.scores.scores, function(item) { return item; });
+      var teamReports = $.map(v.reports, function(item) { return item; });
 
+      summary[k] = {
+        team_key: v.team_key,
+        oprs: v.scores.oprs,
+        ccwms: v.scores.ccwms,
+        matches_played: Object.keys(v.scores.scores).length,
+        total_points: matchScores.reduce(function(prevVal, match) { return prevVal + match.totalPoints; }, 0),
+        teleop_points: matchScores.reduce(function(prevVal, match) { return prevVal + match.teleopPoints; }, 0),
+        auto_points: matchScores.reduce(function(prevVal, match) { return prevVal + match.autoPoints; }, 0),
+        crossing_points: matchScores.reduce(function(prevVal, match) { return prevVal + (match.autoCrossingPoints + match.teleopCrossingPoints); }, 0),
+        challenge_scale_points: matchScores.reduce(function(prevVal, match) { return prevVal + (match.teleopChallengePoints + match.teleopScalePoints); }, 0),
+        high_goals_count: matchScores.reduce(function(prevVal, match) { return prevVal + (match.autoBouldersHigh + match.teleopBouldersHigh); }, 0),
+        low_goals_count: matchScores.reduce(function(prevVal, match) { return prevVal + (match.autoBouldersLow + match.teleopBouldersLow); }, 0),
+      };
+
+      // iterate through each reports ratings in order to determine # of times each criteria was rated and overall score
+      $.each(teamReports, function(reportKey, report) {
+        $.each(report, function (ratingKey, ratingVal) {
+          if (!ratingKey.startsWith('rating_obstacle') && !ratingKey.startsWith('rating_overall') && !ratingKey.startsWith('rating_scoring')) return;
+
+          var ratingCount = (summary[k].hasOwnProperty(ratingKey)) ? summary[k][ratingKey].count + 1 : 1;
+
+          var ratingScore = 0.0;
+          if(ratingKey.endsWith("_auto")) {
+            ratingScore = ratingCount;
+          }
+          else {
+            ratingScore = (summary[k].hasOwnProperty(ratingKey)) ? summary[k][ratingKey].score + parseInt(ratingVal) : parseInt(ratingVal);
+          }
+
+          summary[k][ratingKey] = { score: ratingScore, count: ratingCount };
+        });
+      });
+    });
+
+    console.log(summary);
+    next(summary);
   });
 };
 
@@ -235,9 +280,9 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
 
     // ONLY call API and update db if last scoring update > 5 mins ago AND event is happening!!!
     // if(minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) {
-    if (today < eventStart 
-        || today > eventEnd.setDate(eventEnd.getDate() + 1) 
-        || (minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) ) {
+    if (today < eventStart || 
+        today > eventEnd.setDate(eventEnd.getDate() + 1) || 
+        (minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) ) {
     
       next();
       return;
@@ -303,7 +348,7 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
           }
           else {
             var firstMatch = {};
-            firstMatch[score.matchKey] = matchScore
+            firstMatch[score.matchKey] = matchScore;
             teamEventDetails[score.teamKey] = { 
               competition_id: ParadoxScout.CompetitionYear, 
               updated_at: updatedAt, 
@@ -321,8 +366,8 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
             };
 
             $.each (rankingData, function(index, arr) { 
-              var k = score.teamKey.replace('frc','')
-              if(arr[1] == k) {
+              var k = score.teamKey.replace('frc','');
+              if (arr[1] === k) {
                 teamEventDetails[score.teamKey].ranking = arr[0];
                 teamEventDetails[score.teamKey].rankingScore = arr[2];
                 teamEventDetails[score.teamKey].rankingAuto = arr[3];
@@ -340,7 +385,7 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
         ParadoxScout.DataService.updateEventScoresAndMatchDetails(eventKey, teamEventDetails, matches, next);
       })
       .fail(function(error) {
-        next(error)
+        next(error);
       });
     });
 };
@@ -357,7 +402,7 @@ ParadoxScout.addScoutingReport = function(data, next) {
     data.scored_by = { user_key: u.key, name: u.name, email: u.email };
 
     // console.log(data);
-    ParadoxScout.DataService.addScoutingReport(eventKey, data, next)
+    ParadoxScout.DataService.addScoutingReport(eventKey, data, next);
   });
 };
 
@@ -368,7 +413,7 @@ ParadoxScout.addScoutingReport = function(data, next) {
 // return default eventKey if ek is null or undefined
 var verifyEventKey = function(ek) {
   return (ek === undefined || ek === null) ? ParadoxScout.CurrentEventKey : ek;
-}
+};
 
 // binds UI elements to user details
 var personalize = function(user) {
@@ -389,7 +434,7 @@ var personalize = function(user) {
     login_or_out_button : ko.computed(function(){
       return user ? 'Logout' : 'Login';
     })
-  }
+  };
 
   ko.applyBindings(ViewModel);
 };

@@ -34,6 +34,10 @@
 /*** SCOUTING-REPORTs ***/
 .ps-scouting-report input[type='checkbox'] { transform: scale(1.4, 1.4); }
 
+/*** MATCH INTEL styles ***/
+.ps-match-intel-team { padding-bottom: 10px; }
+.ps-match-intel-team td { padding:3px; }
+
 /*** MISC ***/
 .loaderImage {
   margin: 0px; 
@@ -111,8 +115,6 @@
 .matches-alliance-blue td, .matches-alliance-red td { width: 33%; }
 .matches-alliance-red { background-color:#D44829 !important; width: 100%; }
 .matches-winning-alliance, .matches-winning-alliance a { font-weight: bold; color:yellow; }
-
-
 
 
 /* styles for bootsnips login ui */

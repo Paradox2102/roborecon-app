@@ -1,9 +1,11 @@
+'use strict';
 // will create app namespace *unless* it already exists because another .js
 // file using the same namespace was loaded first
 var ParadoxScout = ParadoxScout || {};
 
 // made into IIFE since only need one module
 ParadoxScout.ApiService = (function() {
+
   // private attributes
   var rootApiUrl = 'https://www.thebluealliance.com',
   eventsUrl = rootApiUrl + '/api/v2/events/{year}',
@@ -13,7 +15,7 @@ ParadoxScout.ApiService = (function() {
   statsUrl = rootApiUrl + '/api/v2/event/{event_key}/stats',
   rankingsUrl = rootApiUrl + '/api/v2/event/{event_key}/rankings',
 
-  // private methods
+  // private methods 
   getDataFromBlueAlliance = function(apiUrl) {
     return $.ajax({
       beforeSend: function(request) {
@@ -23,8 +25,6 @@ ParadoxScout.ApiService = (function() {
     });
   },
 
-  // public api - anything here is accessible to client.  much easier than creating private funcitons and then
-  //              have to remember to also return them in the "return" statement below!
   getEvents = function(year) {
     return getDataFromBlueAlliance(eventsUrl.replace('{year}', year));
   },
@@ -38,7 +38,7 @@ ParadoxScout.ApiService = (function() {
   },
 
   getEventAndTeams = function(eventKey) {
-    return $.when(getEvent(eventKey), getTeamsForEvent(eventKey))
+    return $.when(getEvent(eventKey), getTeamsForEvent(eventKey));
   },
 
   getAllMatchDetails = function(eventKey) {
@@ -49,6 +49,7 @@ ParadoxScout.ApiService = (function() {
     );
   };
 
+  // public api 
   return {
     getEvents: getEvents,
     getEvent: getEvent,

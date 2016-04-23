@@ -1,0 +1,12 @@
+ {
+  "globals": {
+    "AppUtility": false,
+    "Firebase": false,
+    "toastr": false,
+    "ko": false,
+    "siteUrl": false,
+    "$": false,
+    "console": false,
+    "Promise": false
+  }
+}
