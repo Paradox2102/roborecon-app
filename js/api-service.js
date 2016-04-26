@@ -15,6 +15,9 @@ ParadoxScout.ApiService = (function() {
   statsUrl = rootApiUrl + '/api/v2/event/{event_key}/stats',
   rankingsUrl = rootApiUrl + '/api/v2/event/{event_key}/rankings',
 
+  teamEventsUrl = rootApiUrl + '/api/v2/team/{team_key}/events',
+  teamEventMatchesUrl = rootApiUrl + '/api/v2/team/{team_key}/event/{event_key}/matches',
+
   // private methods 
   getDataFromBlueAlliance = function(apiUrl) {
     return $.ajax({
@@ -47,6 +50,15 @@ ParadoxScout.ApiService = (function() {
       getDataFromBlueAlliance(statsUrl.replace('{event_key}', eventKey)),
       getDataFromBlueAlliance(rankingsUrl.replace('{event_key}', eventKey))
     );
+  },
+
+  // championship only
+  getEventsByTeam = function(teamKey) {
+    return getDataFromBlueAlliance(teamEventsUrl.replace('{team_key}', teamKey));
+  },
+
+  getMatchResultsByTeam = function(eventKey, teamKey) {
+    return getDataFromBlueAlliance(teamEventMatchesUrl.replace('{team_key}', teamKey).replace('{event_key}', eventKey));
   };
 
   // public api 
@@ -55,7 +67,9 @@ ParadoxScout.ApiService = (function() {
     getEvent: getEvent,
     getTeamsForEvent: getTeamsForEvent,
     getEventAndTeams: getEventAndTeams,
-    getAllMatchDetails: getAllMatchDetails
+    getAllMatchDetails: getAllMatchDetails,
+    getEventsByTeam: getEventsByTeam,
+    getMatchResultsByTeam: getMatchResultsByTeam
   };
 
 })();

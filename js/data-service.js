@@ -22,7 +22,7 @@ ParadoxScout.DataService = (function() {
     // ensure it is sent
     var options = {};
     options.remember = 'sessionOnly';
-    
+
     if (provider === 'google') options.scope = 'email';
     if (provider === 'github') options.scope = 'user';
 
@@ -464,7 +464,7 @@ ParadoxScout.DataService = (function() {
   // ----------------------------------------------------------------------
   cleanUserKey = function (email) {
     // firebase keys cannot include ., $, #, [, ], / characters
-    return email
+    return email.toLowerCase()
       .replace(/\./g, '%2E')
       .replace(/\$/g, '%24')
       .replace(/\#/g, '%23')

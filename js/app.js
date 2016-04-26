@@ -167,14 +167,15 @@ ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams, next
 
     $.each(data, function(k,v) {
       // get arrays of individual match scores and scouting reports
+      if(!v.scores) v.scores = {};  // in case no data for team
       var matchScores = $.map(v.scores.scores, function(item) { return item; });
       var teamReports = $.map(v.reports, function(item) { return item; });
 
       summary[k] = {
         team_key: v.team_key,
-        oprs: v.scores.oprs,
-        ccwms: v.scores.ccwms,
-        matches_played: Object.keys(v.scores.scores).length,
+        oprs: v.scores.oprs || 0,
+        ccwms: v.scores.ccwms || 0,
+        matches_played: v.scores.scores ? Object.keys(v.scores.scores).length: 0,
         total_points: matchScores.reduce(function(prevVal, match) { return prevVal + match.totalPoints; }, 0),
         teleop_points: matchScores.reduce(function(prevVal, match) { return prevVal + match.teleopPoints; }, 0),
         auto_points: matchScores.reduce(function(prevVal, match) { return prevVal + match.autoPoints; }, 0),

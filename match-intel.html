@@ -40,11 +40,11 @@ $(function() {
       // gather statistical data if available
       var oprs = Math.round(v.oprs *100)/100;
       var ccwms = Math.round(v.ccwms *100)/100;
-      var avgTotal = Math.round((v.total_points/v.matches_played) *100)/100;
-      var avgChallenge = Math.round((v.challenge_scale_points/v.matches_played) *100)/100;
-      var avgCrossing = Math.round((v.crossing_points/v.matches_played) *100)/100;
-      var avgHighGoals = Math.round((v.high_goals_count/v.matches_played) *100)/100;
-      var avgLowGoals = Math.round((v.low_goals_count/v.matches_played) *100)/100;
+      var avgTotal = v.matches_played !== 0 ? Math.round((v.total_points/v.matches_played) *100)/100 : 0;
+      var avgChallenge = v.matches_played !== 0 ? Math.round((v.challenge_scale_points/v.matches_played) *100)/100 : 0;
+      var avgCrossing = v.matches_played !== 0 ? Math.round((v.crossing_points/v.matches_played) *100)/100 : 0;
+      var avgHighGoals = v.matches_played !== 0 ? Math.round((v.high_goals_count/v.matches_played) *100)/100 : 0;
+      var avgLowGoals = v.matches_played !== 0 ? Math.round((v.low_goals_count/v.matches_played) *100)/100 : 0;
 
       // fetch overall, teamwork, and high/low goal ratings
       var avgOverallRating = v.hasOwnProperty('rating_overall') ? 
