@@ -34,69 +34,152 @@ $(function() {
     var option = $("#events option:selected");
     var val = option.val();
 
-    $.getJSON("{{ site.url }}/test-data/" + val, function(teamData) {
-      var teams = [];
-      var teamEventPromises = [];
-      var teamMatchResultPromises = [];
-      var historicalStatsPromises = [];
-      var historicalRankingsPromises = [];
+    $.getJSON("{{ site.url }}/test-data/" + val, function(newtonTeams) {
 
-      $.each(teamData, function (team_key, team) {
-        teams.push({ team_key: team_key, events: {} });
-        teamEventPromises.push(ParadoxScout.ApiService.getEventsByTeam(team_key));
+      $.getJSON("{{ site.url }}/test-data/frc-champ-newton-div-match-history.json", function(teamData) {
+        // get all the match scores by team; 1 entry per team + match
+        var teamScores = [];
+
+        // high level match information here (e.g. alliances, alliance scores, etc...)
+        var matches = {};
+
+        $.each (teamData, function(i, match) {
+          // add match alliance data
+          matches[match.key] = {
+            comp_level: match.comp_level,
+            number: match.match_number,
+            time: match.time,
+            set_number: match.set_number,
+            alliances: match.alliances
+          };
+
+          // if match isn't scored yet!
+          if (!match.score_breakdown) return;
+
+          // 2016 - combine obstacles names and crossings into ONE key
+          match.score_breakdown.blue[match.score_breakdown.blue.position2] = parseInt(match.score_breakdown.blue.position2crossings) || 0;
+          match.score_breakdown.blue[match.score_breakdown.blue.position3] = parseInt(match.score_breakdown.blue.position3crossings) || 0;
+          match.score_breakdown.blue[match.score_breakdown.blue.position4] = parseInt(match.score_breakdown.blue.position4crossings) || 0;
+
+          match.score_breakdown.red[match.score_breakdown.red.position2] = parseInt(match.score_breakdown.red.position2crossings) || 0;
+          match.score_breakdown.red[match.score_breakdown.red.position3] = parseInt(match.score_breakdown.red.position3crossings) || 0;
+          match.score_breakdown.red[match.score_breakdown.red.position4] = parseInt(match.score_breakdown.red.position4crossings) || 0;
+
+          // add team/match data to array for each alliance
+          $.each (match.alliances.blue.teams, function(i, team) {
+            if (newtonTeams.hasOwnProperty(team)) {
+              $.each(match.score_breakdown.blue, function(k,v) {
+                teamScores.push({ 
+                  event_key: match.event_key, 
+                  team_key: team, 
+                  match_key: match.key, 
+                  match_level: match.comp_level,
+                  match_time: new Date(match.time * 1000), 
+                  category: k, 
+                  score: v, 
+                  score_integer: parseInt(v),
+                  video_link: match.videos.length > 0 ? match.videos[0].type + '.com/watch?v=' + match.videos[0].key : ''
+                });
+              });
+            }
+          });
+
+          $.each (match.alliances.red.teams, function(i, team) {
+             if (newtonTeams.hasOwnProperty(team)) {
+              $.each(match.score_breakdown.red, function(k,v) {
+                teamScores.push({ 
+                  event_key: match.event_key, 
+                  team_key: team, 
+                  match_key: match.key, 
+                  match_level: match.comp_level,
+                  match_time: new Date(match.time * 1000), 
+                  category: k, 
+                  score: v, 
+                  score_integer: parseInt(v),
+                  video_link: match.videos.length > 0 ? 'https://' + match.videos[0].type + '.com/watch?v=' + match.videos[0].key : ''
+                });
+              });
+            }
+          });
+        });
+
+        var json = teamScores;
+        var fields = Object.keys(json[0]);
+        var csv = json.map(function(row){
+          return fields.map(function(fieldName){
+            return '"' + (row[fieldName] || '') + '"';
+          });
+        });
+        csv.unshift(fields); // add header column
+
+        console.log(csv.join('\r\n'));
       });
-
-      Promise.all(teamEventPromises).then(function(values) {
-        $.each(values, function(teamIndex, teamEvents) {
-          $.each(teamEvents, function(eventIndex, eventData) {
-             teams[teamIndex].events[eventData.key] = { matches: {} };
-             teamMatchResultPromises.push(ParadoxScout.ApiService.getMatchResultsByTeam(eventData.key, teams[teamIndex].team_key));
-             historicalStatsPromises.push(ParadoxScout.ApiService.getEventStatus(eventData.key));
-             historicalRankingsPromises.push(ParadoxScout.ApiService.getEventRankings(eventData.key));
-          });
-        });
-
-        Promise.all(teamMatchResultPromises).then(function(values) {
-          $.each(values, function(matchesIndex, matches) {
-            $.each(matches, function(matchIndex, match) {
-              var result = $.grep(historicalMatches, function(e) { return e.key === match.key; } );
-              if (result.length === 0) {
-                historicalMatches.push(match);
-              }
-            });
-          });
-          
-          console.log(historicalMatches);
-        });
-
-        Promise.all(historicalStatsPromises).then(function(values) {
-          $.each(values, function(matchesIndex, matches) {
-            $.each(matches, function(matchIndex, match) {
-              var result = $.grep(historicalMatches, function(e) { return e.key === match.key; } );
-              if (result.length === 0) {
-                historicalMatches.push(match);
-              }
-            });
-          });
-          
-          console.log(historicalMatches);
-        });
-
-        Promise.all(historicalRankingsPromises).then(function(values) {
-          $.each(values, function(matchesIndex, matches) {
-            $.each(matches, function(matchIndex, match) {
-              var result = $.grep(historicalMatches, function(e) { return e.key === match.key; } );
-              if (result.length === 0) {
-                historicalMatches.push(match);
-              }
-            });
-          });
-          
-          console.log(historicalMatches);
-        });
-      });
-
     });
+
+
+    // $.getJSON("{{ site.url }}/test-data/" + val, function(teamData) {
+    //   var teams = [];
+    //   var teamEventPromises = [];
+    //   var teamMatchResultPromises = [];
+    //   var historicalStatsPromises = [];
+    //   var historicalRankingsPromises = [];
+
+    //   $.each(teamData, function (team_key, team) {
+    //     teams.push({ team_key: team_key, events: {} });
+    //     teamEventPromises.push(ParadoxScout.ApiService.getEventsByTeam(team_key));
+    //   });
+
+    //   Promise.all(teamEventPromises).then(function(values) {
+    //     $.each(values, function(teamIndex, teamEvents) {
+    //       $.each(teamEvents, function(eventIndex, eventData) {
+    //          teams[teamIndex].events[eventData.key] = { matches: {} };
+    //          teamMatchResultPromises.push(ParadoxScout.ApiService.getMatchResultsByTeam(eventData.key, teams[teamIndex].team_key));
+    //          historicalStatsPromises.push(ParadoxScout.ApiService.getEventStatus(eventData.key));
+    //          historicalRankingsPromises.push(ParadoxScout.ApiService.getEventRankings(eventData.key));
+    //       });
+    //     });
+
+    //     Promise.all(teamMatchResultPromises).then(function(values) {
+    //       $.each(values, function(matchesIndex, matches) {
+    //         $.each(matches, function(matchIndex, match) {
+    //           var result = $.grep(historicalMatches, function(e) { return e.key === match.key; } );
+    //           if (result.length === 0) {
+    //             historicalMatches.push(match);
+    //           }
+    //         });
+    //       });
+          
+    //       console.log(historicalMatches);
+    //     });
+
+    //     Promise.all(historicalStatsPromises).then(function(values) {
+    //       $.each(values, function(matchesIndex, matches) {
+    //         $.each(matches, function(matchIndex, match) {
+    //           var result = $.grep(historicalMatches, function(e) { return e.key === match.key; } );
+    //           if (result.length === 0) {
+    //             historicalMatches.push(match);
+    //           }
+    //         });
+    //       });
+          
+    //       console.log(historicalMatches);
+    //     });
+
+    //     Promise.all(historicalRankingsPromises).then(function(values) {
+    //       $.each(values, function(matchesIndex, matches) {
+    //         $.each(matches, function(matchIndex, match) {
+    //           var result = $.grep(historicalMatches, function(e) { return e.key === match.key; } );
+    //           if (result.length === 0) {
+    //             historicalMatches.push(match);
+    //           }
+    //         });
+    //       });
+          
+    //       console.log(historicalMatches);
+    //     });
+    //   });
+
+    // });
   });
 });
 </script>

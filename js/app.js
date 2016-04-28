@@ -10,7 +10,7 @@ ParadoxScout.start = function(next) {
   ParadoxScout.CompetitionYear = new Date().getFullYear();
 
   // default event key
-  ParadoxScout.CurrentEventKey = '2016cada';
+  ParadoxScout.CurrentEventKey = '2016new';
 
   // default minutes to check TBA for scoring updates
   ParadoxScout.ScoringUpdateIntervalInMinutes = 5;
@@ -205,7 +205,7 @@ ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams, next
       });
     });
 
-    console.log(summary);
+    //console.log(summary);
     next(summary);
   });
 };
