@@ -16,7 +16,3 @@ github_username: paradoxscout
 
 # Build settings
 #permalink: "/blog/:title" #pretty
-
-markdown: kramdown
-kramdown:
-  input: GFM #GitHub Flavored Markdown
