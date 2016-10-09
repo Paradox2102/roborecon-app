@@ -10,7 +10,7 @@ title: Paradox Scout
 email: webmaster@sdarobotics.org
 description: >
 baseurl: "/paradox_scout/" # the subpath of your site, e.g. /blog
-url: "http://sdarobotics.org/paradox_scout" # the base hostname & protocol for your site
+root_url: "http://sdarobotics.org/paradox_scout" # the base hostname & protocol for your site
 twitter_username:
 github_username: paradoxscout
 
