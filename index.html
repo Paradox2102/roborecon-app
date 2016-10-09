@@ -25,7 +25,7 @@ $(function() {
       setTimeout(function() {$("#dashboard").DataTable().columns.adjust().draw(); }, 10);
     },
     ajax: function(data, callback, settings) {
-      // load the data -- for testing use: $.getJSON("{{ site.url }}/test-data/sample-event-scores.json", function(teamData) {
+      // load the data -- for testing use: $.getJSON("{{ site.root_url }}/test-data/sample-event-scores.json", function(teamData) {
       $('.loaderImage').show();
 
       ParadoxScout.getEventScoutingData(null, function(teamData, error) {
@@ -62,9 +62,9 @@ $(function() {
       { title: 'Team', data: 'team_number', 
         render: function(data,type,full,meta) { 
           if (type === 'display') {
-            return '<span><a style="color:#ccc;font-weight:bold;" href="{{ site.url }}/team-details?team_id=' + full.team_key + '">' + full.team_name + '</a></span><br>' +
-              '<span>[ <a style="color:#D59E2A;" href="{{ site.url }}/rate?team_id=' + full.team_key + '"><i class="fa fa-star-o"> Rate</i></a> | ' +
-              '<a style="color:#D59E2A;" href="{{ site.url }}/scouting-reports?team_id=' + full.team_key + '"><i class="fa fa-files-o"> View Reports</i></a> ]</span>' 
+            return '<span><a style="color:#ccc;font-weight:bold;" href="{{ site.root_url }}/team-details?team_id=' + full.team_key + '">' + full.team_name + '</a></span><br>' +
+              '<span>[ <a style="color:#D59E2A;" href="{{ site.root_url }}/rate?team_id=' + full.team_key + '"><i class="fa fa-star-o"> Rate</i></a> | ' +
+              '<a style="color:#D59E2A;" href="{{ site.root_url }}/scouting-reports?team_id=' + full.team_key + '"><i class="fa fa-files-o"> View Reports</i></a> ]</span>' 
           }
           else {
             return data;
