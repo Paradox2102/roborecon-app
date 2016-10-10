@@ -4,7 +4,7 @@ rvm:
 cache: bundler
 script:
   - echo "Building Site"
-  - bundle exec "jekyll build"
+  - bundle exec "jekyll build --profile"
   - echo "Testing Site"
   - bundle exec htmlproofer ./_site --disable-external --check-html --check-favicon --assume-extension
 env:
