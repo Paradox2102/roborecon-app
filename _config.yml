@@ -6,7 +6,7 @@
 ##########################
 title: Paradox Scout # site title, also used in the navbar
 email: webmaster@sdarobotics.org
-description: "A First Robotics Scouting Application built by Team paradox 2102" # site description
+description: "A First Robotics Scouting Application built by Team Paradox 2102" # site description
 baseurl: "/paradox_scout/" # the subpath of your site, e.g. /blog
 root_url: "http://sdarobotics.org/paradox_scout/" # the base hostname & protocol for your site
 
