@@ -2,6 +2,9 @@ language: ruby
 rvm:
   - 2.1.5
 cache: bundler
+branches:
+  only:
+  - gh-pages
 script:
   - echo "Building Site"
   - bundle exec "jekyll build --profile"
