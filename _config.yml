@@ -1,22 +1,26 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'jekyll serve'. If you change this file, please restart the server process.
+### Welcome to Paradox-Scout Jekyll! ###
+########################################
+# There is a bit of configuring before you can get up and running with Paradox-Scout
 
-# Site settings
-title: Paradox Scout
+### Base Site settings ###
+##########################
+title: Paradox Scout # site title, also used in the navbar
 email: webmaster@sdarobotics.org
-description: >
-baseurl: "/paradox_scout/" # the subpath of your site, e.g. /blog
-root_url: "http://sdarobotics.org/paradox_scout" # the base hostname & protocol for your site
-twitter_username:
-github_username: paradoxscout
+description: "A First Robotics Scouting Application built by Team paradox 2102" # site description
+baseurl: "" # the subpath of your site, e.g. /blog
+root_url: "" # the base hostname & protocol for your site
 
-# Build settings
-#permalink: "/blog/:title" #pretty
 
-markdown: kramdown
-kramdown:
-  input: GFM #GitHub Flavored Markdown
+### Header Settings ###
+#######################
+headerTitle: Team Paradox 2102 # the bold, bigger main text
+headerAccent: Scouting System # the smaller, but informative accenting text
+headerLogo: "/images/paradox_logo_2016.png" # FULL path to image in the header 150x150 works well
+
+
+### Scouting System Settings ###
+################################
+# These are the most imporant settings, choose carefully
+
+firebase: https://brilliant-torch-6506.firebaseio.com/ # address of firebase server to connect to
+

@@ -1,3 +1,5 @@
+---
+---
 'use strict';
 // will create app namespace *unless* it already exists because another .js
 // file using the same namespace was loaded first
@@ -5,7 +7,7 @@ var ParadoxScout = ParadoxScout || {};
 
 ParadoxScout.DataService = (function() {
   // private attributes
-  var dbRootUrl = 'https://brilliant-torch-6506.firebaseio.com/',
+  var dbRootUrl = '{{ site.firebase }}',
   dbRef = new Firebase(dbRootUrl),   // init firebase db
   dbUsersRef = dbRef.child('users'), 
 
