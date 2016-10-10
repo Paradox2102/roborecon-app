@@ -24,3 +24,7 @@ headerLogo: "/images/paradox_logo_2016.png" # FULL path to image in the header 1
 
 firebase: https://brilliant-torch-6506.firebaseio.com/ # address of firebase server to connect to
 
+### Other Jekyll###
+###################
+# You should never have to change these.
+exclude: [vendor]
