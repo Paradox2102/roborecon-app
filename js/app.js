@@ -164,6 +164,7 @@ ParadoxScout.getMatches = function(eventKey, next) {
 
 ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams, next) {
   eventKey = verifyEventKey(eventKey);
+  
   ParadoxScout.DataService.getMatchIntelligence(eventKey, blueTeams, redTeams, function(data) {
     //console.log(data);
     var summary = {};
@@ -171,6 +172,7 @@ ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams, next
     $.each(data, function(k,v) {
       // get arrays of individual match scores and scouting reports
       if(!v.scores) v.scores = {};  // in case no data for team
+      
       var matchScores = $.map(v.scores.scores, function(item) { return item; });
       var teamReports = $.map(v.reports, function(item) { return item; });
 

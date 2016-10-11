@@ -7,6 +7,7 @@ layout: page
       <h3>Match: <span id="match-name"></span></h3>
     </div>
   </div>
+  
   <div class="row" style="background-color:#2295C7;">
     <div id="blue0" class="col-md-4 ps-match-intel-team">
     </div>
@@ -15,6 +16,7 @@ layout: page
     <div id="blue2" class="col-md-4 ps-match-intel-team">
     </div>
   </div>
+  
   <div class="row" style="background-color:#D44829;">
     <div id="red0" class="col-md-4 ps-match-intel-team">
     </div>
@@ -27,17 +29,21 @@ layout: page
 
 <script>
 $(function() {
+  
   // *** onload ***
   var matchName = AppUtility.getUrlParameter('m');
+  
   $('#match-name').html(matchName);
 
   var blueAlliance = [ AppUtility.getUrlParameter('b0'), AppUtility.getUrlParameter('b1'), AppUtility.getUrlParameter('b2') ];
   var redAlliance = [ AppUtility.getUrlParameter('r0'), AppUtility.getUrlParameter('r1'), AppUtility.getUrlParameter('r2') ];
 
   ParadoxScout.getMatchIntelligence(null, blueAlliance, redAlliance, function(teamData) {
+    
     // iterate each team's info from TBA & scouting reports
     $.each(teamData, function(k,v) {
-      // gather statistical data if available
+      
+      // gather match aggregated stats (vis TBA)
       var oprs = Math.round(v.oprs *100)/100;
       var ccwms = Math.round(v.ccwms *100)/100;
       var avgTotal = v.matches_played !== 0 ? Math.round((v.total_points/v.matches_played) *100)/100 : 0;
@@ -46,40 +52,76 @@ $(function() {
       var avgHighGoals = v.matches_played !== 0 ? Math.round((v.high_goals_count/v.matches_played) *100)/100 : 0;
       var avgLowGoals = v.matches_played !== 0 ? Math.round((v.low_goals_count/v.matches_played) *100)/100 : 0;
 
-      // fetch overall, teamwork, and high/low goal ratings
-      var avgOverallRating = v.hasOwnProperty('rating_overall') ? 
-                          Math.round((v.rating_overall.score/v.rating_overall.count) *100)/100 : -1;
-      var avgTeamworkRating = v.hasOwnProperty('rating_overall_alliance_coop') ? 
-                          Math.round((v.rating_overall_alliance_coop.score/v.rating_overall_alliance_coop.count) *100)/100 : -1;
+      // fetch team stats (via scouting)
+      // -- scoring
+      var highGoalsMade = v.hasOwnProperty('rating_scoring_high_goals_made') ? v.rating_scoring_high_goal_made.score : 0;
+      var highGoalsMissed = v.hasOwnProperty('rating_scoring_high_goals_missed') ? v.rating_scoring_high_goals_missed.score : 0;
+      
+      var lowGoalsMade = v.hasOwnProperty('rating_scoring_low_goals_made') ? v.rating_scoring_low_goals_made.score : 0;
+      var lowGoalsMissed = v.hasOwnProperty('rating_scoring_low_goals_missed') ? v.rating_scoring_low_goals_missed.score : 0;
+      
+      var towerScaleMade = v.hasOwnProperty('rating_scoring_tower_scale_made') ? v.rating_scoring_tower_scale_made.score : 0;
+      var towerScaleMissed = v.hasOwnProperty('rating_scoring_tower_scale_missed') ? v.rating_scoring_tower_scale_missed.score : 0;
+      
+      // -- obstacles
+      var chevalMade = v.hasOwnProperty('rating_obstacle_cheval_de_frise_made') ? v.rating_obstacle_cheval_de_frise_made.score : 0;
+      var chevalMissed = v.hasOwnProperty('rating_obstacle_cheval_de_frise_missed') ? v.rating_obstacle_cheval_de_frise_missed.score : 0;
+      
+      var drawbridgeMade = v.hasOwnProperty('rating_obstacle_drawbridge_made') ? v.rating_obstacle_drawbridge_made.score : 0;
+      var drawbridgeMissed = v.hasOwnProperty('rating_obstacle_drawbridge_missed') ? v.rating_obstacle_drawbridge_missed.score : 0;
+      
+      var lowBarMade = v.hasOwnProperty('rating_obstacle_low_bar_made') ? v.rating_obstacle_low_bar_made.score : 0;
+      var lowBarMissed = v.hasOwnProperty('rating_obstacle_low_ba_missed') ? v.rating_obstacle_low_ba_missed.score : 0;
+      
+      var moatMade = v.hasOwnProperty('rating_obstacle_moat_made') ? v.rating_obstacle_moat_made.score : 0;
+      var moatMissed = v.hasOwnProperty('rating_obstacle_moat_missed') ? v.rating_obstacle_moat_missed.score : 0;
+      
+      var portcullisMade = v.hasOwnProperty('rating_obstacle_portcullis_made') ? v.rating_obstacle_portcullis_made.score : 0;
+      var portcullisMissed = v.hasOwnProperty('rating_obstacle_portcullis_missed') ? v.rating_obstacle_portcullis_missed.score : 0;
+      
+      var rampartsMade = v.hasOwnProperty('rating_obstacle_ramparts_made') ? v.rating_obstacle_ramparts_made.score : 0;
+      var rampartsMissed = v.hasOwnProperty('rating_obstacle_ramparts_missed') ? v.rating_obstacle_ramparts_missed.score : 0;
+      
+      var rockWallMade = v.hasOwnProperty('rating_obstacle_rock_wall_made') ? v.rating_obstacle_rock_wall_made.score : 0;
+      var rockWallMissed = v.hasOwnProperty('rating_obstacle_rock_wall_missed') ? v.rating_obstacle_rock_wall_missed.score : 0;
+      
+      var roughTerrainMade = v.hasOwnProperty('rating_obstacle_rough_terrain_made') ? v.rating_obstacle_rough_terrain_made.score : 0;
+      var roughTerrainMissed = v.hasOwnProperty('rating_obstacle_rough_terrain_missed') ? v.rating_obstacle_rough_terrain_missed.score : 0;
+      
+      var sallyPortMade = v.hasOwnProperty('rating_obstacle_sally_port_made') ? v.rating_obstacle_sally_port_made.score : 0;
+      var sallyPortMissed = v.hasOwnProperty('rating_obstacle_sally_port_missed') ? v.rating_obstacle_sally_port_missed.score : 0;
+      
+      // -- overall
       var avgStabilityRating = v.hasOwnProperty('rating_overall_robot_stability') ? 
                           Math.round((v.rating_overall_robot_stability.score/v.rating_overall_robot_stability.count) *100)/100 : -1;
-      var avgHighGoalRating = v.hasOwnProperty('rating_scoring_high_goal') ? 
-                          Math.round((v.rating_scoring_high_goal.score/v.rating_scoring_high_goal.count) *100)/100 : -1;
-      var avgLowGoalRating = v.hasOwnProperty('rating_scoring_low_goal') ? 
-                          Math.round((v.rating_scoring_low_goal.score/v.rating_scoring_low_goal.count) *100)/100 : -1;
-      var avgCaptureRating = v.hasOwnProperty('rating_scoring_tower_capture') ? 
-                          Math.round((v.rating_scoring_tower_capture.score/v.rating_scoring_tower_capture.count) *100)/100 : -1;
+                          
+      // scoring and obstacles accuracy
+      var highGoalAccuracy = ((highGoalsMade / (highGoalsMade + highGoalsMissed)) * 100 || 0 ).toFixed(2);
+      var lowGoalAccuracy = ((lowGoalsMade / (lowGoalsMade + lowGoalsMissed)) * 100 || 0 ).toFixed(2);
+      var towerScaleAccuracy = ((towerScaleMade / (towerScaleMade + towerScaleMissed)) * 100 || 0 ).toFixed(2);
+      
+      var chevalAccuracy = ((chevalMade / (chevalMade + chevalMissed)) * 100 || 0 ).toFixed(2);
+      var drawbridgeAccuracy = ((drawbridgeMade / (drawbridgeMade + drawbridgeMissed)) * 100 || 0 ).toFixed(2);
+      var lowBarAccuracy = ((lowBarMade / (lowBarMade + lowBarMissed)) * 100 || 0 ).toFixed(2);
+      var moatAccuracy = ((moatMade / (moatMade + moatMissed)) * 100 || 0 ).toFixed(2);
+      var portcullisAccuracy = ((portcullisMade / (portcullisMade + portcullisMissed)) * 100 || 0 ).toFixed(2);
+      var rampartsAccuracy = ((rampartsMade / (rampartsMade + rampartsMissed)) * 100 || 0 ).toFixed(2);
+      var rockWallAccuracy = ((rockWallMade / (rockWallMade + rockWallMissed)) * 100 || 0 ).toFixed(2);
+      var roughTerrainAccuracy = ((roughTerrainMade / (roughTerrainMade + roughTerrainMissed)) * 100 || 0 ).toFixed(2);
+      var sallyPortAccuracy = ((sallyPortMade / (sallyPortMade + sallyPortMissed)) * 100 || 0 ).toFixed(2);
+      
 
       // fetch obstacle ratings that exist for team
       var obstacleRatings = [];
-      if(v.hasOwnProperty('rating_obstacle_low_bar')) 
-        obstacleRatings.push({ name: 'Low Bar', val: Math.round((v.rating_obstacle_low_bar.score/v.rating_obstacle_low_bar.count) *100)/100 });
-      if(v.hasOwnProperty('rating_obstacle_cheval_de_frise')) 
-        obstacleRatings.push({ name: 'Cheval De Frise', val: Math.round((v.rating_obstacle_cheval_de_frise.score/v.rating_obstacle_cheval_de_frise.count) *100)/100 });
-      if(v.hasOwnProperty('rating_obstacle_drawbridge')) 
-        obstacleRatings.push({ name: 'Drawbridge', val: Math.round((v.rating_obstacle_drawbridge.score/v.rating_obstacle_drawbridge.count) *100)/100 });
-      if(v.hasOwnProperty('rating_obstacle_moat')) 
-        obstacleRatings.push({ name: 'Moat', val: Math.round((v.rating_obstacle_moat.score/v.rating_obstacle_moat.count) *100)/100 });
-      if(v.hasOwnProperty('rating_obstacle_portcullis')) 
-        obstacleRatings.push({ name: 'Portcullis', val: Math.round((v.rating_obstacle_portcullis.score/v.rating_obstacle_portcullis.count) *100)/100 });
-      if(v.hasOwnProperty('rating_obstacle_ramparts')) 
-        obstacleRatings.push({ name: 'Ramparts', val: Math.round((v.rating_obstacle_ramparts.score/v.rating_obstacle_ramparts.count) *100)/100 });
-      if(v.hasOwnProperty('rating_obstacle_rock_wall')) 
-        obstacleRatings.push({ name: 'Rock Wall', val: Math.round((v.rating_obstacle_rock_wall.score/v.rating_obstacle_rock_wall.count) *100)/100 });
-      if(v.hasOwnProperty('rating_obstacle_rough_terrain')) 
-        obstacleRatings.push({ name: 'Rough Terrain', val: Math.round((v.rating_obstacle_rough_terrain.score/v.rating_obstacle_rough_terrain.count) *100)/100 });
-      if(v.hasOwnProperty('rating_obstacle_sally_port')) 
-        obstacleRatings.push({ name: 'Sally Port', val: Math.round((v.rating_obstacle_sally_port.score/v.rating_obstacle_sally_port.count) *100)/100 });
+      obstacleRatings.push({ name: 'Low Bar', val: parseFloat(lowBarAccuracy), text: lowBarAccuracy + '% (' + lowBarMade + ' | ' + lowBarMissed + ')' });
+      obstacleRatings.push({ name: 'Cheval De Frise', val: parseFloat(chevalAccuracy), text: chevalAccuracy + '% (' + chevalMade + ' | ' + chevalMissed + ')' });
+      obstacleRatings.push({ name: 'Drawbridge', val: parseFloat(drawbridgeAccuracy), text: drawbridgeAccuracy + '% (' + drawbridgeMade + ' | ' + drawbridgeMissed + ')' });
+      obstacleRatings.push({ name: 'Moat', val: parseFloat(moatAccuracy), text: moatAccuracy + '% (' + moatMade + ' | ' + moatMissed + ')' });
+      obstacleRatings.push({ name: 'Portcullis', val: parseFloat(portcullisAccuracy), text: portcullisAccuracy + '% (' + portcullisMade + ' | ' + portcullisMissed + ')' });
+      obstacleRatings.push({ name: 'Ramparts', val: parseFloat(rampartsAccuracy), text: rampartsAccuracy + '% (' + rampartsMade + ' | ' + rampartsMissed + ')' });
+      obstacleRatings.push({ name: 'Rock Wall', val: parseFloat(rockWallAccuracy), text: rockWallAccuracy + '% (' + rockWallMade + ' | ' + rockWallMissed + ')' });
+      obstacleRatings.push({ name: 'Rough Terrain', val: parseFloat(roughTerrainAccuracy), text: roughTerrainAccuracy + '% (' + roughTerrainMade + ' | ' + roughTerrainMissed + ')' });
+      obstacleRatings.push({ name: 'Sally Port', val: parseFloat(sallyPortAccuracy), text: sallyPortAccuracy + '% (' + sallyPortMade + ' | ' + sallyPortMissed + ')' });
 
       // sort obstacle ratings in asc. order (weakest to strongest)
       obstacleRatings.sort(function(a, b){ return a.val - b.val; });
@@ -96,35 +138,35 @@ $(function() {
         .append('<h4>Team: ' + v.team_key.replace(/frc/i, '') + '</h4>')
         .append('<p class="pull-left" style="margin:0px 15px 5px 0px;">OPRS: <span class="label label-default" style="font-size:14px;">' + oprs + '</span></p>')
         .append('<p class="pull-left" style="margin:0px 15px 5px 0px;">CCWMS: <span class="label label-default" style="font-size:14px;">' + ccwms + '</span></p>')
-        .append('<p class="pull-left" style="margin:0px 15px 5px 0px;">Avg.: <span class="label label-default" style="font-size:14px;">' + avgTotal + '</span></p>')
-        .append('<table style="width:100%;">' + 
-          '<tr><td>Avg. High Goals:</td><td>' + avgHighGoals + '</td></tr>' +
-          '<tr><td>Avg. Low Goals:</td><td>' + avgLowGoals + '</td></tr>' +
-          '<tr><td>Avg. Crossing Points:</td><td>' + avgCrossing + '</td></tr>' +
-          '<tr><td>Avg. Challenge/Scale Points:</td><td>' + avgChallenge + '</td></tr>' +
+        .append('<p class="pull-left" style="margin:0px 15px 5px 0px;">Avg.: <span class="label label-default" style="font-size:14px;">' + avgTotal + '</span></p>');
+        
+      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">TEAM STATS</p>');
+      $el.append('<table style="width:100%;">' + 
+          '<tr><td>Robot Stability:</td><td class="match-intel-rating-val">' + (avgStabilityRating === -1 ? 'N/A' : avgStabilityRating) + '</td></tr>' +
+          '<tr><td>High Goal Accuracy:</td><td class="match-intel-rating-val">' + highGoalAccuracy + '% (' + highGoalsMade + ' | ' + highGoalsMissed + ')</td></tr>' +
+          '<tr><td>Low Goal Accuracy:</td><td class="match-intel-rating-val">' + lowGoalAccuracy + '% (' + lowGoalsMade + ' | ' + lowGoalsMissed + ')</td></tr>' +
+          '<tr><td>Scale Accuracy:</td><td class="match-intel-rating-val">' + towerScaleAccuracy + '% (' + towerScaleMade + ' | ' + towerScaleMissed + ')</td></tr>' +
           '</table>');
+          
+      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">MATCH STATS</p>');
+      $el.append('<table style="width:100%;">' + 
+        '<tr><td>Avg. High Goals:</td><td>' + avgHighGoals + '</td></tr>' +
+        '<tr><td>Avg. Low Goals:</td><td>' + avgLowGoals + '</td></tr>' +
+        '<tr><td>Avg. Crossing Points:</td><td>' + avgCrossing + '</td></tr>' +
+        '<tr><td>Avg. Challenge/Scale Points:</td><td>' + avgChallenge + '</td></tr>' +
+        '</table>');
 
       var $weakTbl = $('<table style="width:100%;">');
       $.each(bottom3obstacles, function (i, e) {
-        $weakTbl.append('<tr><td>' + e.name + '</td><td class="match-intel-rating-val">' + e.val + '</td></tr>');
+        $weakTbl.append('<tr><td>' + e.name + '</td><td class="match-intel-rating-val">' + e.text + '</td></tr>');
       });
       $weakTbl.append('</table>');
 
       var $strengthTbl = $('<table style="width:100%;">');
       $.each(top3obstacles, function (i,e) {
-        $strengthTbl.append('<tr><td>' + e.name + '</td><td class="match-intel-rating-val">' + e.val + '</td></tr>');
+        $strengthTbl.append('<tr><td>' + e.name + '</td><td class="match-intel-rating-val">' + e.text + '</td></tr>');
       });
       $strengthTbl.append('</table>');
-
-      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">OVERALL TEAM RATINGS</p>');
-      $el.append('<table style="width:100%;">' + 
-          '<tr><td>Overall:</td><td class="match-intel-rating-val">' + (avgOverallRating === -1 ? 'N/A' : avgOverallRating) + '</td></tr>' +
-          '<tr><td>Teamwork:</td><td class="match-intel-rating-val">' + (avgTeamworkRating === -1 ? 'N/A' : avgTeamworkRating) + '</td></tr>' +
-          '<tr><td>Robot Stability:</td><td class="match-intel-rating-val">' + (avgStabilityRating === -1 ? 'N/A' : avgStabilityRating) + '</td></tr>' +
-          '<tr><td>High Goal Ability:</td><td class="match-intel-rating-val">' + (avgHighGoalRating === -1 ? 'N/A' : avgHighGoalRating) + '</td></tr>' +
-          '<tr><td>Low Goal Ability:</td><td class="match-intel-rating-val">' + (avgLowGoalRating === -1 ? 'N/A' : avgLowGoalRating) + '</td></tr>' +
-          '<tr><td>Challenge/Scale Ability:</td><td class="match-intel-rating-val">' + (avgCaptureRating === -1 ? 'N/A' : avgCaptureRating) + '</td></tr>' +
-          '</table>');
 
       $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">TOP 3 WEAKNESSES</p>');
       $el.append($weakTbl);
