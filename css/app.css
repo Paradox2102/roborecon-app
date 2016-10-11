@@ -118,6 +118,13 @@
 .matches-winning-alliance, .matches-winning-alliance a { font-weight: bold; color:yellow; }
 
 
+.btn-circle.green {
+  background-image: none; background-color: green;
+}
+.btn-circle.red {
+  background-image: none; background-color: red;
+}
+
 .btn-circle {
   width: 30px;
   height: 30px;
