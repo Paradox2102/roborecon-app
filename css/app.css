@@ -217,6 +217,7 @@ body{margin:40px;}
 /* media based styles for any elements that need adjusting when screen is < 992px */
 @media (max-width: 991px) {
   #main-header {font-size: 22px;}
+  body{margin:0px;}
 }
 
 
