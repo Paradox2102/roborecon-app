@@ -355,7 +355,7 @@ $(function() {
     $.each($('#reportForm').serializeArray(), function(k, v) {
       data[v.name] = v.value;
     });
-    //console.log(json);
+    console.log(data);
 
     // add scouting report
     ParadoxScout.addScoutingReport(data, function(error) {
