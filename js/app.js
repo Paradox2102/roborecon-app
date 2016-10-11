@@ -1,6 +1,3 @@
----
-#Jekyllify
----
 'use strict';
 
 // will create app namespace *unless* it already exists because another .js

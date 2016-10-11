@@ -15,6 +15,7 @@
   background-color: #D5482A !important;
   color: #fff !important;
   border-style: none !important;
+  border-radius: 0 !important;
 }
 
 .navbar-nav > li > a:hover {
@@ -182,8 +183,6 @@
     margin-top:10px;
   }
 }
-
-body{margin:40px;}
 
 
 .btn-circle {
