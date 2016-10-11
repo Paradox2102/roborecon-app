@@ -7,7 +7,7 @@ var ParadoxScout = ParadoxScout || {};
 
 ParadoxScout.DataService = (function() {
   // private attributes
-  var dbRootUrl = '{{ site.firebase }}',
+  var dbRootUrl = '{{ site.scout.firebase }}',
   dbRef = new Firebase(dbRootUrl),   // init firebase db
   dbUsersRef = dbRef.child('users'), 
 
