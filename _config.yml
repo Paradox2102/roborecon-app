@@ -4,25 +4,29 @@
 
 ### Base Site settings ###
 ##########################
+
 title: Paradox Scout # site title, also used in the navbar
 email: webmaster@sdarobotics.org
 description: "A First Robotics Scouting Application built by Team Paradox 2102" # site description
 baseurl: "/paradox_scout/" # the subpath of your site, e.g. /blog
-root_url: "http://sdarobotics.org/paradox_scout/" # the base hostname & protocol for your site
+root_url: "http://sdarobotics.org/paradox_scout" # the base hostname & protocol for your site
 
 
 ### Header Settings ###
 #######################
-headerTitle: Team Paradox 2102 # the bold, bigger main text
-headerAccent: Scouting System # the smaller, but informative accenting text
-headerLogo: "/images/paradox_logo_2016.png" # FULL path to image in the header 150x150 works well
+# Customise to how you want
+header:
+    title: Team Paradox 2102 # the bold, bigger main text
+    accent: Scouting System # the smaller, but informative accenting text
+    logo: "/images/paradox_logo_2016.png" # FULL path to image in the header 150x150 works well
 
 
 ### Scouting System Settings ###
 ################################
 # These are the most imporant settings, choose carefully
 
-firebase: https://brilliant-torch-6506.firebaseio.com/ # address of firebase server to connect to
+scout:
+    firebase: https://brilliant-torch-6506.firebaseio.com/ # address of firebase server to connect to
 
 ### Other Jekyll###
 ###################
