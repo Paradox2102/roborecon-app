@@ -127,11 +127,7 @@ permalink: /rate/
                 <label class="col-md-4 control-label" for="rating_overall_robot_stability">Robot Stability:</label>
                 <div class="col-md-8">   
                   <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_1" value="1" autocomplete="off">1</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_2" value="2" autocomplete="off">2</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_3" value="3" autocomplete="off">3</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_4" value="4" autocomplete="off">4</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_5" value="5" autocomplete="off">5</label>
+                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_overall_robot_stability" value="0"/>
                   </div>
                 </div>
               </div>
@@ -156,17 +152,20 @@ permalink: /rate/
               <div class="form-group">
                 <label class="col-md-4 control-label" for="rating_obstacle_cheval_de_frise">Cheval de Frise:</label>
                 <div class="col-md-8">   
-                  <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_cheval_de_frise" id="rating_obstacle_cheval_de_frise_1" value="1" autocomplete="off">1</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_cheval_de_frise" id="rating_obstacle_cheval_de_frise_2" value="2" autocomplete="off">2</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_cheval_de_frise" id="rating_obstacle_cheval_de_frise_3" value="3" autocomplete="off">3</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_cheval_de_frise" id="rating_obstacle_cheval_de_frise_4" value="4" autocomplete="off">4</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_obstacle_cheval_de_frise" id="rating_obstacle_cheval_de_frise_5" value="5" autocomplete="off">5</label>
-                  </div>
-                  <div class="checkbox-inline" style="margin-left:15px;">
+                   <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_scoring_cheval_de_frise"><i class="fa fa-plus"></i></button>
+                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_cheval_de_frise" value ="0"/>
+                   <button type="button" class="btn btn-primary btn-circle red btn-lg js-counter-btn" data-counter-for="rating_scoring_cheval_de_frise_miss"><i class="fa fa-times"></i></button>
+                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_cheval_de_frise_miss" value="0"/>
+                  <div class="checkbox-inline" style="margin-right:50px;">
                     <label>
                       <input type="checkbox" name="rating_obstacle_cheval_de_frise_auto" value="1">
-                      Auto
+                      Completed Auto
+                    </label>
+                  </div>
+                  <div class="checkbox-inline" style="margin-left:30px;">
+                    <label>
+                      <input type="checkbox" name="rating_obstacle_cheval_de_frise_auto_attempted" value="1">
+                      Attempted Auto
                     </label>
                   </div>
                 </div>

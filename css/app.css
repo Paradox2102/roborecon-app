@@ -222,6 +222,16 @@
     border-radius: 35px;
   }
 
+
+/*Make header size and image right */
+#header_full {
+  margin: 40px;
+}
+#header_full #main-header .img-responsive {
+  position: relative;
+  z-index: 99;
+}
+
 /*** RESPONSIVE CSS ***/
 
 /* media based styles for any elements that need adjusting when screen is < 992px */
@@ -229,4 +239,7 @@
   #main-header {font-size: 22px;}
 }
 
-
+@media (max-width: 1500px) {
+  #header_full {margin:0px;}
+  #header_full #main-header .img-responsive { position: static; z-index: 1; }
+}
