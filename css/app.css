@@ -15,6 +15,7 @@
   background-color: #D5482A !important;
   color: #fff !important;
   border-style: none !important;
+  border-radius: 0 !important;
 }
 
 .navbar-nav > li > a:hover {
@@ -226,7 +227,6 @@
 /*Make header size and image right */
 #header_full {
   margin: 40px;
-  border-radius: 0 !important;
 }
 #header_full #main-header .img-responsive {
   position: relative;
