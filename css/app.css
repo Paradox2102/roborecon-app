@@ -35,6 +35,9 @@
 /*** INDEX/DASHBOARD styles ***/
 #dashboard-container { margin-left: 40px; margin-right: 40px; padding:0; }
 
+/*** MATCHES styles ***/
+#matches-container { margin-left: 40px; margin-right: 40px; padding:0; }
+
 /*** SCOUTING-REPORTs ***/
 .ps-scouting-report input[type='checkbox'] { transform: scale(1.4, 1.4); }
 
@@ -60,7 +63,9 @@
   position:absolute; top:50%; left:50%; margin-left: -75px; margin-top: -75px;
 }
 
-/*** 3rd party component overrides ***/
+/* ------------------------------------------------------------------
+    3rd party component overrides ***/
+/* ------------------------------------------------------------------
 
 /*** DASHBOARD table styles ***/
 .dataTable.fixedHeader-floating {
@@ -250,7 +255,7 @@
   #header_full {margin:0px;}
   #header_full #main-header .img-responsive { position: static; z-index: 1; }
   
-  #dashboard-container { margin-left: auto; margin-right: auto; padding:inherit; }
+  #dashboard-container, #matches-container { margin-left: auto; margin-right: auto; padding:inherit; }
   
   .navbar,
   .navbar ul,
