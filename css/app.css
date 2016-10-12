@@ -1,6 +1,6 @@
 /*** main HEADER styles ***/
 #main-header {
-  display:flex;align-items:center;font-size:36px;height:75px;color:#000;background-color:#D59E2A;
+  display:flex;align-items:center;font-size:36px;height:75px;color:#000;background-color:#D59E2A;border-radius: 10px 10px 0px 0px !important;
 }
 
 /*** main NAVIGATION bar and menu styles ***/
@@ -15,7 +15,7 @@
   background-color: #D5482A !important;
   color: #fff !important;
   border-style: none !important;
-  border-radius: 0 !important;
+  border-radius: 0px 0px 10px 10px !important;
 }
 
 .navbar-nav > li > a:hover {
@@ -228,6 +228,7 @@
 #header_full {
   margin: 40px;
 }
+
 #header_full #main-header .img-responsive {
   position: relative;
   z-index: 99;
@@ -241,6 +242,10 @@
 }
 
 @media (max-width: 1500px) {
+  #main-header {border-radius: 0px 0px 0px 0px !important;}
   #header_full {margin:0px;}
   #header_full #main-header .img-responsive { position: static; z-index: 1; }
+  .navbar,
+  .navbar ul,
+  .navbar-nav > li > a {border-radius: 0px 0px 0px 0px !important;}
 }
