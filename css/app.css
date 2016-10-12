@@ -32,6 +32,9 @@
   border-style: none !important;
 }
 
+/*** INDEX/DASHBOARD styles ***/
+#dashboard-container { margin-left: 40px; margin-right: 40px; padding:0; }
+
 /*** SCOUTING-REPORTs ***/
 .ps-scouting-report input[type='checkbox'] { transform: scale(1.4, 1.4); }
 
@@ -227,6 +230,7 @@
 /*Make header size and image right */
 #header_full {
   margin: 40px;
+  margin-bottom: 10px;
 }
 
 #header_full #main-header .img-responsive {
@@ -239,6 +243,7 @@
 /* media based styles for any elements that need adjusting when screen is < 992px */
 @media (max-width: 991px) {
   #main-header {font-size: 22px;}
+  #dashboard-container { margin-left: auto; margin-right: auto; padding:inherit; }
 }
 
 @media (max-width: 1500px) {
