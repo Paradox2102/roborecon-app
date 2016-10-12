@@ -1,4 +1,19 @@
+/* ------------------------------------------------------------------
+    General Application Styles
+/* ------------------------------------------------------------------
+
 /*** main HEADER styles ***/
+/* make header size and image right */
+#header_full {
+  margin: 40px;
+  margin-bottom: 10px;
+}
+
+#header_full #main-header .img-responsive {
+  position: relative;
+  z-index: 99;
+}
+
 #main-header {
   display:flex;align-items:center;font-size:36px;height:75px;color:#000;background-color:#D59E2A;border-radius: 10px 10px 0px 0px !important;
 }
@@ -32,14 +47,7 @@
   border-style: none !important;
 }
 
-/*** SCOUTING-REPORTs ***/
-.ps-scouting-report input[type='checkbox'] { transform: scale(1.4, 1.4); }
-
-/*** MATCH INTEL styles ***/
-.ps-match-intel-team { padding-bottom: 10px; }
-.ps-match-intel-team td { padding:3px; }
-
-/*** MISC ***/
+/*** loading image used to entertain during AJAX requests ***/
 .loaderImage {
   margin: 0px; 
   padding: 0px; 
@@ -57,9 +65,37 @@
   position:absolute; top:50%; left:50%; margin-left: -75px; margin-top: -75px;
 }
 
-/*** 3rd party component overrides ***/
 
-/*** DASHBOARD table styles ***/
+/* ------------------------------------------------------------------
+    Page Specific Styles
+/* ------------------------------------------------------------------
+
+/*** INDEX/DASHBOARD styles ***/
+#dashboard-container { margin-left: 40px; margin-right: 40px; padding:0; }
+
+/*** MATCHES styles ***/
+#matches-container { margin-left: 40px; margin-right: 40px; padding:0; }
+
+#matches table { margin:0; }
+#matches > tbody > tr > td { padding: 0; }
+.matches-alliance-blue { background-color:#2295C7 !important; width: 100%; }
+.matches-alliance-blue td, .matches-alliance-red td { width: 33%; }
+.matches-alliance-red { background-color:#D44829 !important; width: 100%; }
+.matches-winning-alliance, .matches-winning-alliance a { font-weight: bold; color:yellow; }
+
+/*** SCOUTING-REPORTs ***/
+.ps-scouting-report input[type='checkbox'] { transform: scale(1.4, 1.4); }
+
+/*** MATCH INTEL styles ***/
+.ps-match-intel-team { padding-bottom: 10px; }
+.ps-match-intel-team td { padding:3px; }
+
+
+/* ------------------------------------------------------------------
+    3rd party component overrides ***/
+/* ------------------------------------------------------------------
+
+/*** datatables styles ***/
 .dataTable.fixedHeader-floating {
   background-color: #2E3338 !important;
 }
@@ -68,6 +104,7 @@
 .dataTable td {
     white-space: nowrap;
 }
+
 .table.DTFC_Cloned  {background-color: #2E3338; }
 .table.DTFC_Cloned tr { background-color: inherit !important; }
 .table.DTFC_Cloned tr.odd { background-color: #353a41 !important; }
@@ -109,20 +146,10 @@
     content: "\f161";
 }
 
-
-#matches table { margin:0; }
-#matches > tbody > tr > td { padding: 0; }
-.matches-alliance-blue { background-color:#2295C7 !important; width: 100%; }
-.matches-alliance-blue td, .matches-alliance-red td { width: 33%; }
-.matches-alliance-red { background-color:#D44829 !important; width: 100%; }
-.matches-winning-alliance, .matches-winning-alliance a { font-weight: bold; color:yellow; }
-
-
-/* styles for bootsnips login ui */
+/*** login ui (via bootsnips) styles ***/
 @media (min-width: 768px) {
-  .omb_row-sm-offset-3 div:first-child[class*="col-"] {
-    margin-left: 25%;
-  }
+  .omb_row-sm-offset-3 div:first-child[class*="col-"] { margin-left: 25%; }
+  .omb_login .omb_forgotPwd { text-align: right; margin-top:10px; }
 }
 
 .omb_login .omb_authTitle {
@@ -142,7 +169,6 @@
 .omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
 .omb_login .omb_socialButtons .omb_btn-google {background: #c32f10;}
 .omb_login .omb_socialButtons .omb_btn-github {background: #fff; color: #000; }
-
 
 .omb_login .omb_loginOr {
   position: relative;
@@ -177,13 +203,7 @@
     color: red;
 }
 
-@media (min-width: 768px) {
-  .omb_login .omb_forgotPwd {
-    text-align: right;
-    margin-top:10px;
-  }
-}
-
+/*** circular buttons (via bootsnips) styles ***/
 .btn-circle {
   width: 30px;
   height: 30px;
@@ -224,17 +244,9 @@
   }
 
 
-/*Make header size and image right */
-#header_full {
-  margin: 40px;
-}
-
-#header_full #main-header .img-responsive {
-  position: relative;
-  z-index: 99;
-}
-
-/*** RESPONSIVE CSS ***/
+/* ------------------------------------------------------------------
+    Responsive CSS styles
+/* ------------------------------------------------------------------
 
 /* media based styles for any elements that need adjusting when screen is < 992px */
 @media (max-width: 991px) {
@@ -245,6 +257,9 @@
   #main-header {border-radius: 0px 0px 0px 0px !important;}
   #header_full {margin:0px;}
   #header_full #main-header .img-responsive { position: static; z-index: 1; }
+  
+  #dashboard-container, #matches-container { margin-left: auto; margin-right: auto; padding:inherit; }
+  
   .navbar,
   .navbar ul,
   .navbar-nav > li > a {border-radius: 0px 0px 0px 0px !important;}
