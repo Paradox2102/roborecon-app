@@ -230,8 +230,9 @@
 /* media based styles for any elements that need adjusting when screen is < 992px */
 @media (max-width: 991px) {
   #main-header {font-size: 22px;}
+}
+
+@media (max-width: 1500px) {
   #header_full {margin:0px;}
   #header_full #main-header .img-responsive { position: static; z-index: 1; }
 }
-
-
