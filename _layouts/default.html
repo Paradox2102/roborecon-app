@@ -2,8 +2,10 @@
 <html>
 {% include head.html %}
 <body>
-  {% include header.html %}
-  {% include nav.html %}
+  <div id="header_full">
+    {% include header.html %}
+    {% include nav.html %}
+  </div>
   <div id="main-body" style="padding-top:0px;padding-bottom:120px;">
     <div class="loaderImage"><div><img src="{{ site.root_url }}/images/ajax-loader.svg" alt="Loading..."></div></div>
     {{content}}
