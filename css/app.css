@@ -243,13 +243,15 @@
 /* media based styles for any elements that need adjusting when screen is < 992px */
 @media (max-width: 991px) {
   #main-header {font-size: 22px;}
-  #dashboard-container { margin-left: auto; margin-right: auto; padding:inherit; }
 }
 
 @media (max-width: 1500px) {
   #main-header {border-radius: 0px 0px 0px 0px !important;}
   #header_full {margin:0px;}
   #header_full #main-header .img-responsive { position: static; z-index: 1; }
+  
+  #dashboard-container { margin-left: auto; margin-right: auto; padding:inherit; }
+  
   .navbar,
   .navbar ul,
   .navbar-nav > li > a {border-radius: 0px 0px 0px 0px !important;}
