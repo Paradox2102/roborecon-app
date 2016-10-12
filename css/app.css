@@ -226,6 +226,7 @@
 /*Make header size and image right */
 #header_full {
   margin: 40px;
+  border-radius: 0 !important;
 }
 #header_full #main-header .img-responsive {
   position: relative;
