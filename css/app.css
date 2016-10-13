@@ -89,6 +89,7 @@
 /*** MATCH INTEL styles ***/
 .ps-match-intel-team { padding-bottom: 10px; }
 .ps-match-intel-team td { padding:3px; }
+.ps-match-intel-team .match-intel-rating-val { width: 140px; }
 
 
 /* ------------------------------------------------------------------

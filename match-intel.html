@@ -113,58 +113,104 @@ $(function() {
 
       // fetch obstacle ratings that exist for team
       var obstacleRatings = [];
-      obstacleRatings.push({ name: 'Low Bar', val: parseFloat(lowBarAccuracy), text: lowBarAccuracy + '% ( ' + lowBarMade + ' | ' + lowBarMissed + ' )' });
-      obstacleRatings.push({ name: 'Cheval De Frise', val: parseFloat(chevalAccuracy), text: chevalAccuracy + '% ( ' + chevalMade + ' | ' + chevalMissed + ' )' });
-      obstacleRatings.push({ name: 'Drawbridge', val: parseFloat(drawbridgeAccuracy), text: drawbridgeAccuracy + '% ( ' + drawbridgeMade + ' | ' + drawbridgeMissed + ' )' });
-      obstacleRatings.push({ name: 'Moat', val: parseFloat(moatAccuracy), text: moatAccuracy + '% ( ' + moatMade + ' | ' + moatMissed + ' )' });
-      obstacleRatings.push({ name: 'Portcullis', val: parseFloat(portcullisAccuracy), text: portcullisAccuracy + '% ( ' + portcullisMade + ' | ' + portcullisMissed + ' )' });
-      obstacleRatings.push({ name: 'Ramparts', val: parseFloat(rampartsAccuracy), text: rampartsAccuracy + '% ( ' + rampartsMade + ' | ' + rampartsMissed + ' )' });
-      obstacleRatings.push({ name: 'Rock Wall', val: parseFloat(rockWallAccuracy), text: rockWallAccuracy + '% ( ' + rockWallMade + ' | ' + rockWallMissed + ' )' });
-      obstacleRatings.push({ name: 'Rough Terrain', val: parseFloat(roughTerrainAccuracy), text: roughTerrainAccuracy + '% ( ' + roughTerrainMade + ' | ' + roughTerrainMissed + ' )' });
-      obstacleRatings.push({ name: 'Sally Port', val: parseFloat(sallyPortAccuracy), text: sallyPortAccuracy + '% ( ' + sallyPortMade + ' | ' + sallyPortMissed + ' )' });
+      obstacleRatings.push({ name: 'Low Bar', 
+                              attempts: parseFloat(lowBarMade + lowBarMissed), 
+                              accuracy: parseFloat(lowBarAccuracy), 
+                              val: parseFloat(lowBarMade - lowBarMissed), 
+                              text: lowBarAccuracy + '% ( ' + lowBarMade + ' | ' + lowBarMissed + ' )' });
+                              
+      obstacleRatings.push({ name: 'Cheval De Frise', 
+                              attempts: parseFloat(chevalMade + chevalMissed), 
+                              accuracy: parseFloat(chevalAccuracy), 
+                              val: parseFloat(chevalMade - chevalMissed), 
+                              text: chevalAccuracy + '% ( ' + chevalMade + ' | ' + chevalMissed + ' )' });
+                              
+      obstacleRatings.push({ name: 'Drawbridge', 
+                              attempts: parseFloat(drawbridgeMade + drawbridgeMissed), 
+                              accuracy: parseFloat(drawbridgeAccuracy), 
+                              val: parseFloat(drawbridgeMade - drawbridgeMissed), 
+                              text: drawbridgeAccuracy + '% ( ' + drawbridgeMade + ' | ' + drawbridgeMissed + ' )' });
+                              
+      obstacleRatings.push({ name: 'Moat', 
+                              attempts: parseFloat(moatMade + moatMissed), 
+                              accuracy: parseFloat(moatAccuracy), 
+                              val: parseFloat(moatMade - moatMissed), 
+                              text: moatAccuracy + '% ( ' + moatMade + ' | ' + moatMissed + ' )' });
+                              
+      obstacleRatings.push({ name: 'Portcullis', 
+                              attempts: parseFloat(portcullisMade + portcullisMissed), 
+                              accuracy: parseFloat(portcullisAccuracy),
+                              val: parseFloat(portcullisMade - portcullisMissed), 
+                              text: portcullisAccuracy + '% ( ' + portcullisMade + ' | ' + portcullisMissed + ' )' });
+                              
+      obstacleRatings.push({ name: 'Ramparts', 
+                              attempts: parseFloat(rampartsMade + rampartsMissed), 
+                              accuracy: parseFloat(rampartsAccuracy), 
+                              val: parseFloat(rampartsMade - rampartsMissed), 
+                              text: rampartsAccuracy + '% ( ' + rampartsMade + ' | ' + rampartsMissed + ' )' });
+                              
+      obstacleRatings.push({ name: 'Rock Wall', 
+                              attempts: parseFloat(rockWallMade + rockWallMissed), 
+                              accuracy: parseFloat(rockWallAccuracy), 
+                              val: parseFloat(rockWallMade - rockWallMissed), 
+                              text: rockWallAccuracy + '% ( ' + rockWallMade + ' | ' + rockWallMissed + ' )' });
+                              
+      obstacleRatings.push({ name: 'Rough Terrain', 
+                              attempts: parseFloat(roughTerrainMade + roughTerrainMissed), 
+                              accuracy: parseFloat(roughTerrainAccuracy), 
+                              val: parseFloat(roughTerrainMade - roughTerrainMissed), 
+                              text: roughTerrainAccuracy + '% ( ' + roughTerrainMade + ' | ' + roughTerrainMissed + ' )' });
+                              
+      obstacleRatings.push({ name: 'Sally Port', 
+                              attempts: parseFloat(sallyPortMade + sallyPortMissed), 
+                              accuracy: parseFloat(sallyPortAccuracy), 
+                              val: parseFloat(sallyPortMade - sallyPortMissed), 
+                              text: sallyPortAccuracy + '% ( ' + sallyPortMade + ' | ' + sallyPortMissed + ' )' });
 
       // sort obstacle ratings in asc. order (weakest to strongest)
       obstacleRatings.sort(function(a, b){ return a.val - b.val; });
 
       // get top/bottom most 3 obstacles
-      var bottom3obstacles = $.grep(obstacleRatings, function (el) { return  el.val <= 3.0; }).slice(0,3);
-      if (bottom3obstacles.length < 1) bottom3obstacles.push({ name: 'N/A', val:'' });
+      var bottom3obstacles = $.grep(obstacleRatings, function (el) { return  el.attempts != 0 && el.accuracy < 70; }).slice(0,3);
+      if (bottom3obstacles.length < 1) bottom3obstacles.push({ name: 'N/A', text:'' });
 
-      var top3obstacles = $.grep(obstacleRatings, function (el) { return  el.val >= 3.5; }).slice(-3).reverse();
-      if (top3obstacles.length < 1) top3obstacles.push({ name: 'N/A', val:'' });
 
+      var top3obstacles = $.grep(obstacleRatings, function (el) { return  el.attempts != 0 && el.accuracy >= 70; }).slice(-3).reverse();
+      if (top3obstacles.length < 1) top3obstacles.push({ name: 'N/A', text:'' });
+
+      
       var $el = $('#' + k);
       $el
         .append('<h4>Team: ' + v.team_key.replace(/frc/i, '') + '</h4>')
-        .append('<p class="pull-left" style="margin:0px 15px 5px 0px;">OPRS: <span class="label label-default" style="font-size:14px;">' + oprs + '</span></p>')
-        .append('<p class="pull-left" style="margin:0px 15px 5px 0px;">CCWMS: <span class="label label-default" style="font-size:14px;">' + ccwms + '</span></p>')
-        .append('<p class="pull-left" style="margin:0px 15px 5px 0px;">Avg.: <span class="label label-default" style="font-size:14px;">' + avgTotal + '</span></p>');
+        .append('<p class="pull-left" style="margin:0px 10px 5px 0px;">OPRS: <span class="label label-default" style="font-size:14px;">' + oprs + '</span></p>')
+        .append('<p class="pull-left" style="margin:0px 10px 5px 0px;">CCWMS: <span class="label label-default" style="font-size:14px;">' + ccwms + '</span></p>')
+        .append('<p class="pull-left" style="margin:0px 10px 5px 0px;">Avg.: <span class="label label-default" style="font-size:14px;">' + avgTotal + '</span></p>');
         
-      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">TEAM STATS</p>');
-      $el.append('<table style="width:100%;">' + 
-          '<tr><td>Robot Stability:</td><td class="match-intel-rating-val">' + (avgStabilityRating === -1 ? 'N/A' : avgStabilityRating) + '</td></tr>' +
-          '<tr><td>High Goal Accuracy:</td><td class="match-intel-rating-val">' + highGoalAccuracy + '% ( ' + highGoalsMade + ' | ' + highGoalsMissed + ' )</td></tr>' +
-          '<tr><td>Low Goal Accuracy:</td><td class="match-intel-rating-val">' + lowGoalAccuracy + '% ( ' + lowGoalsMade + ' | ' + lowGoalsMissed + ' )</td></tr>' +
-          '<tr><td>Scale Accuracy:</td><td class="match-intel-rating-val">' + towerScaleAccuracy + '% ( ' + towerScaleMade + ' | ' + towerScaleMissed + ' )</td></tr>' +
-          '</table>');
-          
-      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">MATCH STATS</p>');
+      $el.append('<p style="clear:both;text-align:center;margin:5px 0px 5px; 0px;">MATCH STATS</p>');
       $el.append('<table style="width:100%;">' + 
         '<tr><td>Avg. High Goals:</td><td>' + avgHighGoals + '</td></tr>' +
         '<tr><td>Avg. Low Goals:</td><td>' + avgLowGoals + '</td></tr>' +
         '<tr><td>Avg. Crossing Points:</td><td>' + avgCrossing + '</td></tr>' +
         '<tr><td>Avg. Challenge/Scale Points:</td><td>' + avgChallenge + '</td></tr>' +
         '</table>');
+        
+      $el.append('<p style="clear:both; text-align:center;margin:5px 0px 5px; 0px;">TEAM STATS</p>');
+      $el.append('<table style="width:100%;">' + 
+          '<tr><td>Robot Stability:</td><td>' + (avgStabilityRating === -1 ? 'N/A' : avgStabilityRating) + '</td></tr>' +
+          '<tr><td>High Goal Accuracy:</td><td class="match-intel-rating-val" data-rating-accuracy="' + highGoalAccuracy + '">' + highGoalAccuracy + '% ( ' + highGoalsMade + ' | ' + highGoalsMissed + ' )</td></tr>' +
+          '<tr><td>Low Goal Accuracy:</td><td class="match-intel-rating-val" data-rating-accuracy="' + lowGoalAccuracy + '">' + lowGoalAccuracy + '% ( ' + lowGoalsMade + ' | ' + lowGoalsMissed + ' )</td></tr>' +
+          '<tr><td>Scale Accuracy:</td><td class="match-intel-rating-val" data-rating-accuracy="' + towerScaleAccuracy + '">' + towerScaleAccuracy + '% ( ' + towerScaleMade + ' | ' + towerScaleMissed + ' )</td></tr>' +
+          '</table>');
 
       var $weakTbl = $('<table style="width:100%;">');
       $.each(bottom3obstacles, function (i, e) {
-        $weakTbl.append('<tr><td>' + e.name + '</td><td class="match-intel-rating-val">' + e.text + '</td></tr>');
+        $weakTbl.append('<tr><td>' + e.name + ':</td><td class="match-intel-rating-val" data-rating-accuracy="' + e.accuracy + '">' + e.text + '</td></tr>');
       });
       $weakTbl.append('</table>');
 
       var $strengthTbl = $('<table style="width:100%;">');
       $.each(top3obstacles, function (i,e) {
-        $strengthTbl.append('<tr><td>' + e.name + '</td><td class="match-intel-rating-val">' + e.text + '</td></tr>');
+        $strengthTbl.append('<tr><td>' + e.name + ':</td><td class="match-intel-rating-val" data-rating-accuracy="' + e.accuracy + '">' + e.text + '</td></tr>');
       });
       $strengthTbl.append('</table>');
 
@@ -176,8 +222,8 @@ $(function() {
     });
     
     // stylize ratings (< 3 then red and >=4 is green)
-    $('td.match-intel-rating-val').filter(function(el){ return parseFloat($(this).text()) > 4.0; }).css('color', '#6EFF74');
-    $('td.match-intel-rating-val').filter(function(el){ return parseFloat($(this).text()) <= 3.0; }).css('color', '#FF0000');
+    $('td.match-intel-rating-val').filter(function(el){ return parseFloat($(this).data('rating-accuracy')) >= 70.0; }).css('color', '#6EFF74');
+    $('td.match-intel-rating-val').filter(function(el){ return parseFloat($(this).data('rating-accuracy')) < 70.0; }).css('color', '#FF0000');
   });
 
 });
