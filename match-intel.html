@@ -54,7 +54,7 @@ $(function() {
 
       // fetch team stats (via scouting)
       // -- scoring
-      var highGoalsMade = v.hasOwnProperty('rating_scoring_high_goals_made') ? v.rating_scoring_high_goal_made.score : 0;
+      var highGoalsMade = v.hasOwnProperty('rating_scoring_high_goals_made') ? v.rating_scoring_high_goals_made.score : 0;
       var highGoalsMissed = v.hasOwnProperty('rating_scoring_high_goals_missed') ? v.rating_scoring_high_goals_missed.score : 0;
       
       var lowGoalsMade = v.hasOwnProperty('rating_scoring_low_goals_made') ? v.rating_scoring_low_goals_made.score : 0;
@@ -71,7 +71,7 @@ $(function() {
       var drawbridgeMissed = v.hasOwnProperty('rating_obstacle_drawbridge_missed') ? v.rating_obstacle_drawbridge_missed.score : 0;
       
       var lowBarMade = v.hasOwnProperty('rating_obstacle_low_bar_made') ? v.rating_obstacle_low_bar_made.score : 0;
-      var lowBarMissed = v.hasOwnProperty('rating_obstacle_low_ba_missed') ? v.rating_obstacle_low_ba_missed.score : 0;
+      var lowBarMissed = v.hasOwnProperty('rating_obstacle_low_bar_missed') ? v.rating_obstacle_low_bar_missed.score : 0;
       
       var moatMade = v.hasOwnProperty('rating_obstacle_moat_made') ? v.rating_obstacle_moat_made.score : 0;
       var moatMissed = v.hasOwnProperty('rating_obstacle_moat_missed') ? v.rating_obstacle_moat_missed.score : 0;
@@ -113,15 +113,15 @@ $(function() {
 
       // fetch obstacle ratings that exist for team
       var obstacleRatings = [];
-      obstacleRatings.push({ name: 'Low Bar', val: parseFloat(lowBarAccuracy), text: lowBarAccuracy + '% (' + lowBarMade + ' | ' + lowBarMissed + ')' });
-      obstacleRatings.push({ name: 'Cheval De Frise', val: parseFloat(chevalAccuracy), text: chevalAccuracy + '% (' + chevalMade + ' | ' + chevalMissed + ')' });
-      obstacleRatings.push({ name: 'Drawbridge', val: parseFloat(drawbridgeAccuracy), text: drawbridgeAccuracy + '% (' + drawbridgeMade + ' | ' + drawbridgeMissed + ')' });
-      obstacleRatings.push({ name: 'Moat', val: parseFloat(moatAccuracy), text: moatAccuracy + '% (' + moatMade + ' | ' + moatMissed + ')' });
-      obstacleRatings.push({ name: 'Portcullis', val: parseFloat(portcullisAccuracy), text: portcullisAccuracy + '% (' + portcullisMade + ' | ' + portcullisMissed + ')' });
-      obstacleRatings.push({ name: 'Ramparts', val: parseFloat(rampartsAccuracy), text: rampartsAccuracy + '% (' + rampartsMade + ' | ' + rampartsMissed + ')' });
-      obstacleRatings.push({ name: 'Rock Wall', val: parseFloat(rockWallAccuracy), text: rockWallAccuracy + '% (' + rockWallMade + ' | ' + rockWallMissed + ')' });
-      obstacleRatings.push({ name: 'Rough Terrain', val: parseFloat(roughTerrainAccuracy), text: roughTerrainAccuracy + '% (' + roughTerrainMade + ' | ' + roughTerrainMissed + ')' });
-      obstacleRatings.push({ name: 'Sally Port', val: parseFloat(sallyPortAccuracy), text: sallyPortAccuracy + '% (' + sallyPortMade + ' | ' + sallyPortMissed + ')' });
+      obstacleRatings.push({ name: 'Low Bar', val: parseFloat(lowBarAccuracy), text: lowBarAccuracy + '% ( ' + lowBarMade + ' | ' + lowBarMissed + ' )' });
+      obstacleRatings.push({ name: 'Cheval De Frise', val: parseFloat(chevalAccuracy), text: chevalAccuracy + '% ( ' + chevalMade + ' | ' + chevalMissed + ' )' });
+      obstacleRatings.push({ name: 'Drawbridge', val: parseFloat(drawbridgeAccuracy), text: drawbridgeAccuracy + '% ( ' + drawbridgeMade + ' | ' + drawbridgeMissed + ' )' });
+      obstacleRatings.push({ name: 'Moat', val: parseFloat(moatAccuracy), text: moatAccuracy + '% ( ' + moatMade + ' | ' + moatMissed + ' )' });
+      obstacleRatings.push({ name: 'Portcullis', val: parseFloat(portcullisAccuracy), text: portcullisAccuracy + '% ( ' + portcullisMade + ' | ' + portcullisMissed + ' )' });
+      obstacleRatings.push({ name: 'Ramparts', val: parseFloat(rampartsAccuracy), text: rampartsAccuracy + '% ( ' + rampartsMade + ' | ' + rampartsMissed + ' )' });
+      obstacleRatings.push({ name: 'Rock Wall', val: parseFloat(rockWallAccuracy), text: rockWallAccuracy + '% ( ' + rockWallMade + ' | ' + rockWallMissed + ' )' });
+      obstacleRatings.push({ name: 'Rough Terrain', val: parseFloat(roughTerrainAccuracy), text: roughTerrainAccuracy + '% ( ' + roughTerrainMade + ' | ' + roughTerrainMissed + ' )' });
+      obstacleRatings.push({ name: 'Sally Port', val: parseFloat(sallyPortAccuracy), text: sallyPortAccuracy + '% ( ' + sallyPortMade + ' | ' + sallyPortMissed + ' )' });
 
       // sort obstacle ratings in asc. order (weakest to strongest)
       obstacleRatings.sort(function(a, b){ return a.val - b.val; });
@@ -143,9 +143,9 @@ $(function() {
       $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">TEAM STATS</p>');
       $el.append('<table style="width:100%;">' + 
           '<tr><td>Robot Stability:</td><td class="match-intel-rating-val">' + (avgStabilityRating === -1 ? 'N/A' : avgStabilityRating) + '</td></tr>' +
-          '<tr><td>High Goal Accuracy:</td><td class="match-intel-rating-val">' + highGoalAccuracy + '% (' + highGoalsMade + ' | ' + highGoalsMissed + ')</td></tr>' +
-          '<tr><td>Low Goal Accuracy:</td><td class="match-intel-rating-val">' + lowGoalAccuracy + '% (' + lowGoalsMade + ' | ' + lowGoalsMissed + ')</td></tr>' +
-          '<tr><td>Scale Accuracy:</td><td class="match-intel-rating-val">' + towerScaleAccuracy + '% (' + towerScaleMade + ' | ' + towerScaleMissed + ')</td></tr>' +
+          '<tr><td>High Goal Accuracy:</td><td class="match-intel-rating-val">' + highGoalAccuracy + '% ( ' + highGoalsMade + ' | ' + highGoalsMissed + ' )</td></tr>' +
+          '<tr><td>Low Goal Accuracy:</td><td class="match-intel-rating-val">' + lowGoalAccuracy + '% ( ' + lowGoalsMade + ' | ' + lowGoalsMissed + ' )</td></tr>' +
+          '<tr><td>Scale Accuracy:</td><td class="match-intel-rating-val">' + towerScaleAccuracy + '% ( ' + towerScaleMade + ' | ' + towerScaleMissed + ' )</td></tr>' +
           '</table>');
           
       $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">MATCH STATS</p>');

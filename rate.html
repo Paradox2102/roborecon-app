@@ -58,7 +58,7 @@ permalink: /rate/
               <!--    </tr>-->
               <!--  </table>-->
               <div class="form-group" >
-                <label class="col-md-4 control-label" for="rating_scoring_high_goal">High Goal:</label>
+                <label class="col-md-4 control-label">High Goal:</label>
                 <div class="col-md-8">   
                     <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_scoring_high_goals_made"><i class="fa fa-plus"></i></button>
                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_high_goals_made" value="0" />
@@ -71,57 +71,35 @@ permalink: /rate/
     
 
                <div class="form-group">
-                 <label class="col-md-4 control-label" for="rating_scoring_low_goal">Low Goal:</label>
+                 <label class="col-md-4 control-label">Low Goal:</label>
                  <div class="col-md-8">   
-                     <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_scoring_low_goal_made"><i class="fa fa-plus"></i></button>
-                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_low_goal_made" value="0"/>
-                     <button type="button" class="btn btn-primary btn-circle red btn-lg js-counter-btn" data-counter-for="rating_scoring_low_goal_missed"><i class="fa fa-times"></i></button>
-                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_low_goal_missed" value="0"/>
+                     <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_scoring_low_goals_made"><i class="fa fa-plus"></i></button>
+                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_low_goals_made" value="0"/>
+                     <button type="button" class="btn btn-primary btn-circle red btn-lg js-counter-btn" data-counter-for="rating_scoring_low_goals_missed"><i class="fa fa-times"></i></button>
+                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_low_goals_missed" value="0"/>
                    </div>
                </div>
 
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_scoring_tower_climb">Tower Climb:</label>
+                <label class="col-md-4 control-label">Tower Climb:</label>
                 <div class="col-md-8">   
-                   <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_scoring_tower_climb_make"><i class="fa fa-plus"></i></button>
-                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_tower_climb_make" value ="0"/>
-                   <button type="button" class="btn btn-primary btn-circle red btn-lg js-counter-btn" data-counter-for="rating_scoring_tower_climb_miss"><i class="fa fa-times"></i></button>
-                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_tower_climb_miss" value="0"/>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_scoring_tower_capture">Tower Capture:</label>
-                <div class="col-md-8">   
-                  <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_capture" id="rating_scoring_tower_capture_1" value="1" autocomplete="off">1</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_capture" id="rating_scoring_tower_capture_2" value="2" autocomplete="off">2</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_capture" id="rating_scoring_tower_capture_3" value="3" autocomplete="off">3</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_capture" id="rating_scoring_tower_capture_4" value="4" autocomplete="off">4</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_tower_capture" id="rating_scoring_tower_capture_5" value="5" autocomplete="off">5</label>
-                  </div>
+                   <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_scoring_tower_scale_made"><i class="fa fa-plus"></i></button>
+                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_tower_scale_made" value ="0"/>
+                   <button type="button" class="btn btn-primary btn-circle red btn-lg js-counter-btn" data-counter-for="rating_scoring_tower_scale_missed"><i class="fa fa-times"></i></button>
+                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_tower_scale_missed" value="0"/>
                 </div>
               </div>
 
               <div class="col-md-12 panel panel-default">Other:</div>
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_overall">Overall:</label>
-                <div class="col-md-8">   
-                  <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall" id="rating_overall_1" value="1" autocomplete="off">1</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall" id="rating_overall_2" value="2" autocomplete="off">2</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall" id="rating_overall_3" value="3" autocomplete="off">3</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall" id="rating_overall_4" value="4" autocomplete="off">4</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall" id="rating_overall_5" value="5" autocomplete="off">5</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
                 <label class="col-md-4 control-label" for="rating_overall_robot_stability">Robot Stability:</label>
                 <div class="col-md-8">   
                   <div class="btn-group" data-toggle="buttons">
-                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_overall_robot_stability" value="0"/>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_5" value="5" autocomplete="off">5</label>
                   </div>
                 </div>
               </div>
@@ -132,19 +110,19 @@ permalink: /rate/
               <div class="col-md-12 panel panel-default">Obstacles:</div>
 
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_obstacle_cheval_de_frise">Cheval de Frise:</label>
+                <label class="col-md-4 control-label">Cheval de Frise:</label>
                 <div class="col-md-8">   
-                   <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_scoring_cheval_de_frise"><i class="fa fa-plus"></i></button>
-                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_cheval_de_frise" value ="0"/>
-                   <button type="button" class="btn btn-primary btn-circle red btn-lg js-counter-btn" data-counter-for="rating_scoring_cheval_de_frise_miss"><i class="fa fa-times"></i></button>
-                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_cheval_de_frise_miss" value="0"/>
+                   <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_obstacle_cheval_de_frise_made"><i class="fa fa-plus"></i></button>
+                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_obstacle_cheval_de_frise_made" value ="0"/>
+                   <button type="button" class="btn btn-primary btn-circle red btn-lg js-counter-btn" data-counter-for="rating_obstacle_cheval_de_frise_missed"><i class="fa fa-times"></i></button>
+                   <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_obstacle_cheval_de_frise_missed" value="0"/>
           
 
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_obstacle_drawbridge">Drawbridge:</label>
+                <label class="col-md-4 control-label">Drawbridge:</label>
                 <div class="col-md-8">   
                    <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_obstacle_drawbridge_made"><i class="fa fa-plus"></i></button>
                    <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_obstacle_drawbridge_made" value="0">
@@ -154,9 +132,9 @@ permalink: /rate/
               </div>
 
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_obstacle_low_bar">Low Bar:</label>
+                <label class="col-md-4 control-label">Low Bar:</label>
                 <div class="col-md-8">   
-                   <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_obstacle_low__bar_made"><i class="fa fa-plus"></i></button>
+                   <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_obstacle_low_bar_made"><i class="fa fa-plus"></i></button>
                    <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_obstacle_low_bar_made" value="0">
                    <button type="button" class="btn btn-primary btn-circle red btn-lg js-counter-btn" data-counter-for="rating_obstacle_low_bar_missed"><i class="fa fa-times"></i></button>
                    <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_obstacle_low_bar_missed" value="0">
@@ -164,7 +142,7 @@ permalink: /rate/
               </div>
 
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_obstacle_moat">Moat:</label>
+                <label class="col-md-4 control-label">Moat:</label>
                 <div class="col-md-8">   
                     <button type="button" class="btn btn-defualt btn-circle green btn-lg js-counter-btn" data-counter-for="rating_obstacle_moat_made"><i class="fa fa-plus"></i></button>
                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_obstacle_moat_made" value="0">
@@ -174,7 +152,7 @@ permalink: /rate/
               </div>
 
                <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_obstacle_portcullis">Portcullis:</label>
+                <label class="col-md-4 control-label">Portcullis:</label>
                 <div class="col-md-8">   
                     <button type="button" class="btn btn-defualt btn-circle green btn-lg js-counter-btn" data-counter-for="rating_obstacle_portcullis_made"><i class="fa fa-plus"></i></button>
                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_obstacle_portcullis_made" value="0">
@@ -184,7 +162,7 @@ permalink: /rate/
               </div>
 
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_obstacle_ramparts">Ramparts:</label>
+                <label class="col-md-4 control-label">Ramparts:</label>
                 <div class="col-md-8">  
                     <button type="button" class="btn btn-defualt btn-circle green btn-lg js-counter-btn" data-counter-for="rating_obstacle_ramparts_made"><i class="fa fa-plus"></i></button>
                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_obstacle_ramparts_made" value="0">
@@ -194,7 +172,7 @@ permalink: /rate/
               </div>
 
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_obstacle_rock_wall">Rock Wall:</label>
+                <label class="col-md-4 control-label">Rock Wall:</label>
                  <div class="col-md-8">   
                     <button type="button" class="btn btn-defualt btn-circle green btn-lg js-counter-btn" data-counter-for="rating_obstacle_rock_wall_made"><i class="fa fa-plus"></i></button>
                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_obstacle_rock_wall_made" value="0">
@@ -204,7 +182,7 @@ permalink: /rate/
               </div>
 
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_obstacle_rough_terrain">Rough Terrain:</label>
+                <label class="col-md-4 control-label">Rough Terrain:</label>
                   <div class="col-md-8">   
                     <button type="button" class="btn btn-defualt btn-circle green btn-lg js-counter-btn" data-counter-for="rating_obstacle_rough_terrain_made"><i class="fa fa-plus"></i></button>
                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_obstacle_rough_terrain_made" value="0">
@@ -214,7 +192,7 @@ permalink: /rate/
               </div>
 
               <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_obstacle_sally_port">Sally Port:</label>
+                <label class="col-md-4 control-label" >Sally Port:</label>
                    <div class="col-md-8">   
                     <button type="button" class="btn btn-defualt btn-circle green btn-lg js-counter-btn" data-counter-for="rating_obstacle_sally_port_made"><i class="fa fa-plus"></i></button>
                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_obstacle_sally_port_made" value="0">
@@ -262,7 +240,7 @@ $(function() {
       }
       else {
         AppUtility.showSuccessMsg("Scouting Report Saved!", '', function() { 
-          setTimeout("location.href = '{{ site.root_url }}'", 3000);
+          setTimeout("location.href = '{{ site.root_url }}/matches'", 3000);
         } );
       }
     });
