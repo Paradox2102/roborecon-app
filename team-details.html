@@ -174,87 +174,141 @@ $(function() {
 
       // get scouting data for selected team
       //$.getJSON("{{ site.root_url }}/test-data/sample-scouting-reports-by-team.json", function(data) {
-      var scores = {};
-
-      // 1. aggregate results by HOUR
+      var categories = [
+        'High Goal', 'Low Goal', 'Tower Climb', 
+        'Cheval', 'Drawbridge', 'Low Bar', 'Moat', 'Portcullis', 'Ramparts', 'Rock Wall', 'Rough Terrain', 'Sally Port'
+      ];
+      
+      var missedData = [0,0,0,0,0,0,0,0,0,0,0,0];
+      var madeData = [0,0,0,0,0,0,0,0,0,0,0,0];
+        
       $.each(data, function(rptKey, r) {
-        // get timestamp by whole hour, this will be the key for the x-axis
-        var timeKey = new Date(moment(new Date(r.scored_at)).format('MM/DD/YYYY, h:00:00 a')).getTime().toString();
-
-        // add timeKey if does not exist and set up ratings to visualize
-        if(!(timeKey in scores)) {
-          scores[timeKey] = { 
-            team_key: r.team_id,
-            timeKey: timeKey,
-            rating_scoring_high_goal: { score: 0, count: 0, display_order: 4}, 
-            rating_scoring_low_goal: { score: 0, count: 0, display_order: 5}, 
-            rating_scoring_tower_climb: { score: 0, count: 0, display_order: 6}, 
-            rating_scoring_tower_capture: { score: 0, count: 0, display_order: 7}, 
-            rating_overall: { score: 0, count: 0, display_order: 1}, 
-            rating_overall_robot_stability: { score: 0, count: 0, display_order: 2}, 
-            rating_overall_alliance_coop: { score: 0, count: 0, display_order: 3}, 
-            rating_obstacle_cheval_de_frise: { score: 0, count: 0, display_order: 8}, 
-            rating_obstacle_drawbridge: { score: 0, count: 0, display_order: 9}, 
-            rating_obstacle_low_bar: { score: 0, count: 0, display_order: 10}, 
-            rating_obstacle_moat: { score: 0, count: 0, display_order: 11}, 
-            rating_obstacle_portcullis: { score: 0, count: 0, display_order: 12}, 
-            rating_obstacle_ramparts: { score: 0, count: 0, display_order: 13}, 
-            rating_obstacle_rock_wall: { score: 0, count: 0, display_order: 14}, 
-            rating_obstacle_rough_terrain: { score: 0, count: 0, display_order: 15}, 
-            rating_obstacle_sally_port: { score: 0, count: 0, display_order: 16}
-          };
-        } 
-
-        // iterate thru ratings and aggregate any visualizable ratings defined above
-        $.each(r, function(scoutingKey, scoutingVal) {
-          if(scoutingKey.startsWith('rating') && (scoutingKey in scores[timeKey])) {
-            scores[timeKey][scoutingKey].score = scores[timeKey][scoutingKey].score += (parseInt(scoutingVal) || 0);
-            scores[timeKey][scoutingKey].count = scores[timeKey][scoutingKey].count += ( scoutingVal ? 1 : 0 );
-          }
-        });
+        madeData[0] += parseFloat(r.rating_scoring_high_goals_made) || 0;
+        missedData[0] += parseFloat(r.rating_scoring_high_goals_missed) || 0;
+        
+        madeData[1] += parseFloat(r.rating_scoring_low_goals_made) || 0;
+        missedData[1] += parseFloat(r.rating_scoring_low_goals_missed) || 0;
+        
+        madeData[2] += parseFloat(r.rating_scoring_tower_scale_made) || 0;
+        missedData[2] += parseFloat(r.rating_scoring_tower_scale_missed) || 0;
+        
+        madeData[3] += parseFloat(r.rating_obstacle_cheval_de_frise_made) || 0;
+        missedData[3] += parseFloat(r.rating_obstacle_cheval_de_frise_missed) || 0;
+        
+        madeData[4] += parseFloat(r.rating_obstacle_drawbridge_made) || 0;
+        missedData[4] += parseFloat(r.rating_obstacle_drawbridge_missed) || 0;
+        
+        madeData[5] += parseFloat(r.rating_obstacle_low_bar_made) || 0;
+        missedData[5] += parseFloat(r.rating_obstacle_low_bar_missed) || 0;
+        
+        madeData[6] += parseFloat(r.rating_obstacle_moat_made) || 0;
+        missedData[6] += parseFloat(r.rating_obstacle_moat_missed) || 0;
+        
+        madeData[7] += parseFloat(r.rating_obstacle_portcullis_made) || 0;
+        missedData[7] += parseFloat(r.rating_obstacle_portcullis_missed) || 0;
+        
+        madeData[8] += parseFloat(r.rating_obstacle_ramparts_made) || 0;
+        missedData[8] += parseFloat(r.rating_obstacle_ramparts_missed) || 0;
+        
+        madeData[9] += parseFloat(r.rating_obstacle_rock_wall_made) || 0;
+        missedData[9] += parseFloat(r.rating_obstacle_rock_wall_missed) || 0;
+        
+        madeData[10] += parseFloat(r.rating_obstacle_rough_terrain_made) || 0;
+        missedData[10] += parseFloat(r.rating_obstacle_rough_terrain_missed) || 0;
+        
+        madeData[11] += parseFloat(r.rating_obstacle_sally_port_made) || 0;
+        missedData[11] += parseFloat(r.rating_obstacle_sally_port_missed) || 0;
       });
-
-      // 2. sort by date asc
-      var scoresByTimeInterval = $.map(scores, function(v, k) { return v ;});
-
-      scoresByTimeInterval.sort(function(a, b) {
-        return parseFloat(a.timeKey) - parseFloat(b.timeKey);
-      });
-
-      // 3. build arrays for x-axis (time) and y-axis (avg. rating)
-      var reportTimes = [];
-      var scoreAggregations = {};
-
-      $.each(scoresByTimeInterval, function(index, s) {
-        // add timeKey to x-axis array
-        reportTimes.push(s.timeKey);
-
-        // add score aggregation to y-axis array
-        $.each(s, function(k, v) {
-          if(!k.startsWith('rating')) return;
-
-          // Connor wanted this and he always gets what he wants
-          var visibleByDefault = true; //k.startsWith('rating_overall') || k.startsWith('rating_scoring');
-
-          if(!(k in scoreAggregations)) scoreAggregations[k] = { name: k, data: [], display_order: v.display_order, visible:visibleByDefault };
-
-          scoreAggregations[k].data.push(v.count == 0 ? null : v.score/v.count);
-        })
-      })
-
-      // 4. sort series by scoring display_order
-      var series = $.map(scoreAggregations, function(v, k) { return v; });
-      series.sort(function(a, b) {
-        return parseFloat(a.display_order) - parseFloat(b.display_order);
-      });
-
-      // console.log(reportTimes);
-      // console.log(series);
-
-      // 5. update chart
-      scoutingVizOptions.xAxis.categories = reportTimes;
+      
+      var series = [ { name: 'Made', data: madeData },{ name: 'Missed', data: missedData } ];
+      
+      scoutingVizOptions.xAxis.categories = categories;
       scoutingVizOptions.series = series;
       var chart = new Highcharts.Chart(scoutingVizOptions);
+      
+      
+      
+      // var scores = {};
+
+      // // 1. aggregate results by HOUR
+      // $.each(data, function(rptKey, r) {
+      //   // get timestamp by whole hour, this will be the key for the x-axis
+      //   var timeKey = new Date(moment(new Date(r.scored_at)).format('MM/DD/YYYY, h:00:00 a')).getTime().toString();
+
+      //   // add timeKey if does not exist and set up ratings to visualize
+      //   if(!(timeKey in scores)) {
+      //     scores[timeKey] = { 
+      //       team_key: r.team_id,
+      //       timeKey: timeKey,
+      //       rating_scoring_high_goal: { score: 0, count: 0, display_order: 4}, 
+      //       rating_scoring_low_goal: { score: 0, count: 0, display_order: 5}, 
+      //       rating_scoring_tower_climb: { score: 0, count: 0, display_order: 6}, 
+      //       rating_scoring_tower_capture: { score: 0, count: 0, display_order: 7}, 
+      //       rating_overall: { score: 0, count: 0, display_order: 1}, 
+      //       rating_overall_robot_stability: { score: 0, count: 0, display_order: 2}, 
+      //       rating_overall_alliance_coop: { score: 0, count: 0, display_order: 3}, 
+      //       rating_obstacle_cheval_de_frise: { score: 0, count: 0, display_order: 8}, 
+      //       rating_obstacle_drawbridge: { score: 0, count: 0, display_order: 9}, 
+      //       rating_obstacle_low_bar: { score: 0, count: 0, display_order: 10}, 
+      //       rating_obstacle_moat: { score: 0, count: 0, display_order: 11}, 
+      //       rating_obstacle_portcullis: { score: 0, count: 0, display_order: 12}, 
+      //       rating_obstacle_ramparts: { score: 0, count: 0, display_order: 13}, 
+      //       rating_obstacle_rock_wall: { score: 0, count: 0, display_order: 14}, 
+      //       rating_obstacle_rough_terrain: { score: 0, count: 0, display_order: 15}, 
+      //       rating_obstacle_sally_port: { score: 0, count: 0, display_order: 16}
+      //     };
+      //   } 
+
+      //   // iterate thru ratings and aggregate any visualizable ratings defined above
+      //   $.each(r, function(scoutingKey, scoutingVal) {
+      //     if(scoutingKey.startsWith('rating') && (scoutingKey in scores[timeKey])) {
+      //       scores[timeKey][scoutingKey].score = scores[timeKey][scoutingKey].score += (parseInt(scoutingVal) || 0);
+      //       scores[timeKey][scoutingKey].count = scores[timeKey][scoutingKey].count += ( scoutingVal ? 1 : 0 );
+      //     }
+      //   });
+      // });
+
+      // // 2. sort by date asc
+      // var scoresByTimeInterval = $.map(scores, function(v, k) { return v ;});
+
+      // scoresByTimeInterval.sort(function(a, b) {
+      //   return parseFloat(a.timeKey) - parseFloat(b.timeKey);
+      // });
+
+      // // 3. build arrays for x-axis (time) and y-axis (avg. rating)
+      // var reportTimes = [];
+      // var scoreAggregations = {};
+
+      // $.each(scoresByTimeInterval, function(index, s) {
+      //   // add timeKey to x-axis array
+      //   reportTimes.push(s.timeKey);
+
+      //   // add score aggregation to y-axis array
+      //   $.each(s, function(k, v) {
+      //     if(!k.startsWith('rating')) return;
+
+      //     // Connor wanted this and he always gets what he wants
+      //     var visibleByDefault = true; //k.startsWith('rating_overall') || k.startsWith('rating_scoring');
+
+      //     if(!(k in scoreAggregations)) scoreAggregations[k] = { name: k, data: [], display_order: v.display_order, visible:visibleByDefault };
+
+      //     scoreAggregations[k].data.push(v.count == 0 ? null : v.score/v.count);
+      //   })
+      // })
+
+      // // 4. sort series by scoring display_order
+      // var series = $.map(scoreAggregations, function(v, k) { return v; });
+      // series.sort(function(a, b) {
+      //   return parseFloat(a.display_order) - parseFloat(b.display_order);
+      // });
+
+      // // console.log(reportTimes);
+      // // console.log(series);
+
+      // // 5. update chart
+      // scoutingVizOptions.xAxis.categories = reportTimes;
+      // scoutingVizOptions.series = series;
+      // var chart = new Highcharts.Chart(scoutingVizOptions);
 
     });
   });
@@ -304,37 +358,48 @@ $(function() {
   // 2. configure scouting reports visualization
   var scoutingVizOptions = {
     chart: {
-      renderTo: 'scouting-viz', type: 'line'
+      renderTo: 'scouting-viz', type: 'column'
     },
     title: {
-      text: 'Scouting Report Rating Analysis', x: -20 //center
+      text: 'Scouting Report Scoring Analysis'
     },
     xAxis: {
-      categories: [],
-      labels: {
-        formatter: function() { 
-          return moment(new Date(parseFloat(this.value))).format('MMM Do hh:mm[-]hh[:59] a');
+      categories: []
+    },
+    yAxis: {
+      title: { text: 'Counts' },
+      min: 0,
+      stackLabels: {
+        enabled: true,
+        style: {
+          fontWeight: 'bold',
+          color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
         }
       }
     },
-    yAxis: {
-      title: { text: 'Rating' },
-      min: 1,
-      max: 5,
-      plotLines: [{ value: 0, width: 1, color: '#808080' }]
-    },
     legend: {
-      layout: 'vertical',
       align: 'right',
-      verticalAlign: 'middle',
-      borderWidth: 0,
-      labelFormatter: function() { return this.name.replace('rating_', '').replace(/_/g, ' ');}
+      x: -30,
+      verticalAlign: 'top',
+      y: 25,
+      floating: true,
+      backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+      borderColor: '#CCC',
+      borderWidth: 1,
+      shadow: false
     },
-    plotOptions: { 
-      series: { connectNulls: true } 
+    tooltip: {
+      headerFormat: '<b>{point.x}</b><br/>',
+      pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
     },
-    tooltip: { 
-      formatter: function() { return this.series.name.replace('rating_', '').replace(/_/g, ' ') + ' avg.: ' + this.y;}
+    plotOptions: {
+      column: {
+        stacking: 'normal',
+        dataLabels: {
+          enabled: true,
+          color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+        }
+      }
     },
     series: []
   };
