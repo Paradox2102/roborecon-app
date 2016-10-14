@@ -340,10 +340,12 @@ $(function() {
       plotLines: [{ value: 0, width: 1, color: '#808080' }]
     },
     legend: {
-      layout: 'vertical',
-      align: 'right',
-      verticalAlign: 'middle',
+      //layout: 'vertical',
+      align: 'left',
+      verticalAlign: 'bottom',
       borderWidth: 0,
+      x: 0,
+      y: 0,
       labelFormatter: function() { return this.name.replace('rating_', '').replace(/_/g, ' ');}
     },
     plotOptions: { 
