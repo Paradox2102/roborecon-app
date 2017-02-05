@@ -24,9 +24,9 @@ header:
 ### Scouting System Settings ###
 ################################
 # These are the most imporant settings, choose carefully
-
+encoding: utf-8
 scout:
-    firebase: https://brilliant-torch-6506.firebaseio.com/ # address of firebase server to connect to
+    firebase: https://paradox-scout-dc256.firebaseio.com/ # address of firebase server to connect to
 
 ### Other Jekyll###
 ###################

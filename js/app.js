@@ -5,7 +5,6 @@
 var ParadoxScout = ParadoxScout || {};
 
 ParadoxScout.start = function(next) {
-  
   // the 4 digit year functions as they competition key!
   ParadoxScout.CompetitionYear = new Date().getFullYear();
 
@@ -39,15 +38,26 @@ ParadoxScout.start = function(next) {
     "hideMethod": "fadeOut"
   };
 
-  // if user is not authenticated, invalidate cache and route to /login as needed
-  if (!ParadoxScout.DataService.isAuthenticated()) {
-    AppUtility.invalidateCache();
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+    } else {
+      // No user is signed in.
+      AppUtility.invalidateCache();
+      if (location.pathname.indexOf('/login') < 0) return (location.href = siteUrl + '/login');
+    }
+    personalize(user);
+  });
 
-    if (location.pathname.indexOf('/login') < 0) return (location.href = siteUrl + '/login');
-  }
+  // if user is not authenticated, invalidate cache and route to /login as needed
+  // if (!ParadoxScout.DataService.isAuthenticated()) {
+  //   AppUtility.invalidateCache();
+
+  //   if (location.pathname.indexOf('/login') < 0) return (location.href = siteUrl + '/login');
+  // }
 
   // update ui with current user info
-  ParadoxScout.DataService.getCurrentUser(personalize);
+  //ParadoxScout.DataService.getCurrentUser(personalize);
 };
 
 // ----------------------------------------------------------------------
@@ -423,7 +433,7 @@ var personalize = function(user) {
   var ViewModel = {
     isLoggedIn: user ? true : false,
     name: ko.computed(function() {
-      return user ? user.name : '';
+      return user ? user.displayName : '';
     }),
     login_or_out : function() {
       if (user) {
@@ -438,6 +448,7 @@ var personalize = function(user) {
       return user ? 'Logout' : 'Login';
     })
   };
+
 
   ko.applyBindings(ViewModel);
 };

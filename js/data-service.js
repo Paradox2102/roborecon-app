@@ -1,6 +1,7 @@
 ---
 ---
 'use strict';
+
 // will create app namespace *unless* it already exists because another .js
 // file using the same namespace was loaded first
 var ParadoxScout = ParadoxScout || {};
@@ -8,38 +9,51 @@ var ParadoxScout = ParadoxScout || {};
 ParadoxScout.DataService = (function() {
   // private attributes
   var dbRootUrl = '{{ site.scout.firebase }}',
-  dbRef = new Firebase(dbRootUrl),   // init firebase db
+  // dbRef = new Firebase(dbRootUrl),   // init firebase db
+  // Initialize Firebase
+  config = {
+    apiKey: "AIzaSyDleJPx9RQChKn4DlLV9nXqMNafP7BvhG0",
+    authDomain: "paradox-scout-dc256.firebaseapp.com",
+    databaseURL: "https://paradox-scout-dc256.firebaseio.com",
+    storageBucket: "paradox-scout-dc256.appspot.com",
+    messagingSenderId: "777517430963"
+  },
+  dbRef = firebase.initializeApp(config).database().ref(),
   dbUsersRef = dbRef.child('users'), 
 
   // private methods
   // ----------------------------------------------------------------------
   // REGISTRATION, LOGIN/LOGOUT, personalization methods
   // ----------------------------------------------------------------------
-  loginWithOAuth = function(provider, next) {
+  loginWithOAuth = function(provider_name, next) {
     // upsert user
+    var user = null;
     var user_key = null;    
-    var authData = null;
+    var provider = null;
 
     // IMPORTANT - must request user e-mail differently for each oauth provider to
     // ensure it is sent
-    var options = {};
-    options.remember = 'sessionOnly';
-
-    if (provider === 'google') options.scope = 'email';
-    if (provider === 'github') options.scope = 'user';
+    if(provider_name === 'google') {
+      provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('https://www.googleapis.com/auth/userinfo.email')
+    }
+    else if(provider_name === 'github')
+    {
+      provider = new firebase.auth.GithubAuthProvider();
+      provider.addScope('user')
+    }
 
     // dummy function() necessary as callback in order to specify oauth options
-    dbRef.authWithOAuthPopup(provider, function(){}, options)
+    firebase.auth().signInWithPopup(provider)
       // 1. capture authentication info and validate email is whitelisted
-      .then(function(auth) {
-        // email is required!
-        if (!auth || !auth[auth.provider].email) {
+      .then(function(result) {
+        user = result.user;
+        if (user === null | user.email === null) {
           return new Error('No e-mail address specified!');
         }
-        // clean the userKey and get auth object
-        user_key = cleanUserKey(auth[provider].email);
-        authData = auth;
 
+        // clean the userKey and get auth object
+        user_key = cleanUserKey(user.email);
         return dbRef.child('user_whitelist/' + user_key).once('value');
       })
       // 2. see if whitelisted user exists
@@ -49,9 +63,9 @@ ParadoxScout.DataService = (function() {
       // 3. insert new users else update the given provider info for existing user
       .then(function(u) {
         // get user info
-        var name = authData[authData.provider].displayName || authData[authData.provider].email;
-        var email = authData[authData.provider].email;
-        var user_auth = {}; user_auth[authData.provider] = authData.uid;
+        var name = user.displayName || user.email;
+        var email = user.email;
+        var user_auth = {}; user_auth[provider_name] = user.uid;
 
         if (!u.exists()) {
           // 3a. add new user
@@ -60,13 +74,13 @@ ParadoxScout.DataService = (function() {
         else {
           // 3b. update existing user (both profile and authentications)
           dbUsersRef.child(user_key).update({ name: name, email: email });
-          dbUsersRef.child(user_key + '/user_authentications/' + authData.provider).set(authData.uid);
+          dbUsersRef.child(user_key + '/user_authentications/' + provider_name).set(user.uid);
           return;
         }
       })
       // 4. set the auth information under the user_authentications node as well
       .then(function() {
-        dbRef.child('user_authentications/' + authData.uid).set({ user_id: user_key }, next);
+        dbRef.child('user_authentications/' + user.uid).set({ user_id: user_key }, next);
       })
       .catch(function(error) {
         // destroy auth token
@@ -87,38 +101,34 @@ ParadoxScout.DataService = (function() {
   },
 
   logout = function() {
-    dbRef.unauth();
+    firebase.auth().signOut();
   },
 
   isAuthenticated = function() {
-    var auth = dbRef.getAuth();
-    return auth !== null && auth[auth.provider].email !== null;
+    var user = firebase.auth().currentUser;
+    return user !== null && user.email !== null;
   },
-
-  // init firebase authenticatin events; useful in SPAs
-  // dbRef.onAuth(function(authData) {});
-  // dbRef.offAuth(function(authData) {});
 
   getCurrentUser = function(next) {
     // get auth and provider data
-    var authData = dbRef.getAuth();
-    var provider = authData === null ? null : authData.provider;
+    var user = firebase.auth().currentUser; //dbRef.getAuth();
+    var providerId = user === null ? null : authData.providerId;
 
-    if (authData && authData[authData.provider].email) {
+    if (user && user.email) {
       // try getting from cache first
-      if (authData.provider === 'github' || authData.provider === 'google') {
+      if (providerId === 'github.com' || providerId === 'google.com') {
         next({ 
-          key: cleanUserKey(authData[authData.provider].email), 
-          email: authData[authData.provider].email, 
-          name: authData[authData.provider].displayName || authData[authData.provider].email
+          key: cleanUserKey(user.email), 
+          email: user.email, 
+          name: user.displayName || user.email
         });
       }
       else {
-        var user_key = cleanUserKey(authData[provider].email);
+        var user_key = cleanUserKey(user.email);
         dbRef.child('users').child(user_key).once('value', function(userSnapshot) {
-          var user = userSnapshot.val();
-          user.key = userSnapshot.key();
-          next(user);
+          var u = userSnapshot.val();
+          u.key = userSnapshot.key;
+          next(u);
         });
       }
     }
@@ -238,9 +248,8 @@ ParadoxScout.DataService = (function() {
         // use forEach to ensure order by time
         matchDataSnapshot.forEach(function(matchSnapshot) {
           var match = matchSnapshot.val();
-          var matchKey = matchSnapshot.key();
+          var matchKey = matchSnapshot.key;
           
-          // console.log(match.time + ' ' + matchSnapshot.key());
           matches.push({ 
             match_key: matchKey,  
             match_comp_level: match.comp_level,
@@ -496,3 +505,4 @@ ParadoxScout.DataService = (function() {
   };
 
 })();
+
