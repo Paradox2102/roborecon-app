@@ -17,7 +17,7 @@ root_url: "http://sdarobotics.org/paradox_scout" # the base hostname & protocol 
 # Customise to how you want
 header:
     title: Team Paradox 2102 # the bold, bigger main text
-    accent: Scouting System # the smaller, but informative accenting text
+    accent: 2017 Scouting System # the smaller, but informative accenting text
     logo: "/images/paradox_logo_2016.png" # FULL path to image in the header 150x150 works well
 
 
