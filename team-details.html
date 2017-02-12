@@ -73,13 +73,13 @@ $(function() {
       // if nothing returned
       if(!teamScoresSnapshot.exists()) return;
 
-      $('#details-link').attr('href', '{{ site.root_url }}/scouting-reports?team_id=' + selectedVal);
+      $('#details-link').attr('href', '{{ site.url }}/scouting-reports?team_id=' + selectedVal);
       $('#details-link').show();
 
       var team = teamScoresSnapshot.val();
       var data = team.scores;
 
-      //$.getJSON("{{ site.root_url }}/test-data/sample-event-scores-by-team.json", function(data) {
+      //$.getJSON("{{ site.url }}/test-data/sample-event-scores-by-team.json", function(data) {
       // add  match_key to each match score object and add to array
       var scores = $.map(data, function(v, k) {
         v.match_key = k
@@ -173,7 +173,7 @@ $(function() {
       //console.log(reports);
 
       // get scouting data for selected team
-      //$.getJSON("{{ site.root_url }}/test-data/sample-scouting-reports-by-team.json", function(data) {
+      //$.getJSON("{{ site.url }}/test-data/sample-scouting-reports-by-team.json", function(data) {
       var categories = [
         'High Goal', 'Low Goal', 'Tower Climb', 
         'Cheval', 'Drawbridge', 'Low Bar', 'Moat', 'Portcullis', 'Ramparts', 'Rock Wall', 'Rough Terrain', 'Sally Port'

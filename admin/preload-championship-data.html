@@ -34,9 +34,9 @@ permalink: /admin-championship-preload/
 //     var option = $("#events option:selected");
 //     var val = option.val();
 
-//     $.getJSON("{{ site.root_url }}/test-data/" + val, function(newtonTeams) {
+//     $.getJSON("{{ site.url }}/test-data/" + val, function(newtonTeams) {
 
-//       $.getJSON("{{ site.root_url }}/test-data/frc-champ-newton-div-match-history.json", function(teamData) {
+//       $.getJSON("{{ site.url }}/test-data/frc-champ-newton-div-match-history.json", function(teamData) {
 //         // get all the match scores by team; 1 entry per team + match
 //         var teamScores = [];
 
@@ -117,7 +117,7 @@ permalink: /admin-championship-preload/
 //     });
 
 
-//     // $.getJSON("{{ site.root_url }}/test-data/" + val, function(teamData) {
+//     // $.getJSON("{{ site.url }}/test-data/" + val, function(teamData) {
 //     //   var teams = [];
 //     //   var teamEventPromises = [];
 //     //   var teamMatchResultPromises = [];
