@@ -15,7 +15,7 @@
 }
 
 #main-header {
-  display:flex;align-items:center;font-size:36px;height:75px;color:#000;background-color:#D59E2A;border-radius: 10px 10px 0px 0px !important;
+  display:flex;align-items:center;font-size:36px;height:75px;color:#000;background-color:#FFC107;border-radius: 10px 10px 0px 0px !important;
 }
 
 /*** main NAVIGATION bar and menu styles ***/
@@ -27,7 +27,7 @@
 .navbar ul,
 .navbar-nav > li > a {
   background-image: none;
-  background-color: #D5482A !important;
+  background-color: #D32F2f !important;
   color: #fff !important;
   border-style: none !important;
   border-radius: 0px 0px 10px 10px !important;
