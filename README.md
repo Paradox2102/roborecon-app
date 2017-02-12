@@ -19,7 +19,7 @@ Paradox Scout Uses Jekyll and Firebase for easy setup.
 Make a change in your file and instantanously see your updates!
 
 #### To easyly setup an enviroment you can use the Codenvy Factory 
-https://codenvy.io/f?id=factory6evx1c9r4jkkn1d1
+https://codenvy.io/f?id=factoryhwp1rln1b26vq11k
 
 ### Docker
 Coming Soon!
