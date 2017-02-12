@@ -56,7 +56,7 @@ $(function() {
       // if nothing returned
       if(!reportSnapshot) return;
 
-      $('#details-link').attr('href', '{{ site.url }}/team-details?team_id=' + selectedVal);
+      $('#details-link').attr('href', '{{ site.baseurl }}/team-details?team_id=' + selectedVal);
       $('#details-link').show();
 
       // build <div> for report and then append

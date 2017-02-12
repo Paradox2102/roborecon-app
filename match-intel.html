@@ -181,8 +181,8 @@ $(function() {
       
       var $el = $('#' + k);
       $el
-        .append('<h4 style="float:left;"><a href="{{ site.url }}/team-details?team_id=' + v.team_key + '">Team: ' + v.team_key.replace(/frc/i, '') + '</a></h4>')
-        .append('<a style="float:left;margin-top:10px;margin-left:10px;color:#efc819;font-size:16px;" href="{{ site.url }}/rate?team_id=' + v.team_key + '"><i class="fa fa-star-o"> Rate</i></a>')
+        .append('<h4 style="float:left;"><a href="{{ site.baseurl }}/team-details?team_id=' + v.team_key + '">Team: ' + v.team_key.replace(/frc/i, '') + '</a></h4>')
+        .append('<a style="float:left;margin-top:10px;margin-left:10px;color:#efc819;font-size:16px;" href="{{ site.baseurl }}/rate?team_id=' + v.team_key + '"><i class="fa fa-star-o"> Rate</i></a>')
         .append('<p class="pull-left" style="margin:0px 10px 5px 0px;clear:both;">OPRS: <span class="label label-default" style="font-size:14px;">' + oprs + '</span></p>')
         .append('<p class="pull-left" style="margin:0px 10px 5px 0px;">CCWMS: <span class="label label-default" style="font-size:14px;">' + ccwms + '</span></p>')
         .append('<p class="pull-left" style="margin:0px 10px 5px 0px;">Avg.: <span class="label label-default" style="font-size:14px;">' + avgTotal + '</span></p>');
