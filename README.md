@@ -24,6 +24,12 @@ https://codenvy.io/f?id=factoryhwp1rln1b26vq11k
 ### Docker
 Coming Soon!
 
+
+
+### Other Usefull Stuff
+
+* (Clearing up baseurl confusion)[https://byparker.com/blog/2014/clearing-up-confusion-around-baseurl/]
+
 ### Todos
 
  - Finish Readme
