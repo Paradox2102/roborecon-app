@@ -144,7 +144,7 @@
 
 .DTFC_LeftHeadWrapper table.dataTable thead th.sorting_desc:after,
 .dataTables_scrollHeadInner table.dataTable thead th.sorting_desc:after {
-    content: "\f161";
+    content: "\f161";500
 }
 
 /*** login ui (via bootsnips) styles ***/
