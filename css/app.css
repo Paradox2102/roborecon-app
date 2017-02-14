@@ -38,6 +38,7 @@
   background-color: #B71C1C !important;
   color: #fff !important;
   border-style: none !important;
+  border-radius: 0px 0px 0px 0px !important;
 }
 
 .navbar-nav li.divider,
