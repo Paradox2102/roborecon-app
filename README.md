@@ -1,7 +1,7 @@
 # Paradox Scout
 [![Build Status](https://travis-ci.org/Paradox2102/paradox_scout.svg?branch=gh-pages)](https://travis-ci.org/Paradox2102/paradox_scout)
 
-## Paradox Scout is an Open Source FRC Scouting website.
+## Paradox Scout is an Open Source FRC Scouting website
   - Powered by [Firebase](https://firebase.google.com/)
   - Hosted on Github
   - Made with Jekyll
@@ -18,7 +18,7 @@ Want to contribute? Great!
 Paradox Scout Uses Jekyll and Firebase for easy setup.
 Make a change in your file and instantanously see your updates!
 
-#### To easyly setup an enviroment you can use the Codenvy Factory 
+#### To easily setup an enviroment you can use the Codenvy Factory 
 https://codenvy.io/f?id=factoryhwp1rln1b26vq11k
 
 ### Docker
@@ -26,10 +26,10 @@ Coming Soon!
 
 
 
-### Other Usefull Stuff
+### Other Useful Information
 
 * [Clearing up baseurl confusion](https://byparker.com/blog/2014/clearing-up-confusion-around-baseurl/)
 
-### Todos
+### ToDo
 
  - Finish Readme
