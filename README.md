@@ -1,5 +1,6 @@
 # Paradox Scout
 [![Build Status](https://travis-ci.org/Paradox2102/paradox_scout.svg?branch=gh-pages)](https://travis-ci.org/Paradox2102/paradox_scout)
+Paradox Scout is a FRC scouting application designed by FIRST Team Paradox 2102. This software was developed to assist FRC teams in more easily analyzing match data for FIRST Robotics Competitions. 
 
 ## Paradox Scout is an Open Source FRC Scouting website
   - Powered by [Firebase](https://firebase.google.com/)
@@ -33,3 +34,5 @@ Coming Soon!
 ### ToDo
 
  - Finish Readme
+ - Impliment Scoring Configurations
+ - Update for Steamworks
