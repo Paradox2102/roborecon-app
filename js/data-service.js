@@ -364,8 +364,8 @@ ParadoxScout.DataService = (function() {
 
               teams[teamKey] = match;
               teams[teamKey].team_key = teamKey;
-              teams[teamKey].team_number = parseInt(t.team_number);
-              teams[teamKey].team_name = t.team_name; 
+              teams[teamKey].team_number = parseInt(t ? t.team_number : teamKey.replace('frc',''));
+              teams[teamKey].team_name = (t ? t.team_name : teamKey); 
               teams[teamKey].oprs = teamDetails.oprs;
               teams[teamKey].ccwms = teamDetails.ccwms;
               teams[teamKey].dprs = teamDetails.dprs;
@@ -423,7 +423,7 @@ ParadoxScout.DataService = (function() {
       })
       // set last time scoring updated from TBA 
       .then(function() {
-        dbRef.child('/events/' + eventKey + '/scores_updated_at').set(Firebase.ServerValue.TIMESTAMP);
+        dbRef.child('/events/' + eventKey + '/scores_updated_at').set(firebase.database.ServerValue.TIMESTAMP);
       })
       .then(next)
       .catch(function(error) { 

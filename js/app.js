@@ -14,7 +14,7 @@ ParadoxScout.start = function(next) {
   ParadoxScout.CurrentEventKey = '{{ site.scout.currentevent }}'; 
 
   // default minutes to check TBA for scoring updates
-  ParadoxScout.ScoringUpdateIntervalInMinutes = 5;
+  ParadoxScout.ScoringUpdateIntervalInMinutes = 1;
 
   // look for new scoring data every 5 mins
   setInterval(function() {
@@ -298,8 +298,8 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
         today > eventEnd.setDate(eventEnd.getDate() + 1) || 
         (minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) ) {
     
-      next();
-      return;
+      //next();
+      //return;
     }
     
     // fetch scores from TBA and update db
@@ -310,7 +310,7 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
         var rankingData = rankingDetails[0];
 
         // get current datetime
-        var updatedAt = Firebase.ServerValue.TIMESTAMP; // moment().format('YYYY-MM-DD, h:mm:ss a'); //'2016-01-12 2:50pm';
+        var updatedAt = firebase.database.ServerValue.TIMESTAMP; // moment().format('YYYY-MM-DD, h:mm:ss a'); //'2016-01-12 2:50pm';
 
         // get all the match scores by team; 1 entry per team + match
         var teamScores = [];
@@ -333,21 +333,30 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
 
           // 2016 - combine obstacles names and crossings into ONE key
           
-          
-          match.score_breakdown.blue[match.score_breakdown.blue.position2] = parseInt(match.score_breakdown.blue.position2crossings) || 0;
-          match.score_breakdown.blue[match.score_breakdown.blue.position3] = parseInt(match.score_breakdown.blue.position3crossings) || 0;
-          match.score_breakdown.blue[match.score_breakdown.blue.position4] = parseInt(match.score_breakdown.blue.position4crossings) || 0;
-
-          match.score_breakdown.red[match.score_breakdown.red.position2] = parseInt(match.score_breakdown.red.position2crossings) || 0;
-          match.score_breakdown.red[match.score_breakdown.red.position3] = parseInt(match.score_breakdown.red.position3crossings) || 0;
-          match.score_breakdown.red[match.score_breakdown.red.position4] = parseInt(match.score_breakdown.red.position4crossings) || 0;
-          
          
-          //for each d in tba_api_scoring_config:
-          //if(sub in d)
-          //    match.score_breakdown.blue[match.score_breakdown.blue[d.id]] = parseInt(match.score_breakdown.blue[d.sub]) || 0;
-          //    match.score_breakdown.red[match.score_breakdown.red[d.id]] = parseInt(match.score_breakdown.red[d.sub]) || 0;
-          //    add team/match data to array for each alliance
+         var tba_subs = tba_api_scoring_config.filter(function(d) {
+             return('sub' in d);
+         });
+        
+         tba_subs.forEach(function(obj) {
+            match.score_breakdown.blue[match.score_breakdown.blue[obj.id]] = parseInt(match.score_breakdown.blue[obj.sub]) || 0;
+            match.score_breakdown.red[match.score_breakdown.red[obj.id]] = parseInt(match.score_breakdown.red[obj.sub]) || 0;
+         });
+         
+         
+         var tba_aggs = tba_api_scoring_config.filter(function(d) {
+             return('agg' in d);
+         });
+         
+         tba_aggs.forEach(function(obj){
+                match.score_breakdown.blue[obj.id] = obj.agg.reduce(function (preVal, el) {
+                    return preVal + parseInt(match.score_breakdown.blue[el] || (obj.default_value || 0));
+                }, 0);
+                
+                match.score_breakdown.red[obj.id] = obj.agg.reduce(function (preVal, el) {
+                    return preVal + parseInt(match.score_breakdown.red[el] || (obj.default_value || 0));
+                }, 0);
+         }); 
           
           
           $.each (match.alliances.blue.teams, function(i, team) {
@@ -378,26 +387,19 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
               scores: firstMatch,
               oprs: (statsData && statsData.oprs) ? statsData.oprs[score.teamKey.replace('frc','')] || 0 : 0,
               ccwms: (statsData && statsData.ccwms) ? statsData.ccwms[score.teamKey.replace('frc','')] || 0 : 0,
-              dprs: (statsData && statsData.dprs) ? statsData.dprs[score.teamKey.replace('frc','')] || 0: 0,
-              ranking: 0,
-              rankingScore: 0,
-              rankingAuto: 0,
-              rankingScaleChallenge: 0,
-              rankingGoals: 0,
-              rankingDef: 0,
-              rankingPlayed: 0,
+              dprs: (statsData && statsData.dprs) ? statsData.dprs[score.teamKey.replace('frc','')] || 0: 0//,
+              
+
             };
 
             $.each (rankingData, function(index, arr) { 
               var k = score.teamKey.replace('frc','');
               if (arr[1] === k) {
-                teamEventDetails[score.teamKey].ranking = arr[0];
-                teamEventDetails[score.teamKey].rankingScore = arr[2];
-                teamEventDetails[score.teamKey].rankingAuto = arr[3];
-                teamEventDetails[score.teamKey].rankingScaleChallenge = arr[4];
-                teamEventDetails[score.teamKey].rankingGoals = arr[5];
-                teamEventDetails[score.teamKey].rankingDef = arr[6];
-                teamEventDetails[score.teamKey].rankingPlayed = arr[8];
+                tba_api_ranking_config.forEach(function (el){
+                    teamEventDetails[score.teamKey][el.id] = arr[el.arr_index];
+                });
+
+                
               }
               
             });
@@ -421,7 +423,7 @@ ParadoxScout.addScoutingReport = function(data, next) {
   var user = ParadoxScout.DataService.getCurrentUser(function(u) {
     // add in scouting metadata
     data.event_id = eventKey;
-    data.scored_at = Firebase.ServerValue.TIMESTAMP; // new Date().getTime() -> e.g., 1456101425447 -or- (new Date()).toString();
+    data.scored_at = firebase.database.ServerValue.TIMESTAMP; // new Date().getTime() -> e.g., 1456101425447 -or- (new Date()).toString();
     data.scored_by = { user_key: u.key, name: u.name, email: u.email };
 
     // console.log(data);

@@ -33,16 +33,68 @@ var tba_api_scoring_config = [
 }, {
   id: 'position2',
   title: 'Position Two',
-  dtype: 'string',
+  dtype: 'int',
   sub: 'position2crossings'
 }, {
   id: 'position3',
   title: 'Position Four',
-  dtype: 'string',
+  dtype: 'int',
   sub: 'position3crossings'
 }, {
   id: 'position4',
   title: 'Position Four',
-  dtype: 'string',
+  dtype: 'int',
   sub: 'position4crossings'
 }];
+
+var app_dashboard_config = {
+  order: [[ 1, "asc" ], [3, "desc"], [10, "desc"]], // default sort set to total_points | desc
+  cols: [
+// major statistical cats
+{ data: 'ranking', title: 'Rank', orderSequence: ['asc', 'desc'], defaultContent:0 }, 
+{ data: 'rankingScore', title: 'RS', orderSequence: ['desc', 'asc'], defaultContent:0 }, 
+{ data: 'oprs', title: 'OPRS', orderSequence: ['desc', 'asc'], defaultContent:0,
+render: function(data) { return Math.round(data*100)/100; }}, 
+{ data: 'ccwms', title: 'CCWMS', orderSequence: ['desc', 'asc'], defaultContent:0,
+render: function(data) { return Math.round(data*100)/100; }}, 
+{ data: 'dprs', title: 'DPRS', orderSequence: ['desc', 'asc'], defaultContent:0,
+render: function(data) { return Math.round(data*100)/100; }}, 
+// offense #s and points
+{ data: 'xTotalHighGoals', title: 'High Golas', orderSequence: ['desc', 'asc'], defaultContent:0 }, 
+{ data: 'xTotalLowGoals', title: 'Low Goals', orderSequence: ['desc', 'asc'], defaultContent:0 }, 
+{ data: 'xBoulderPoints', title: 'Boulder Points',  orderSequence: ['desc', 'asc'],  defaultContent:0 }, 
+{ data: 'xCrossingPoints', title: 'Crossing Points',  orderSequence: ['desc', 'asc'], defaultContent:0 },
+// totals
+{ title: 'Total Points', data: 'totalPoints', orderSequence: ['desc', 'asc'] },
+{ title: 'Teleop Points', data: 'teleopPoints', orderSequence: ['desc', 'asc'] },
+{ title: 'Auto Points', data: 'autoPoints', orderSequence: ['desc', 'asc'] },
+// other ranking info
+{ title: 'Auto', data: 'rankingAuto', orderSequence: ['desc', 'asc'] }, 
+{ title: 'Scale Challenge', data: 'rankingScaleChallenge', orderSequence: ['desc', 'asc'] },
+{ title: 'Goals', data: 'rankingGoals', orderSequence: ['desc', 'asc'] },
+{ title: 'Def.', data: 'rankingDef', orderSequence: ['desc', 'asc'] }, 
+// obstacles crossing details
+{ title: 'Pos.1 X Count', data: 'position1crossings', orderSequence: ['desc', 'asc'], defaultContent:0 },
+{ title: 'ChevalDeFrise X Count', data: 'A_ChevalDeFrise', orderSequence: ['desc', 'asc'], defaultContent:0 },
+{ title: 'Drawbridge X Count', data: 'C_Drawbridge', orderSequence: ['desc', 'asc'], defaultContent:0 },
+{ title: 'Moat Count X Count', data: 'B_Moat', orderSequence: ['desc', 'asc'], defaultContent:0 },
+{ title: 'Portcullis X Count', data: 'A_Portcullis', orderSequence: ['desc', 'asc'], defaultContent:0 },
+{ title: 'Ramparts X Count', data: 'B_Ramparts', orderSequence: ['desc', 'asc'], defaultContent:0 },
+{ title: 'RockWall X Count', data: 'D_RockWall', orderSequence: ['desc', 'asc'], defaultContent:0 },
+{ title: 'RoughTerrain X Count', data: 'D_RoughTerrain', orderSequence: ['desc', 'asc'], defaultContent:0 },
+{ title: 'SallyPort X Count', data: 'C_SallyPort', orderSequence: ['desc', 'asc'], defaultContent:0 },
+// other
+{ title: 'Auto Reach Points', data: 'autoReachPoints', orderSequence: ['desc', 'asc'] },
+{ title: 'Teleop Challenge Points', data: 'teleopChallengePoints', orderSequence: ['desc', 'asc'] },
+{ title: 'Teleop Scale Points', data: 'teleopScalePoints', orderSequence: ['desc', 'asc'] },
+{ title: 'Teleop Defenses Breached', data: 'teleopDefensesBreached', orderSequence: ['desc', 'asc'] },
+{ title: 'Teleop Tower Captured', data: 'teleopTowerCaptured', orderSequence: ['desc', 'asc'] },
+{ title: 'Breach Points', data: 'breachPoints', orderSequence: ['desc', 'asc'] },
+{ title: 'CapturePoints', data: 'capturePoints', orderSequence: ['desc', 'asc'] },
+{ title: 'Tower End Strength', data: 'towerEndStrength', orderSequence: ['desc', 'asc'] },
+{ title: 'Adjust Points', data: 'adjustPoints', orderSequence: ['desc', 'asc'] },
+{ title: 'Foul Points', data: 'foulPoints', orderSequence: ['desc', 'asc'] },
+{ title: 'Foul Count', data: 'foulCount', orderSequence: ['desc', 'asc'] },
+{ title: 'Tech Foul Count', data: 'techFoulCount', orderSequence: ['desc', 'asc'] }
+]};
+ 
