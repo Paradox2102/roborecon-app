@@ -8,15 +8,15 @@ var ParadoxScout = ParadoxScout || {};
 
 ParadoxScout.DataService = (function() {
   // private attributes
-  var dbRootUrl = '{{ site.scout.firebase }}',
+  var dbRootUrl = "{{ site.scout.firebase.rooturl }}",
   // dbRef = new Firebase(dbRootUrl),   // init firebase db
   // Initialize Firebase
   config = {
-    apiKey: "AIzaSyDleJPx9RQChKn4DlLV9nXqMNafP7BvhG0",
-    authDomain: "paradox-scout-dc256.firebaseapp.com",
-    databaseURL: "https://paradox-scout-dc256.firebaseio.com",
-    storageBucket: "paradox-scout-dc256.appspot.com",
-    messagingSenderId: "777517430963"
+    apiKey: "{{ site.scout.firebase.apikey }}",
+    authDomain: "{{ site.scout.firebase.authdomain }}",
+    databaseURL: "{{ site.scout.firebase.databaseurl }}",
+    storageBucket: "{{ site.scout.firebase.storagebucket }}",
+    messagingSenderId: "{{ site.scout.firebase.messagingsenderid }}"
   },
   dbRef = firebase.initializeApp(config).database().ref(),
   dbUsersRef = dbRef.child('users'), 
