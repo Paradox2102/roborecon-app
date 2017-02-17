@@ -48,7 +48,6 @@ ParadoxScout.start = function(next) {
     }
     personalize(user);
   });
-
   // if user is not authenticated, invalidate cache and route to /login as needed
   // if (!ParadoxScout.DataService.isAuthenticated()) {
   //   AppUtility.invalidateCache();
@@ -331,6 +330,8 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
           if (!match.score_breakdown) return;
 
           // 2016 - combine obstacles names and crossings into ONE key
+          
+          
           match.score_breakdown.blue[match.score_breakdown.blue.position2] = parseInt(match.score_breakdown.blue.position2crossings) || 0;
           match.score_breakdown.blue[match.score_breakdown.blue.position3] = parseInt(match.score_breakdown.blue.position3crossings) || 0;
           match.score_breakdown.blue[match.score_breakdown.blue.position4] = parseInt(match.score_breakdown.blue.position4crossings) || 0;
@@ -338,8 +339,15 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
           match.score_breakdown.red[match.score_breakdown.red.position2] = parseInt(match.score_breakdown.red.position2crossings) || 0;
           match.score_breakdown.red[match.score_breakdown.red.position3] = parseInt(match.score_breakdown.red.position3crossings) || 0;
           match.score_breakdown.red[match.score_breakdown.red.position4] = parseInt(match.score_breakdown.red.position4crossings) || 0;
-
-          // add team/match data to array for each alliance
+          
+         
+          //for each d in tba_api_scoring_config:
+          //if(sub in d)
+          //    match.score_breakdown.blue[match.score_breakdown.blue[d.id]] = parseInt(match.score_breakdown.blue[d.sub]) || 0;
+          //    match.score_breakdown.red[match.score_breakdown.red[d.id]] = parseInt(match.score_breakdown.red[d.sub]) || 0;
+          //    add team/match data to array for each alliance
+          
+          
           $.each (match.alliances.blue.teams, function(i, team) {
             teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.blue });
           });
