@@ -1,6 +1,6 @@
 jekyll:
     image: jekyll/jekyll:pages
-    command: jekyll serve --config _config.yml --force_polling
+    command: jekyll serve --config _config.yml --force_polling --baseurl ""
     ports:
         - 4000:4000
     volumes:
