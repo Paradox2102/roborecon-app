@@ -3,3 +3,4 @@ _site
 .jekyll-metadata
 .bundle
 _config.c9.yml
+.DS_Store #Dang Mac Users
