@@ -160,8 +160,8 @@
 }
 
 .omb_login .omb_socialButtons a {
-  color: white; // In yourUse @body-bg
-  opacity:0.9;
+  color: white; In yourUse @body-bg
+  opacity: 0.9;
 }
 .omb_login .omb_socialButtons a:hover {
   color: white;
@@ -359,4 +359,9 @@
 			margin: 0 auto 20px;
 		}
 }
+}
+
+.scouting-report {
+    text-align: center;
+    font-size: 25px;
 }
