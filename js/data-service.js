@@ -112,26 +112,15 @@ ParadoxScout.DataService = (function() {
   getCurrentUser = function(next) {
     // get auth and provider data
     var user = firebase.auth().currentUser; //dbRef.getAuth();
-    var providerId = user === null ? null : authData.providerId;
 
     if (user && user.email) {
       // try getting from cache first
-      if (providerId === 'github.com' || providerId === 'google.com') {
-        next({ 
-          key: cleanUserKey(user.email), 
-          email: user.email, 
-          name: user.displayName || user.email
+      next({ 
+        key: cleanUserKey(user.email), 
+        email: user.email, 
+        name: user.displayName || user.email
         });
       }
-      else {
-        var user_key = cleanUserKey(user.email);
-        dbRef.child('users').child(user_key).once('value', function(userSnapshot) {
-          var u = userSnapshot.val();
-          u.key = userSnapshot.key;
-          next(u);
-        });
-      }
-    }
     else {
       logout();
       next(null);
