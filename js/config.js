@@ -60,7 +60,7 @@ render: function(data) { return Math.round(data*100)/100; }},
 { data: 'dprs', title: 'DPRS', orderSequence: ['desc', 'asc'], defaultContent:0,
 render: function(data) { return Math.round(data*100)/100; }}, 
 // offense #s and points
-{ data: 'xTotalHighGoals', title: 'High Golas', orderSequence: ['desc', 'asc'], defaultContent:0 }, 
+{ data: 'xTotalHighGoals', title: 'High Goals', orderSequence: ['desc', 'asc'], defaultContent:0 }, 
 { data: 'xTotalLowGoals', title: 'Low Goals', orderSequence: ['desc', 'asc'], defaultContent:0 }, 
 { data: 'xBoulderPoints', title: 'Boulder Points',  orderSequence: ['desc', 'asc'],  defaultContent:0 }, 
 { data: 'xCrossingPoints', title: 'Crossing Points',  orderSequence: ['desc', 'asc'], defaultContent:0 },
