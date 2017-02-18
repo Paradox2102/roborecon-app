@@ -282,13 +282,14 @@ $(function() {
     $(this).val(Math.max(parseFloat( $(this).val()), 0) || 0)  
   });
   
-  // 2. hook buttons up to associated counters
+  // 2. add in increments of 5
   $(".js-counter-btn").on("click", function(ev) {
     var input = $("input[name=" + $(this).data('counter-for') + "]");
     var currentVal = parseFloat(input.val());
     input.val(Math.max((currentVal + 5), 0) || 0);
   });
 
+  // 3. add in increments of 1
   $(".js-counter-btn-1").on("click", function(ev) {
     var input = $("input[name=" + $(this).data('counter-for') + "]");
     var currentVal = parseFloat(input.val());
