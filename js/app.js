@@ -360,10 +360,12 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
           
           
           $.each (match.alliances.blue.teams, function(i, team) {
+            delete match.score_breakdown.blue['']
             teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.blue });
           });
 
           $.each (match.alliances.red.teams, function(i, team) {
+            delete match.score_breakdown.red['']
             teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.red });
           });
         });
