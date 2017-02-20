@@ -132,3 +132,9 @@ var app_scouting_reports_config = {
     },
   ]
 }
+
+var app_team_details_config = {
+  top_area : [],
+  scoring_data: [],
+  scouting_data: []
+};
