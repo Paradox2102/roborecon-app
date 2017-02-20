@@ -70,37 +70,44 @@ permalink: /scouting-reports/
           '<div id="' + data.rpt.rptKey + '" class="col-sm-12 ps-scouting-report">',
           ' <h4>Team: ' + data.rpt.team_id.replace('frc', '') + '<br>',
           ' <small><span class="fb-ts" data-fb-ts="' + data.rpt.scored_at + '">' + moment(new Date(data.rpt.scored_at)).fromNow() + '</span> by ' + data.rpt.scored_by.name + '</small></h4>',
-           // buildOverall(data),
-           // buildColumns(data),
+          buildOverall(data),
+          buildColumns(data),
           '</div>',
           '<hr style="width:100%;border-color:#fff;">'
         ];
 
-      //   function buildOverall(data) {
-      //     return $(['<h5>Overall: <span class="badge"><%= data.rating_overall || \'N/ A\' %></span></h5>'])
-      //   }
+        function buildOverall(data) {
+          var html=[];
+          app_scouting_reports_config.overall.forEach(function(el){
+            html.push(el.title + ' <span class="badge">' + (data.rpt[el.id] || el.defaultValue) + '</span>&nbsp;&nbsp;');
+          });
+          return '<h5>' + html.join('') + '</h5>';
+        }
 
-      //   function buildColumns(data) {
-      //     return $([
-      //         '<div class="col-sm-4">',
-      //         '<div class="table-responsive">',
-      //           '<table class="table">',
-      //           '<tr><th>Scoring Ability</th><th>&nbsp;</th><th>Autonomous?</th></tr>',
-      //             buildColumnData(data),
-      //           '</table>',
-      //         '</div>',
-      //       '</div>'
-      //     ]);
-      //   }
+        function buildColumns(data) {
+          var html=[];
+          var colNumber= 12 / app_scouting_reports_config.cols.length;
 
-      // function buildColumnData(data) {
-      //   return $([ 
-      //     '<tr>',
-      //       '<td>High Goal:</td><td><%= data.rating_sco ring_high_goal || \'N/ A\' %></td>',
-      //       '<td><input type="checkbox" value="" disabled <%= (data.rating_scoring_high_goal_auto ? \'checked\' : \'\') %> ></td>',
-      //     '</tr>'
-      //   ]);
-      // }
+          app_scouting_reports_config.cols.forEach(function(el){
+            html = html.concat(['<div class="col-sm-' + colNumber + '">',
+              '<div class="table-responsive">',
+                '<table class="table">',
+                '<tr><th colspan="2">' + el.header_title + '</th></tr>',
+                buildColumnData(el.col_data, data),
+                '</table>',
+              '</div>',
+            '</div>']);
+          });
+          return html.join('');
+        }
+
+      function buildColumnData(colData, data) {
+        var html=[];
+        colData.forEach(function(el){
+          html.push('<tr><td style="background-color:#000;">' + el.title + '</td><td style="background-color:#000;">' + (data.rpt[el.id] || el.defaultValue) + '</td></tr>');
+        });
+        return html.join('');
+      }
 
         $('#reports').prepend($(htmlReport.join('\n')));
       });

@@ -102,13 +102,13 @@ var app_dashboard_config = {
     { title: 'Foul Points', data: 'foulPoints', orderSequence: ['desc', 'asc'] },
     { title: 'Foul Count', data: 'foulCount', orderSequence: ['desc', 'asc'] },
     { title: 'Tech Foul Count', data: 'techFoulCount', orderSequence: ['desc', 'asc'] }
-  ]
+  ] 
 };
 
 var app_scouting_reports_config = {
   overall: [
     { id: 'rating_overall_gear_efficiency', title: 'Gear Efficiency', defaultValue: 'N/A' },
-    { id: 'rating_overall_gear_efficiency_auto', title: 'Gear Efficiency', defaultValue: 'N/A' },
+    { id: 'rating_overall_gear_efficiency_auto', title: 'Gear Efficiency Auto', defaultValue: 'N/A' },
     { id: 'rating_overall_robot_stability', title: 'Robot Stability', defaultValue: 'N/A' },
   ],
   cols: [
