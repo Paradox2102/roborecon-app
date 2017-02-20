@@ -1,3 +1,6 @@
+// ------------------------------------------------------------------------
+// Configuration - For data fetched via TBA
+// ------------------------------------------------------------------------
 var tba_api_ranking_config = [
   { id: 'ranking', title: 'Rank', display_order: 1, arr_index: 0 },
   { id: 'rankingScore', title: 'Ranking Score', display_order: 2, arr_index: 2 },
@@ -47,6 +50,9 @@ var tba_api_scoring_config = [
     sub: 'position4crossings'
   }];
 
+// ------------------------------------------------------------------------
+// Configuration - For the primary dashboard
+// ------------------------------------------------------------------------
 var app_dashboard_config = {
   order: [[1, "asc"], [3, "desc"], [10, "desc"]], // default sort set to total_points | desc
   cols: [
@@ -105,6 +111,45 @@ var app_dashboard_config = {
   ] 
 };
 
+// ------------------------------------------------------------------------
+// Configuration - For the team-details view
+// ------------------------------------------------------------------------
+var app_team_details_config = {
+  summary_panel: [
+    { id: 'rankingPlayed', title: 'Matches Played', display_order: 1 },
+    { id: 'view_pointsPerMatch', title: 'Points/Match', decimal_places: 2, display_order: 2 },
+    { id: 'ranking', title: 'Rank', display_order: 3 },
+    { id: 'rankingScore', title: 'Ranking Score', display_order: 4 },
+    { id: 'rankingScaleChallenge', title: 'Scale/Challenge', display_order: 5 },
+    { id: 'rankingGoals', title: 'Goals', display_order: 6 },
+    { id: 'oprs', title: 'OPRS', tooltip: 'Offensive Power Rating: expected points contribution per match', decimal_places: 2, display_order: 7 },
+    { id: 'ccwms', title: 'CCWMS', tooltip: 'Calculated Contribution to Winning Margin', decimal_places: 2, display_order: 8 },
+    { id: 'dprs', title: 'DPRS', tooltip: 'Defensive Power Rating', decimal_places: 2, display_order: 9 }
+  ],
+  scoring_viz: [
+    { id: 'totalPoints', title: 'Total Points', display_order: 1, visible: true }, 
+    { id: 'teleopPoints', title: 'Teleop Points', display_order: 2, visible: true }, 
+    { id: 'teleopBoulderPoints', title: 'Teleop Boulder Points', display_order: 3, visible: true }, 
+    { id: 'teleopBouldersHigh', title: 'Teleop High Goals', display_order: 4 }, 
+    { id: 'teleopBouldersLow', title: 'Teleop Low Goals', display_order: 5 }, 
+    { id: 'teleopCrossingPoints', title: 'Teleop Crossing Points', display_order: 6, visible: true }, 
+    { id: 'autoPoints', title: 'Auto Points', display_order: 7, visible: true },
+    { id: 'autoBoulderPoints', title: 'Auto Boulder Points', display_order: 8, visible: true }, 
+    { id: 'autoBouldersHigh', title: 'Auto High Goals', display_order: 9 }, 
+    { id: 'autoBouldersLow', title: 'Auto Low Goals', display_order: 10 }, 
+    { id: 'autoCrossingPoints', title: 'Auto Crossing Points', display_order: 11, visible: true }
+  ],
+  scouting_viz: [
+    { id: 'rating_scoring_high_goals_made', title: 'High Goals', display_order: 1, missed_id: 'rating_scoring_high_goals_missed' }, 
+    { id: 'rating_scoring_low_goals_made', title: 'Low Goal', display_order: 2, missed_id: 'rating_scoring_low_goals_missed' }, 
+    { id: 'rating_scoring_tower_scale_made', title: 'Tower Climb', display_order: 3, missed_id: 'rating_scoring_tower_scale_missed' }, 
+    { id: 'rating_obstacle_cheval_de_frise_made', title: 'Cheval', display_order: 4, missed_id: 'rating_obstacle_cheval_de_frise_missed' }
+  ]
+};
+
+// ------------------------------------------------------------------------
+// Configuration - For the scouting reports view
+// ------------------------------------------------------------------------
 var app_scouting_reports_config = {
   overall: [
     { id: 'rating_overall_gear_efficiency', title: 'Gear Efficiency', defaultValue: 'N/A' },
