@@ -40,178 +40,94 @@ $(function() {
 
   ParadoxScout.getMatchIntelligence(null, blueAlliance, redAlliance, function(teamData) {
     
-    // iterate each team's info from TBA & scouting reports
+    // 1. iterate each team's info from TBA & scouting reports
     $.each(teamData, function(k,v) {
       
-      // gather match aggregated stats (vis TBA)
-      var oprs = Math.round(v.oprs *100)/100;
-      var ccwms = Math.round(v.ccwms *100)/100;
-      var avgTotal = v.matches_played !== 0 ? Math.round((v.total_points/v.matches_played) *100)/100 : 0;
-      var avgChallenge = v.matches_played !== 0 ? Math.round((v.challenge_scale_points/v.matches_played) *100)/100 : 0;
-      var avgCrossing = v.matches_played !== 0 ? Math.round((v.crossing_points/v.matches_played) *100)/100 : 0;
-      var avgHighGoals = v.matches_played !== 0 ? Math.round((v.high_goals_count/v.matches_played) *100)/100 : 0;
-      var avgLowGoals = v.matches_played !== 0 ? Math.round((v.low_goals_count/v.matches_played) *100)/100 : 0;
+      // determine strengths/weaknesses for team
+      var strengthsWeaknesses = [];
+      app_match_intel_config.strengths_weaknesses_stats.forEach(function(el) {
+        // ratings shoule be based on 0-100
+        var sw_rating = 0.0;
+        var sw_html = '';
 
-      // fetch team stats (via scouting)
-      // -- scoring
-      var highGoalsMade = v.hasOwnProperty('rating_scoring_high_goals_made') ? v.rating_scoring_high_goals_made.score : 0;
-      var highGoalsMissed = v.hasOwnProperty('rating_scoring_high_goals_missed') ? v.rating_scoring_high_goals_missed.score : 0;
-      
-      var lowGoalsMade = v.hasOwnProperty('rating_scoring_low_goals_made') ? v.rating_scoring_low_goals_made.score : 0;
-      var lowGoalsMissed = v.hasOwnProperty('rating_scoring_low_goals_missed') ? v.rating_scoring_low_goals_missed.score : 0;
-      
-      var towerScaleMade = v.hasOwnProperty('rating_scoring_tower_scale_made') ? v.rating_scoring_tower_scale_made.score : 0;
-      var towerScaleMissed = v.hasOwnProperty('rating_scoring_tower_scale_missed') ? v.rating_scoring_tower_scale_missed.score : 0;
-      
-      // -- obstacles
-      var chevalMade = v.hasOwnProperty('rating_obstacle_cheval_de_frise_made') ? v.rating_obstacle_cheval_de_frise_made.score : 0;
-      var chevalMissed = v.hasOwnProperty('rating_obstacle_cheval_de_frise_missed') ? v.rating_obstacle_cheval_de_frise_missed.score : 0;
-      
-      var drawbridgeMade = v.hasOwnProperty('rating_obstacle_drawbridge_made') ? v.rating_obstacle_drawbridge_made.score : 0;
-      var drawbridgeMissed = v.hasOwnProperty('rating_obstacle_drawbridge_missed') ? v.rating_obstacle_drawbridge_missed.score : 0;
-      
-      var lowBarMade = v.hasOwnProperty('rating_obstacle_low_bar_made') ? v.rating_obstacle_low_bar_made.score : 0;
-      var lowBarMissed = v.hasOwnProperty('rating_obstacle_low_bar_missed') ? v.rating_obstacle_low_bar_missed.score : 0;
-      
-      var moatMade = v.hasOwnProperty('rating_obstacle_moat_made') ? v.rating_obstacle_moat_made.score : 0;
-      var moatMissed = v.hasOwnProperty('rating_obstacle_moat_missed') ? v.rating_obstacle_moat_missed.score : 0;
-      
-      var portcullisMade = v.hasOwnProperty('rating_obstacle_portcullis_made') ? v.rating_obstacle_portcullis_made.score : 0;
-      var portcullisMissed = v.hasOwnProperty('rating_obstacle_portcullis_missed') ? v.rating_obstacle_portcullis_missed.score : 0;
-      
-      var rampartsMade = v.hasOwnProperty('rating_obstacle_ramparts_made') ? v.rating_obstacle_ramparts_made.score : 0;
-      var rampartsMissed = v.hasOwnProperty('rating_obstacle_ramparts_missed') ? v.rating_obstacle_ramparts_missed.score : 0;
-      
-      var rockWallMade = v.hasOwnProperty('rating_obstacle_rock_wall_made') ? v.rating_obstacle_rock_wall_made.score : 0;
-      var rockWallMissed = v.hasOwnProperty('rating_obstacle_rock_wall_missed') ? v.rating_obstacle_rock_wall_missed.score : 0;
-      
-      var roughTerrainMade = v.hasOwnProperty('rating_obstacle_rough_terrain_made') ? v.rating_obstacle_rough_terrain_made.score : 0;
-      var roughTerrainMissed = v.hasOwnProperty('rating_obstacle_rough_terrain_missed') ? v.rating_obstacle_rough_terrain_missed.score : 0;
-      
-      var sallyPortMade = v.hasOwnProperty('rating_obstacle_sally_port_made') ? v.rating_obstacle_sally_port_made.score : 0;
-      var sallyPortMissed = v.hasOwnProperty('rating_obstacle_sally_port_missed') ? v.rating_obstacle_sally_port_missed.score : 0;
-      
-      // -- overall
-      var avgStabilityRating = v.hasOwnProperty('rating_overall_robot_stability') ? 
-                          Math.round((v.rating_overall_robot_stability.score/v.rating_overall_robot_stability.count) *100)/100 : -1;
-                          
-      // scoring and obstacles accuracy
-      var highGoalAccuracy = ((highGoalsMade / (highGoalsMade + highGoalsMissed)) * 100 || 0 ).toFixed(2);
-      var lowGoalAccuracy = ((lowGoalsMade / (lowGoalsMade + lowGoalsMissed)) * 100 || 0 ).toFixed(2);
-      var towerScaleAccuracy = ((towerScaleMade / (towerScaleMade + towerScaleMissed)) * 100 || 0 ).toFixed(2);
-      
-      var chevalAccuracy = ((chevalMade / (chevalMade + chevalMissed)) * 100 || 0 ).toFixed(2);
-      var drawbridgeAccuracy = ((drawbridgeMade / (drawbridgeMade + drawbridgeMissed)) * 100 || 0 ).toFixed(2);
-      var lowBarAccuracy = ((lowBarMade / (lowBarMade + lowBarMissed)) * 100 || 0 ).toFixed(2);
-      var moatAccuracy = ((moatMade / (moatMade + moatMissed)) * 100 || 0 ).toFixed(2);
-      var portcullisAccuracy = ((portcullisMade / (portcullisMade + portcullisMissed)) * 100 || 0 ).toFixed(2);
-      var rampartsAccuracy = ((rampartsMade / (rampartsMade + rampartsMissed)) * 100 || 0 ).toFixed(2);
-      var rockWallAccuracy = ((rockWallMade / (rockWallMade + rockWallMissed)) * 100 || 0 ).toFixed(2);
-      var roughTerrainAccuracy = ((roughTerrainMade / (roughTerrainMade + roughTerrainMissed)) * 100 || 0 ).toFixed(2);
-      var sallyPortAccuracy = ((sallyPortMade / (sallyPortMade + sallyPortMissed)) * 100 || 0 ).toFixed(2);
-      
+        if (el.calc_type === 'avg') {
+          if (v[el.id] <= 0.00) return;
+          sw_rating = (v[el.id] / el.max) * 100;
+          sw_html = `${sw_rating.toFixed(2)}%`;
+        }
+        else if (el.calc_type === 'accuracy') {
+          if (v[el.id].made_count === 0 && v[el.id].missed_count === 0) return;
+          sw_rating = parseFloat(v[el.id].accuracy);
+          sw_html = `${v[el.id].accuracy}% ( ${v[el.id].made_count} | ${v[el.id].missed_count} )`;
+        }
+        
+        strengthsWeaknesses.push({ 
+          name: el.title,
+          calc_type: el.calc_type,
+          rating: sw_rating.toFixed(2),
+          text: sw_html
+        });
+      });
 
-      // fetch obstacle ratings that exist for team
-      var obstacleRatings = [];
-      obstacleRatings.push({ name: 'Low Bar', 
-                              attempts: parseFloat(lowBarMade + lowBarMissed), 
-                              accuracy: parseFloat(lowBarAccuracy), 
-                              val: parseFloat(lowBarMade - lowBarMissed), 
-                              text: lowBarAccuracy + '% ( ' + lowBarMade + ' | ' + lowBarMissed + ' )' });
-                              
-      obstacleRatings.push({ name: 'Cheval De Frise', 
-                              attempts: parseFloat(chevalMade + chevalMissed), 
-                              accuracy: parseFloat(chevalAccuracy), 
-                              val: parseFloat(chevalMade - chevalMissed), 
-                              text: chevalAccuracy + '% ( ' + chevalMade + ' | ' + chevalMissed + ' )' });
-                              
-      obstacleRatings.push({ name: 'Drawbridge', 
-                              attempts: parseFloat(drawbridgeMade + drawbridgeMissed), 
-                              accuracy: parseFloat(drawbridgeAccuracy), 
-                              val: parseFloat(drawbridgeMade - drawbridgeMissed), 
-                              text: drawbridgeAccuracy + '% ( ' + drawbridgeMade + ' | ' + drawbridgeMissed + ' )' });
-                              
-      obstacleRatings.push({ name: 'Moat', 
-                              attempts: parseFloat(moatMade + moatMissed), 
-                              accuracy: parseFloat(moatAccuracy), 
-                              val: parseFloat(moatMade - moatMissed), 
-                              text: moatAccuracy + '% ( ' + moatMade + ' | ' + moatMissed + ' )' });
-                              
-      obstacleRatings.push({ name: 'Portcullis', 
-                              attempts: parseFloat(portcullisMade + portcullisMissed), 
-                              accuracy: parseFloat(portcullisAccuracy),
-                              val: parseFloat(portcullisMade - portcullisMissed), 
-                              text: portcullisAccuracy + '% ( ' + portcullisMade + ' | ' + portcullisMissed + ' )' });
-                              
-      obstacleRatings.push({ name: 'Ramparts', 
-                              attempts: parseFloat(rampartsMade + rampartsMissed), 
-                              accuracy: parseFloat(rampartsAccuracy), 
-                              val: parseFloat(rampartsMade - rampartsMissed), 
-                              text: rampartsAccuracy + '% ( ' + rampartsMade + ' | ' + rampartsMissed + ' )' });
-                              
-      obstacleRatings.push({ name: 'Rock Wall', 
-                              attempts: parseFloat(rockWallMade + rockWallMissed), 
-                              accuracy: parseFloat(rockWallAccuracy), 
-                              val: parseFloat(rockWallMade - rockWallMissed), 
-                              text: rockWallAccuracy + '% ( ' + rockWallMade + ' | ' + rockWallMissed + ' )' });
-                              
-      obstacleRatings.push({ name: 'Rough Terrain', 
-                              attempts: parseFloat(roughTerrainMade + roughTerrainMissed), 
-                              accuracy: parseFloat(roughTerrainAccuracy), 
-                              val: parseFloat(roughTerrainMade - roughTerrainMissed), 
-                              text: roughTerrainAccuracy + '% ( ' + roughTerrainMade + ' | ' + roughTerrainMissed + ' )' });
-                              
-      obstacleRatings.push({ name: 'Sally Port', 
-                              attempts: parseFloat(sallyPortMade + sallyPortMissed), 
-                              accuracy: parseFloat(sallyPortAccuracy), 
-                              val: parseFloat(sallyPortMade - sallyPortMissed), 
-                              text: sallyPortAccuracy + '% ( ' + sallyPortMade + ' | ' + sallyPortMissed + ' )' });
+      // sort strength/weakness ratings in asc. order (weakest to strongest)
+      strengthsWeaknesses.sort(function(a, b){ return a.rating - b.rating; });
 
-      // sort obstacle ratings in asc. order (weakest to strongest)
-      obstacleRatings.sort(function(a, b){ return a.val - b.val; });
+      // get top 3 weaknesses and top 3 strengths
+      var sw_bottom3 = $.grep(strengthsWeaknesses, function (el) { return  el.rating < 70; }).slice(0,3);
+      if (sw_bottom3.length < 1) sw_bottom3.push({ name: 'N/A', text:'' });
 
-      // get top/bottom most 3 obstacles
-      var bottom3obstacles = $.grep(obstacleRatings, function (el) { return  el.attempts != 0 && el.accuracy < 70; }).slice(0,3);
-      if (bottom3obstacles.length < 1) bottom3obstacles.push({ name: 'N/A', text:'' });
+      var sw_top3 = $.grep(strengthsWeaknesses, function (el) { return el.rating >= 70; }).slice(-3).reverse();
+      if (sw_top3.length < 1) sw_top3.push({ name: 'N/A', text:'' });
 
-
-      var top3obstacles = $.grep(obstacleRatings, function (el) { return  el.attempts != 0 && el.accuracy >= 70; }).slice(-3).reverse();
-      if (top3obstacles.length < 1) top3obstacles.push({ name: 'N/A', text:'' });
-
-      
+      // 2. build team summary html
       var $el = $('#' + k);
-      $el
-        .append('<h4 style="float:left;"><a href="{{ site.baseurl }}/team-details?team_id=' + v.team_key + '">Team: ' + v.team_key.replace(/frc/i, '') + '</a></h4>')
-        .append('<a style="float:left;margin-top:10px;margin-left:10px;color:#efc819;font-size:16px;" href="{{ site.baseurl }}/rate?team_id=' + v.team_key + '"><i class="fa fa-star-o"> Rate</i></a>')
-        .append('<p class="pull-left" style="margin:0px 10px 5px 0px;clear:both;">OPRS: <span class="label label-default" style="font-size:14px;">' + oprs + '</span></p>')
-        .append('<p class="pull-left" style="margin:0px 10px 5px 0px;">CCWMS: <span class="label label-default" style="font-size:14px;">' + ccwms + '</span></p>')
-        .append('<p class="pull-left" style="margin:0px 10px 5px 0px;">Avg.: <span class="label label-default" style="font-size:14px;">' + avgTotal + '</span></p>');
-        
-      $el.append('<p style="clear:both;text-align:center;margin:5px 0px 5px; 0px;">MATCH STATS</p>');
-      $el.append('<table style="width:100%;">' + 
-        '<tr><td>Avg. High Goals:</td><td>' + avgHighGoals + '</td></tr>' +
-        '<tr><td>Avg. Low Goals:</td><td>' + avgLowGoals + '</td></tr>' +
-        '<tr><td>Avg. Crossing Points:</td><td>' + avgCrossing + '</td></tr>' +
-        '<tr><td>Avg. Challenge/Scale Points:</td><td>' + avgChallenge + '</td></tr>' +
-        '</table>');
-        
-      $el.append('<p style="clear:both; text-align:center;margin:5px 0px 5px; 0px;">TEAM STATS</p>');
-      $el.append('<table style="width:100%;">' + 
-          '<tr><td>Robot Stability:</td><td>' + (avgStabilityRating === -1 ? 'N/A' : avgStabilityRating) + '</td></tr>' +
-          '<tr><td>High Goal Accuracy:</td><td class="match-intel-rating-val" data-rating-accuracy="' + highGoalAccuracy + '">' + highGoalAccuracy + '% ( ' + highGoalsMade + ' | ' + highGoalsMissed + ' )</td></tr>' +
-          '<tr><td>Low Goal Accuracy:</td><td class="match-intel-rating-val" data-rating-accuracy="' + lowGoalAccuracy + '">' + lowGoalAccuracy + '% ( ' + lowGoalsMade + ' | ' + lowGoalsMissed + ' )</td></tr>' +
-          '<tr><td>Scale Accuracy:</td><td class="match-intel-rating-val" data-rating-accuracy="' + towerScaleAccuracy + '">' + towerScaleAccuracy + '% ( ' + towerScaleMade + ' | ' + towerScaleMissed + ' )</td></tr>' +
-          '</table>');
 
+      // build summary_panel
+      $el.append('<h4 style="float:left;"><a href="{{ site.baseurl }}/team-details?team_id=' + v.team_key + '">Team: ' + v.team_key.replace(/frc/i, '') + '</a></h4>');
+      $el.append('<a style="float:left;margin-top:10px;margin-left:10px;color:#efc819;font-size:16px;" href="{{ site.baseurl }}/rate?team_id=' + v.team_key + '"><i class="fa fa-star-o"> Rate</i></a>');
+
+      var summary_panel_html = '<div style="clear:both;">'
+      app_match_intel_config.summary_panel.forEach(function(el) {
+        summary_panel_html += `<p class="pull-left" style="margin:0px 10px 5px 0px;">${el.title}: <span class="label label-default" style="font-size:14px;">${v[el.id]}</span></p>`;
+      });
+      $el.append(summary_panel_html + '</div>')
+        
+      // build match status
+      $el.append('<p style="clear:both;text-align:center;margin:5px 0px 5px; 0px;">MATCH STATS</p>');
+      var match_stats_html = '<table style="width:100%;">'
+      app_match_intel_config.match_stats.forEach(function(el) {
+        if (el.calc_type === 'accuracy') {
+          match_stats_html += `<tr><td>${el.title}</td><td class="match-intel-rating-val" data-rating-accuracy="${v[el.id].accuracy}">${v[el.id].accuracy}% ( ${v[el.id].made_count} | ${v[el.id].missed_count} )</td></tr>`
+        }
+        else {
+          match_stats_html += `<tr><td>${el.title}:</td><td>${v[el.id]}</td></tr>`;
+        }
+      });
+      $el.append(match_stats_html + '</table>')
+
+      // build team stats
+      $el.append('<p style="clear:both; text-align:center;margin:5px 0px 5px; 0px;">TEAM STATS</p>');
+      var team_stats_html = '<table style="width:100%;">'
+      app_match_intel_config.team_stats.forEach(function(el) {
+        if (el.calc_type === 'accuracy') {
+          team_stats_html += `<tr><td>${el.title}</td><td class="match-intel-rating-val" data-rating-accuracy="${v[el.id].accuracy}">${v[el.id].accuracy}% ( ${v[el.id].made_count} | ${v[el.id].missed_count} )</td></tr>`
+        }
+        else {
+          team_stats_html += `<tr><td>${el.title}:</td><td>${v[el.id]}</td></tr>`;
+        }
+      });
+      $el.append(team_stats_html + '</table>')
+
+      // build strengths/weakness table
       var $weakTbl = $('<table style="width:100%;">');
-      $.each(bottom3obstacles, function (i, e) {
-        $weakTbl.append('<tr><td>' + e.name + ':</td><td class="match-intel-rating-val" data-rating-accuracy="' + e.accuracy + '">' + e.text + '</td></tr>');
+      $.each(sw_bottom3, function (i, e) {
+        $weakTbl.append('<tr><td>' + e.name + ':</td><td class="match-intel-rating-val" data-rating-accuracy="' + e.rating + '">' + e.text + '</td></tr>');
       });
       $weakTbl.append('</table>');
 
       var $strengthTbl = $('<table style="width:100%;">');
-      $.each(top3obstacles, function (i,e) {
-        $strengthTbl.append('<tr><td>' + e.name + ':</td><td class="match-intel-rating-val" data-rating-accuracy="' + e.accuracy + '">' + e.text + '</td></tr>');
+      $.each(sw_top3, function (i,e) {
+        $strengthTbl.append('<tr><td>' + e.name + ':</td><td class="match-intel-rating-val" data-rating-accuracy="' + e.rating + '">' + e.text + '</td></tr>');
       });
       $strengthTbl.append('</table>');
 

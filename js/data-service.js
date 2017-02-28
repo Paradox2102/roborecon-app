@@ -351,6 +351,7 @@ ParadoxScout.DataService = (function() {
                 return record.team_key === teamKey;
               });
 
+              // add default data
               teams[teamKey] = match;
               teams[teamKey].team_key = teamKey;
               teams[teamKey].team_number = parseInt(t ? t.team_number : teamKey.replace('frc',''));
@@ -358,13 +359,11 @@ ParadoxScout.DataService = (function() {
               teams[teamKey].oprs = teamDetails.oprs;
               teams[teamKey].ccwms = teamDetails.ccwms;
               teams[teamKey].dprs = teamDetails.dprs;
-              teams[teamKey].ranking = teamDetails.ranking || 0;
-              teams[teamKey].rankingScore = teamDetails.rankingScore || 0;
-              teams[teamKey].rankingAuto = teamDetails.rankingAuto || 0;
-              teams[teamKey].rankingScaleChallenge = teamDetails.rankingScaleChallenge || 0;
-              teams[teamKey].rankingGoals = teamDetails.rankingGoals || 0;
-              teams[teamKey].rankingDef = teamDetails.rankingDef || 0;
-              teams[teamKey].rankingPlayed = teamDetails.rankingPlayed || 0;
+
+              // add configurable ranking data
+              tba_api_ranking_config.forEach(function(el) {
+                teams[teamKey][el.id] = teamDetails[el.id] || 0;
+              });
             }
           });
         });

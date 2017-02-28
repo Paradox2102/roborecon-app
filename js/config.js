@@ -177,3 +177,32 @@ var app_scouting_reports_config = {
     },
   ]
 }
+
+// ------------------------------------------------------------------------
+// Configuration - For the team-details view
+// ------------------------------------------------------------------------
+var app_match_intel_config = {
+  summary_panel: [
+    { id: 'oprs', title: 'OPRS', tooltip: 'Offensive Power Rating: expected points contribution per match', decimal_places: 2 },
+    { id: 'ccwms', title: 'CCWMS', tooltip: 'Calculated Contribution to Winning Margin', decimal_places: 2 },
+    { id: 'avgPoints', title: 'Avg.', calc_type: 'avg', agg:['totalPoints'], decimal_places: 2 }
+  ],
+  match_stats: [
+    { id: 'avgHighGoals', title: 'Avg. High Goals', calc_type: 'avg', agg:['autoBouldersHigh', 'teleopBouldersHigh'] }, 
+    { id: 'avgLowGoals', title: 'Avg. Low Goals', calc_type: 'avg', agg:['autoBouldersLow', 'teleopBouldersLow'] }, 
+    { id: 'avgCrossingPoints', title: 'Avg. Crossing Points', calc_type: 'avg', agg:['autoCrossingPoints', 'teleopCrossingPoints'] }, 
+    { id: 'avgChallengeScalePoints', title: 'Avg. Challenge/Scale Points', calc_type: 'avg', agg:['teleopChallengePoints', 'teleopScalePoints'] }
+  ],
+  team_stats: [
+    { id: 'avgRobotStability', title: 'Robot Stability', calc_type: 'avg', agg:['rating_overall_robot_stability'], min: 1, max: 5 }, 
+    { id: 'accHighGoals', title: 'High Goal Accuracy',calc_type: 'accuracy',  made_ids: ['rating_scoring_high_goals_made'], missed_ids: ['rating_scoring_high_goals_missed'] }, 
+    { id: 'accLowGoals', title: 'Low Goal Accuracy',calc_type: 'accuracy',  made_ids: ['rating_scoring_low_goals_made'], missed_ids: ['rating_scoring_low_goals_missed'] }, 
+    { id: 'accScale', title: 'Scale Accuracy', calc_type: 'accuracy',  made_ids: ['rating_scoring_tower_scale_made'], missed_ids: ['rating_scoring_tower_scale_missed'] }
+  ],
+  strengths_weaknesses_stats : [
+    { id: 'avgRobotStability', title: 'Robot Stability', calc_type: 'avg', agg:['rating_overall_robot_stability'], min: 1, max: 5 }, 
+    { id: 'accHighGoals', title: 'High Goal Accuracy',calc_type: 'accuracy',  made_ids: ['rating_scoring_high_goals_made'], missed_ids: ['rating_scoring_high_goals_missed'] }, 
+    { id: 'accLowGoals', title: 'Low Goal Accuracy',calc_type: 'accuracy',  made_ids: ['rating_scoring_low_goals_made'], missed_ids: ['rating_scoring_low_goals_missed'] }, 
+    { id: 'accScale', title: 'Scale Accuracy', calc_type: 'accuracy',  made_ids: ['rating_scoring_tower_scale_made'], missed_ids: ['rating_scoring_tower_scale_missed'] }
+  ]
+};
