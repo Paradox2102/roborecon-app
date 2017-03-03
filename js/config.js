@@ -8,7 +8,7 @@ var tba_api_ranking_config = [
   { id: 'rankingAuto', title: 'Auto', display_order: 3, arr_index: 4 },
   { id: 'rankingRotor', title: 'Rotor', display_order: 4, arr_index: 5 },
   { id: 'rankingTouchpad', title: 'Touchpad', display_order: 5, arr_index: 6 },
-  { id: 'Pressure', title: 'Defense', display_order: 6, arr_index: 7 },
+  { id: 'Pressure', title: 'Pressure', display_order: 6, arr_index: 7 },
   { id: 'rankingRecord', title: 'Record (W-L-T)', display_order: 7, arr_index: 8 },
   { id: 'rankingPlayed', title: 'Played', display_order: 8, arr_index: 9 }
 ];
@@ -118,7 +118,7 @@ var app_team_details_config = {
     { id: 'rankingScore', title: 'Ranking Score', display_order: 4 },
     { id: 'rankingRotor', title: 'Rotor', display_order: 4, arr_index: 5 },
     { id: 'rankingTouchpad', title: 'Touchpad', display_order: 5, arr_index: 6 },
-    { id: 'Pressure', title: 'Defense', display_order: 6, arr_index: 7 },
+    { id: 'Pressure', title: 'Pressure', display_order: 6, arr_index: 7 },
     { id: 'oprs', title: 'OPRS', tooltip: 'Offensive Power Rating: expected points contribution per match', decimal_places: 2, display_order: 8 },
     { id: 'ccwms', title: 'CCWMS', tooltip: 'Calculated Contribution to Winning Margin', decimal_places: 2, display_order: 9 },
     { id: 'dprs', title: 'DPRS', tooltip: 'Defensive Power Rating', decimal_places: 2, display_order: 10 }

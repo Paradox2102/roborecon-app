@@ -425,11 +425,17 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
           
           $.each (match.alliances.blue.teams, function(i, team) {
             delete match.score_breakdown.blue['']
+            $.each(match.score_breakdown.blue, function(k,v) {
+              if (typeof(v) === 'boolean') match.score_breakdown.blue[k] = +v
+            });
             teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.blue });
           });
 
           $.each (match.alliances.red.teams, function(i, team) {
             delete match.score_breakdown.red['']
+            $.each(match.score_breakdown.red, function(k,v) {
+              if (typeof(v) === 'boolean') match.score_breakdown.red[k] = +v
+            });
             teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.red });
           });
         });

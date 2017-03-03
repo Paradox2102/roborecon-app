@@ -26,7 +26,7 @@ header:
 # These are the most imporant settings, choose carefully
 
 scout:
-    currentevent: 2017mndu # the Event key for the event you want to scout, can be found on TBA
+    currentevent: 2017flwp # the Event key for the event you want to scout, can be found on TBA
     firebase:
         rooturl: https://paradox-scout-dc256.firebaseio.com/ # Address of Firebase Server
         apikey: AIzaSyDleJPx9RQChKn4DlLV9nXqMNafP7BvhG0 # API Key of Firebase
