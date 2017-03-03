@@ -404,11 +404,21 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
          
          tba_aggs.forEach(function(obj){
                 match.score_breakdown.blue[obj.id] = obj.agg.reduce(function (preVal, el) {
+                  if (obj.dtype == 'bool') {
+                    return preVal + (match.score_breakdown.blue[el] === true ? 1 : 0);
+                  }
+                  else {
                     return preVal + parseInt(match.score_breakdown.blue[el] || (obj.default_value || 0));
+                  }
                 }, 0);
                 
                 match.score_breakdown.red[obj.id] = obj.agg.reduce(function (preVal, el) {
+                  if (obj.dtype == 'bool') {
+                    return preVal + (match.score_breakdown.red[el] === true ? 1 : 0);
+                  }
+                  else {
                     return preVal + parseInt(match.score_breakdown.red[el] || (obj.default_value || 0));
+                  }
                 }, 0);
          }); 
           
@@ -447,19 +457,18 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
               
 
             };
-
-            $.each (rankingData, function(index, arr) { 
-              var k = score.teamKey.replace('frc','');
-              if (arr[1] === k) {
-                tba_api_ranking_config.forEach(function (el){
-                    teamEventDetails[score.teamKey][el.id] = arr[el.arr_index];
-                });
-
-                
-              }
-              
-            });
           }
+        });
+
+        $.each (rankingData, function(index, arr) { 
+          if (index === 0 || arr.length < 1) return;
+
+          var tk = 'frc' + arr[1];
+          if (!tk in teamEventDetails) return;
+
+          tba_api_ranking_config.forEach(function (el) {
+            teamEventDetails[tk][el.id] = arr[el.arr_index];
+          });
         });
 
         // update db

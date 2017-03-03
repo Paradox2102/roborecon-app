@@ -4,19 +4,20 @@
 var tba_api_ranking_config = [
   { id: 'ranking', title: 'Rank', display_order: 1, arr_index: 0 },
   { id: 'rankingScore', title: 'Ranking Score', display_order: 2, arr_index: 2 },
-  { id: 'rankingAuto', title: 'Auto', display_order: 3, arr_index: 3 },
-  { id: 'rankingScaleChallenge', title: 'Scale/Chal', display_order: 4, arr_index: 4 },
-  { id: 'rankingGoals', title: 'Goals', display_order: 5, arr_index: 5 },
-  { id: 'rankingDef', title: 'Defense', display_order: 6, arr_index: 6 },
-  { id: 'rankingRecord', title: 'Record (W-L-T)', display_order: 7, arr_index: 7 },
-  { id: 'rankingPlayed', title: 'Played', display_order: 8, arr_index: 8 }
+  { id: 'rankingMatchPoints', title: 'Match Points', display_order: 2, arr_index: 3 },
+  { id: 'rankingAuto', title: 'Auto', display_order: 3, arr_index: 4 },
+  { id: 'rankingRotor', title: 'Rotor', display_order: 4, arr_index: 5 },
+  { id: 'rankingTouchpad', title: 'Touchpad', display_order: 5, arr_index: 6 },
+  { id: 'Pressure', title: 'Defense', display_order: 6, arr_index: 7 },
+  { id: 'rankingRecord', title: 'Record (W-L-T)', display_order: 7, arr_index: 8 },
+  { id: 'rankingPlayed', title: 'Played', display_order: 8, arr_index: 9 }
 ];
 
 var tba_api_scoring_config = [
   {
     id: 'xTotalRotorsEngaged',
     title: 'Rotors Engaged',
-    dtype: 'int',
+    dtype: 'bool',
     agg: ['rotor1Engaged', 'rotor2Engaged', 'rotor3Engaged', 'rotor4Engaged']
   }, {
     id: 'xTotalRotorPoints',
@@ -115,11 +116,12 @@ var app_team_details_config = {
     { id: 'view_pointsPerMatch', title: 'Points/Match', decimal_places: 2, display_order: 2 },
     { id: 'ranking', title: 'Rank', display_order: 3 },
     { id: 'rankingScore', title: 'Ranking Score', display_order: 4 },
-    { id: 'rankingScaleChallenge', title: 'Scale/Challenge', display_order: 5 },
-    { id: 'rankingGoals', title: 'Goals', display_order: 6 },
-    { id: 'oprs', title: 'OPRS', tooltip: 'Offensive Power Rating: expected points contribution per match', decimal_places: 2, display_order: 7 },
-    { id: 'ccwms', title: 'CCWMS', tooltip: 'Calculated Contribution to Winning Margin', decimal_places: 2, display_order: 8 },
-    { id: 'dprs', title: 'DPRS', tooltip: 'Defensive Power Rating', decimal_places: 2, display_order: 9 }
+    { id: 'rankingRotor', title: 'Rotor', display_order: 4, arr_index: 5 },
+    { id: 'rankingTouchpad', title: 'Touchpad', display_order: 5, arr_index: 6 },
+    { id: 'Pressure', title: 'Defense', display_order: 6, arr_index: 7 },
+    { id: 'oprs', title: 'OPRS', tooltip: 'Offensive Power Rating: expected points contribution per match', decimal_places: 2, display_order: 8 },
+    { id: 'ccwms', title: 'CCWMS', tooltip: 'Calculated Contribution to Winning Margin', decimal_places: 2, display_order: 9 },
+    { id: 'dprs', title: 'DPRS', tooltip: 'Defensive Power Rating', decimal_places: 2, display_order: 10 }
   ],
   scoring_viz: [
     { id: 'totalPoints', title: 'Total Points', display_order: 1, visible: true }, 
@@ -137,15 +139,19 @@ var app_team_details_config = {
     { id: 'autoMobilityPoints', title: 'Auto Mobility Points', display_order: 11, visible: true }
   ],
   scouting_viz: [
-    { id: 'rating_scoring_high_goals_made', title: 'High Goals', display_order: 1, missed_id: 'rating_scoring_high_goals_made_auto' }, 
-    { id: 'rating_scoring_low_goals_made', title: 'Low Goal', display_order: 2, missed_id: 'rating_scoring_low_goals_made_auto' }, 
-    { id: 'rating_scoring_gears_made', title: 'Gears', display_order: 3, missed_id: 'rating_scoring_gears_made_auto' }, 
-    { id: 'rating_overall_gear_efficiency', title: 'Gear Efficiency', display_order: 3, missed_id: 'rating_overall_gear_efficiency_auto' }, 
+    { id: 'rating_scoring_gears_made', title: 'Gears', display_order: 3, missed_id: '' }, 
+    { id: 'rating_scoring_gears_made_auto', title: 'Gears (auto)', display_order: 3, missed_id: '' }, 
+
+    { id: 'rating_scoring_high_goals_made', title: 'High Goals', display_order: 1, missed_id: '' }, 
+    { id: 'rating_scoring_high_goals_made_auto', title: 'High Goals (auto)', display_order: 1, missed_id: '' }, 
+    { id: 'rating_scoring_low_goals_made', title: 'Low Goals', display_order: 2, missed_id: '' }, 
+    { id: 'rating_scoring_low_goals_made_auto', title: 'Low Goals (auto)', display_order: 2, missed_id: '' }, 
+    
     { id: 'rating_scoring_airship_climb', title: 'Takeoff (teleop)', display_order: 4, missed_id: '' },
-    { id: '', title: 'Mobility (auto)', display_order: 4, missed_id: 'rating_scoring_base_line_made_auto' },
+    { id: 'rating_scoring_base_line_made_auto', title: 'Mobility (auto)', display_order: 4, missed_id: '' },
     { id: 'rating_overall_robot_stability', title: 'Stability', display_order: 4, missed_id: '' }
   ],
-  scouting_viz_series: {  made_title: 'Teleop', missed_title: 'Auto' }
+  scouting_viz_series: {  made_title: 'Made', missed_title: 'Missed' }
 };
 
 // ------------------------------------------------------------------------
@@ -191,6 +197,7 @@ var app_match_intel_config = {
   match_stats: [
     { id: 'avgRotorPoints', title: 'Avg. Rotor Points', calc_type: 'avg', agg:['autoRotorPoints', 'teleopRotorPoints'] },
     { id: 'avgRotorPointsAuto', title: 'Avg. Rotor Points (auto)', calc_type: 'avg', agg:['autoRotorPoints'] },
+    { id: 'avgRotorsEngaged', title: 'Avg. Rotors Engaged', calc_type: 'avg', agg:['xTotalRotorsEngaged'] }, 
     { id: 'avgFuelPoints', title: 'Avg. Fuel Points', calc_type: 'avg', agg:['autoFuelPoints', 'teleopFuelPoints'] }, 
     { id: 'avgFuelPointsAuto', title: 'Avg. Fuel Points (auto)', calc_type: 'avg', agg:['autoFuelPoints'] }
   ],
@@ -204,9 +211,9 @@ var app_match_intel_config = {
     { id: 'avgHighGoalsAuto', title: 'Avg. High Goals (auto)',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto'] }, 
     { id: 'avgLowGoals', title: 'Avg. Low Goals', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto', 'rating_scoring_low_goals_made'] }, 
     { id: 'avgLowGoalsAuto', title: 'Avg. Low Goals (auto)', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto'] },
-    
-    { id: 'avgClimbing', title: 'Climbing Accuracy', calc_type: 'avg', agg:['rating_scoring_airship_climb'] }, 
-    { id: 'avgMobility', title: 'Mobility Accuracy', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'] } 
+
+    { id: 'avgClimbing', title: 'Climbing Accuracy', calc_type: 'avg', agg:['rating_scoring_airship_climb'], min: 0, max: 1 }, 
+    { id: 'avgMobility', title: 'Mobility Accuracy', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 } 
   ],
   strengths_weaknesses_stats : [
     { id: 'avgGearsMade', title: 'Avg. Gears',calc_type: 'avg', agg:['rating_scoring_gears_made', 'rating_scoring_gears_made_auto'] },
@@ -218,8 +225,8 @@ var app_match_intel_config = {
     { id: 'avgLowGoals', title: 'Avg. Low Goals', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto', 'rating_scoring_low_goals_made'] }, 
     { id: 'avgLowGoalsAuto', title: 'Avg. Low Goals (auto)', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto'] },
 
-    { id: 'avgClimbing', title: 'Climbing Accuracy', calc_type: 'avg', agg:['rating_scoring_airship_climb'] }, 
-    { id: 'avgMobility', title: 'Mobility Accuracy', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'] } 
+    { id: 'avgClimbing', title: 'Climbing Accuracy', calc_type: 'avg', agg:['rating_scoring_airship_climb'], min: 0, max: 1 }, 
+    { id: 'avgMobility', title: 'Mobility Accuracy', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 } 
     // { id: 'accScale', title: 'Scale Accuracy', calc_type: 'accuracy',  made_ids: ['rating_scoring_tower_scale_made'], missed_ids: ['rating_scoring_tower_scale_missed'] }
   ]
 };
