@@ -164,7 +164,7 @@ permalink: /team-details/
           });
         });
 
-        var series = [{ name: 'Made', data: madeData }, { name: 'Missed', data: missedData }];
+        var series = [{ name: app_team_details_config.scouting_viz_series.made_title, data: madeData }, { name: app_team_details_config.scouting_viz_series.missed_title, data: missedData }];
 
         scoutingVizOptions.xAxis.categories = categories;
         scoutingVizOptions.series = series;

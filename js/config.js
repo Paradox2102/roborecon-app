@@ -14,41 +14,38 @@ var tba_api_ranking_config = [
 
 var tba_api_scoring_config = [
   {
-    id: 'xCrossingPoints',
-    title: 'Crossing Points',
+    id: 'xTotalRotorsEngaged',
+    title: 'Rotors Engaged',
     dtype: 'int',
-    agg: ['autoCrossingPoints', 'teleopCrossingPoints']
+    agg: ['rotor1Engaged', 'rotor2Engaged', 'rotor3Engaged', 'rotor4Engaged']
   }, {
-    id: 'xBoulderPoints',
-    title: 'Boulder Points',
+    id: 'xTotalRotorPoints',
+    title: 'Rotor Points',
     dtype: 'int',
-    agg: ['autoBoulderPoints', 'teleopBoulderPoints']
+    agg: ['autoRotorPoints', 'teleopRotorPoints']
   }, {
-    id: 'xTotalHighGoals',
-    title: 'High Goals',
+    id: 'xTotalFuelPoints',
+    title: 'Fuel Points',
     dtype: 'int',
-    agg: ['autoBouldersHigh', 'teleopBouldersHigh']
+    agg: ['autoFuelPoints', 'teleopFuelPoints']
   }, {
-    id: 'xTotalLowGoals',
-    title: 'Low Goals',
+    id: 'xTotalHighFuels',
+    title: 'High Fuels',
     dtype: 'int',
-    agg: ['autoBouldersLow', 'teleopBouldersLow']
+    agg: ['autoFuelHigh', 'teleopFuelHigh']
   }, {
-    id: 'position2',
-    title: 'Position Two',
+    id: 'xTotalLowFuels',
+    title: 'Low Fuels',
     dtype: 'int',
-    sub: 'position2crossings'
-  }, {
-    id: 'position3',
-    title: 'Position Four',
-    dtype: 'int',
-    sub: 'position3crossings'
-  }, {
-    id: 'position4',
-    title: 'Position Four',
-    dtype: 'int',
-    sub: 'position4crossings'
+    agg: ['autoFuelLow', 'teleopFuelLow']
   }];
+  // { keeping this in here so we remember we can do substitutions
+  //   id: 'position2',
+  //   title: 'Position Two',
+  //   dtype: 'int',
+  //   sub: 'position2crossings'
+  // }
+
 
 // ------------------------------------------------------------------------
 // Configuration - For the primary dashboard
@@ -71,39 +68,37 @@ var app_dashboard_config = {
       data: 'dprs', title: 'DPRS', orderSequence: ['desc', 'asc'], defaultContent: 0,
       render: function (data) { return Math.round(data * 100) / 100; }
     },
-    // offense #s and points
-    { data: 'xTotalHighGoals', title: 'High Goals', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { data: 'xTotalLowGoals', title: 'Low Goals', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { data: 'xBoulderPoints', title: 'Boulder Points', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { data: 'xCrossingPoints', title: 'Crossing Points', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    // aggregated category points/counts
+    { data: 'xTotalRotorPoints', title: 'Rotor Points', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { data: 'xTotalRotorsEngaged', title: '# Rotors Engaged', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { data: 'xTotalFuelPoints', title: 'Fuel Points', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { data: 'xTotalHighFuels', title: 'High Fuels', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { data: 'xTotalLowFuels', title: 'Low Fuels', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     // totals
     { title: 'Total Points', data: 'totalPoints', orderSequence: ['desc', 'asc'] },
     { title: 'Teleop Points', data: 'teleopPoints', orderSequence: ['desc', 'asc'] },
     { title: 'Auto Points', data: 'autoPoints', orderSequence: ['desc', 'asc'] },
     // other ranking info
-    { title: 'Auto', data: 'rankingAuto', orderSequence: ['desc', 'asc'] },
-    { title: 'Scale Challenge', data: 'rankingScaleChallenge', orderSequence: ['desc', 'asc'] },
-    { title: 'Goals', data: 'rankingGoals', orderSequence: ['desc', 'asc'] },
-    { title: 'Def.', data: 'rankingDef', orderSequence: ['desc', 'asc'] },
-    // obstacles crossing details
-    { title: 'Pos.1 X Count', data: 'position1crossings', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { title: 'ChevalDeFrise X Count', data: 'A_ChevalDeFrise', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { title: 'Drawbridge X Count', data: 'C_Drawbridge', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { title: 'Moat Count X Count', data: 'B_Moat', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { title: 'Portcullis X Count', data: 'A_Portcullis', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { title: 'Ramparts X Count', data: 'B_Ramparts', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { title: 'RockWall X Count', data: 'D_RockWall', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { title: 'RoughTerrain X Count', data: 'D_RoughTerrain', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { title: 'SallyPort X Count', data: 'C_SallyPort', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'Rotor Ranking Points', data: 'rotorRankingPointAchieved', orderSequence: ['desc', 'asc'] },
+    { title: 'Rotor Bonus Points', data: 'rotorBonusPoints', orderSequence: ['desc', 'asc'] },
+    { title: 'Fuel Ranking Points', data: 'kPaRankingPointAchieved', orderSequence: ['desc', 'asc'] },
+    { title: 'Fuel Bonus Points', data: 'kPaBonusPoints', orderSequence: ['desc', 'asc'] },
+    { title: 'Takeoff Points', data: 'teleopTakeoffPoints', orderSequence: ['desc', 'asc'] },
+    { title: 'Mobility Points (auto)', data: 'autoMobilityPoints', orderSequence: ['desc', 'asc'] },
+    // rotor/fuel details
+    { title: 'Auto Rotor Points', data: 'autoRotorPoints', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'Teleop Rotor Points', data: 'teleopRotorPoints', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'Auto Fuel Points', data: 'autoFuelPoints', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'Teleop Fuel Points', data: 'teleopFuelPoints', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'Auto Fuel High', data: 'autoFuelHigh', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'Teleop Fuel High', data: 'teleopFuelHigh', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'Auto Fuel Low', data: 'autoFuelLow', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'Teleop Fuel Low', data: 'teleopFuelLow', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     // other
-    { title: 'Auto Reach Points', data: 'autoReachPoints', orderSequence: ['desc', 'asc'] },
-    { title: 'Teleop Challenge Points', data: 'teleopChallengePoints', orderSequence: ['desc', 'asc'] },
-    { title: 'Teleop Scale Points', data: 'teleopScalePoints', orderSequence: ['desc', 'asc'] },
-    { title: 'Teleop Defenses Breached', data: 'teleopDefensesBreached', orderSequence: ['desc', 'asc'] },
-    { title: 'Teleop Tower Captured', data: 'teleopTowerCaptured', orderSequence: ['desc', 'asc'] },
-    { title: 'Breach Points', data: 'breachPoints', orderSequence: ['desc', 'asc'] },
-    { title: 'CapturePoints', data: 'capturePoints', orderSequence: ['desc', 'asc'] },
-    { title: 'Tower End Strength', data: 'towerEndStrength', orderSequence: ['desc', 'asc'] },
+    { title: 'Rotor 1 Engaged', data: 'rotor1Engaged', orderSequence: ['desc', 'asc'] },
+    { title: 'Rotor 2 Engaged', data: 'rotor2Engaged', orderSequence: ['desc', 'asc'] },
+    { title: 'Rotor 3 Engaged', data: 'rotor3Engaged', orderSequence: ['desc', 'asc'] },
+    { title: 'Rotor 4 Engaged', data: 'rotor4Engaged', orderSequence: ['desc', 'asc'] },
     { title: 'Adjust Points', data: 'adjustPoints', orderSequence: ['desc', 'asc'] },
     { title: 'Foul Points', data: 'foulPoints', orderSequence: ['desc', 'asc'] },
     { title: 'Foul Count', data: 'foulCount', orderSequence: ['desc', 'asc'] },
@@ -129,22 +124,28 @@ var app_team_details_config = {
   scoring_viz: [
     { id: 'totalPoints', title: 'Total Points', display_order: 1, visible: true }, 
     { id: 'teleopPoints', title: 'Teleop Points', display_order: 2, visible: true }, 
-    { id: 'teleopBoulderPoints', title: 'Teleop Boulder Points', display_order: 3, visible: true }, 
-    { id: 'teleopBouldersHigh', title: 'Teleop High Goals', display_order: 4 }, 
-    { id: 'teleopBouldersLow', title: 'Teleop Low Goals', display_order: 5 }, 
-    { id: 'teleopCrossingPoints', title: 'Teleop Crossing Points', display_order: 6, visible: true }, 
+    { id: 'teleopRotorPoints', title: 'Teleop Rotor Points', display_order: 3, visible: true }, 
+    { id: 'teleopFuelPoints', title: 'Teleop Low Goals', display_order: 5 }, 
+    { id: 'teleopFuelHigh', title: 'Teleop Low Goals', display_order: 5 },
+    { id: 'teleopFuelLow', title: 'Teleop Low Goals', display_order: 5 },
+    { id: 'teleopTakeoffPoints', title: 'Teleop Takeoff Points', display_order: 6, visible: true }, 
     { id: 'autoPoints', title: 'Auto Points', display_order: 7, visible: true },
-    { id: 'autoBoulderPoints', title: 'Auto Boulder Points', display_order: 8, visible: true }, 
-    { id: 'autoBouldersHigh', title: 'Auto High Goals', display_order: 9 }, 
-    { id: 'autoBouldersLow', title: 'Auto Low Goals', display_order: 10 }, 
-    { id: 'autoCrossingPoints', title: 'Auto Crossing Points', display_order: 11, visible: true }
+    { id: 'autoRotorPoints', title: 'Auto Rotor Points', display_order: 4 }, 
+    { id: 'autoFuelPoints', title: 'Auto Fuel Points', display_order: 8, visible: true }, 
+    { id: 'autoFuelsHigh', title: 'Auto High Fuels', display_order: 9 }, 
+    { id: 'autoFuelsLow', title: 'Auto Low Fuels', display_order: 10 }, 
+    { id: 'autoMobilityPoints', title: 'Auto Mobility Points', display_order: 11, visible: true }
   ],
   scouting_viz: [
-    { id: 'rating_scoring_high_goals_made', title: 'High Goals', display_order: 1, missed_id: 'rating_scoring_high_goals_missed' }, 
-    { id: 'rating_scoring_low_goals_made', title: 'Low Goal', display_order: 2, missed_id: 'rating_scoring_low_goals_missed' }, 
-    { id: 'rating_scoring_tower_scale_made', title: 'Tower Climb', display_order: 3, missed_id: 'rating_scoring_tower_scale_missed' }, 
-    { id: 'rating_obstacle_cheval_de_frise_made', title: 'Cheval', display_order: 4, missed_id: 'rating_obstacle_cheval_de_frise_missed' }
-  ]
+    { id: 'rating_scoring_high_goals_made', title: 'High Goals', display_order: 1, missed_id: 'rating_scoring_high_goals_made_auto' }, 
+    { id: 'rating_scoring_low_goals_made', title: 'Low Goal', display_order: 2, missed_id: 'rating_scoring_low_goals_made_auto' }, 
+    { id: 'rating_scoring_gears_made', title: 'Gears', display_order: 3, missed_id: 'rating_scoring_gears_made_auto' }, 
+    { id: 'rating_overall_gear_efficiency', title: 'Gear Efficiency', display_order: 3, missed_id: 'rating_overall_gear_efficiency_auto' }, 
+    { id: 'rating_scoring_airship_climb', title: 'Takeoff (teleop)', display_order: 4, missed_id: '' },
+    { id: '', title: 'Mobility (auto)', display_order: 4, missed_id: 'rating_scoring_base_line_made_auto' },
+    { id: 'rating_overall_robot_stability', title: 'Stability', display_order: 4, missed_id: '' }
+  ],
+  scouting_viz_series: {  made_title: 'Teleop', missed_title: 'Auto' }
 };
 
 // ------------------------------------------------------------------------
@@ -188,21 +189,37 @@ var app_match_intel_config = {
     { id: 'avgPoints', title: 'Avg.', calc_type: 'avg', agg:['totalPoints'], decimal_places: 2 }
   ],
   match_stats: [
-    { id: 'avgHighGoals', title: 'Avg. High Goals', calc_type: 'avg', agg:['autoBouldersHigh', 'teleopBouldersHigh'] }, 
-    { id: 'avgLowGoals', title: 'Avg. Low Goals', calc_type: 'avg', agg:['autoBouldersLow', 'teleopBouldersLow'] }, 
-    { id: 'avgCrossingPoints', title: 'Avg. Crossing Points', calc_type: 'avg', agg:['autoCrossingPoints', 'teleopCrossingPoints'] }, 
-    { id: 'avgChallengeScalePoints', title: 'Avg. Challenge/Scale Points', calc_type: 'avg', agg:['teleopChallengePoints', 'teleopScalePoints'] }
+    { id: 'avgRotorPoints', title: 'Avg. Rotor Points', calc_type: 'avg', agg:['autoRotorPoints', 'teleopRotorPoints'] },
+    { id: 'avgRotorPointsAuto', title: 'Avg. Rotor Points (auto)', calc_type: 'avg', agg:['autoRotorPoints'] },
+    { id: 'avgFuelPoints', title: 'Avg. Fuel Points', calc_type: 'avg', agg:['autoFuelPoints', 'teleopFuelPoints'] }, 
+    { id: 'avgFuelPointsAuto', title: 'Avg. Fuel Points (auto)', calc_type: 'avg', agg:['autoFuelPoints'] }
   ],
   team_stats: [
     { id: 'avgRobotStability', title: 'Robot Stability', calc_type: 'avg', agg:['rating_overall_robot_stability'], min: 1, max: 5 }, 
-    { id: 'accHighGoals', title: 'High Goal Accuracy',calc_type: 'accuracy',  made_ids: ['rating_scoring_high_goals_made'], missed_ids: ['rating_scoring_high_goals_missed'] }, 
-    { id: 'accLowGoals', title: 'Low Goal Accuracy',calc_type: 'accuracy',  made_ids: ['rating_scoring_low_goals_made'], missed_ids: ['rating_scoring_low_goals_missed'] }, 
-    { id: 'accScale', title: 'Scale Accuracy', calc_type: 'accuracy',  made_ids: ['rating_scoring_tower_scale_made'], missed_ids: ['rating_scoring_tower_scale_missed'] }
+    { id: 'avgGearsMade', title: 'Avg. Gears',calc_type: 'avg', agg:['rating_scoring_gears_made', 'rating_scoring_gears_made_auto'] },
+    { id: 'avgGearEff', title: 'Gear Efficiency',calc_type: 'avg', agg:['rating_overall_gear_efficiency', 'rating_overall_gear_efficiency_auto'], min: 1, max: 5 },
+    { id: 'avgGearsMadeAuto', title: 'Avg. Gears (auto)',calc_type: 'avg', agg:['rating_scoring_gears_made_auto'] },
+   
+    { id: 'avgHighGoals', title: 'Avg. High Goals',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto', 'rating_scoring_high_goals_made_auto'] },  
+    { id: 'avgHighGoalsAuto', title: 'Avg. High Goals (auto)',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto'] }, 
+    { id: 'avgLowGoals', title: 'Avg. Low Goals', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto', 'rating_scoring_low_goals_made'] }, 
+    { id: 'avgLowGoalsAuto', title: 'Avg. Low Goals (auto)', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto'] },
+    
+    { id: 'avgClimbing', title: 'Climbing Accuracy', calc_type: 'avg', agg:['rating_scoring_airship_climb'] }, 
+    { id: 'avgMobility', title: 'Mobility Accuracy', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'] } 
   ],
   strengths_weaknesses_stats : [
-    { id: 'avgRobotStability', title: 'Robot Stability', calc_type: 'avg', agg:['rating_overall_robot_stability'], min: 1, max: 5 }, 
-    { id: 'accHighGoals', title: 'High Goal Accuracy',calc_type: 'accuracy',  made_ids: ['rating_scoring_high_goals_made'], missed_ids: ['rating_scoring_high_goals_missed'] }, 
-    { id: 'accLowGoals', title: 'Low Goal Accuracy',calc_type: 'accuracy',  made_ids: ['rating_scoring_low_goals_made'], missed_ids: ['rating_scoring_low_goals_missed'] }, 
-    { id: 'accScale', title: 'Scale Accuracy', calc_type: 'accuracy',  made_ids: ['rating_scoring_tower_scale_made'], missed_ids: ['rating_scoring_tower_scale_missed'] }
+    { id: 'avgGearsMade', title: 'Avg. Gears',calc_type: 'avg', agg:['rating_scoring_gears_made', 'rating_scoring_gears_made_auto'] },
+    { id: 'avgGearEff', title: 'Gear Efficiency',calc_type: 'avg', agg:['rating_overall_gear_efficiency', 'rating_overall_gear_efficiency_auto'], min: 1, max: 5 },
+    { id: 'avgGearsMadeAuto', title: 'Avg. Gears (auto)',calc_type: 'avg', agg:['rating_scoring_gears_made_auto'] },
+   
+    { id: 'avgHighGoals', title: 'Avg. High Goals',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto', 'rating_scoring_high_goals_made_auto'] },  
+    { id: 'avgHighGoalsAuto', title: 'Avg. High Goals (auto)',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto'] }, 
+    { id: 'avgLowGoals', title: 'Avg. Low Goals', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto', 'rating_scoring_low_goals_made'] }, 
+    { id: 'avgLowGoalsAuto', title: 'Avg. Low Goals (auto)', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto'] },
+
+    { id: 'avgClimbing', title: 'Climbing Accuracy', calc_type: 'avg', agg:['rating_scoring_airship_climb'] }, 
+    { id: 'avgMobility', title: 'Mobility Accuracy', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'] } 
+    // { id: 'accScale', title: 'Scale Accuracy', calc_type: 'accuracy',  made_ids: ['rating_scoring_tower_scale_made'], missed_ids: ['rating_scoring_tower_scale_missed'] }
   ]
 };
