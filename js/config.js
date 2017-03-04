@@ -124,19 +124,25 @@ var app_team_details_config = {
     { id: 'dprs', title: 'DPRS', tooltip: 'Defensive Power Rating', decimal_places: 2, display_order: 10 }
   ],
   scoring_viz: [
-    { id: 'totalPoints', title: 'Total Points', display_order: 1, visible: true }, 
-    { id: 'teleopPoints', title: 'Teleop Points', display_order: 2, visible: true }, 
-    { id: 'teleopRotorPoints', title: 'Teleop Rotor Points', display_order: 3, visible: true }, 
-    { id: 'teleopFuelPoints', title: 'Teleop Low Goals', display_order: 5 }, 
-    { id: 'teleopFuelHigh', title: 'Teleop Low Goals', display_order: 5 },
-    { id: 'teleopFuelLow', title: 'Teleop Low Goals', display_order: 5 },
-    { id: 'teleopTakeoffPoints', title: 'Teleop Takeoff Points', display_order: 6, visible: true }, 
-    { id: 'autoPoints', title: 'Auto Points', display_order: 7, visible: true },
-    { id: 'autoRotorPoints', title: 'Auto Rotor Points', display_order: 4 }, 
-    { id: 'autoFuelPoints', title: 'Auto Fuel Points', display_order: 8, visible: true }, 
-    { id: 'autoFuelsHigh', title: 'Auto High Fuels', display_order: 9 }, 
-    { id: 'autoFuelsLow', title: 'Auto Low Fuels', display_order: 10 }, 
-    { id: 'autoMobilityPoints', title: 'Auto Mobility Points', display_order: 11, visible: true }
+    { id: 'totalPoints', title: 'Total Points', display_order: 1 }, 
+    { id: 'teleopPoints', title: 'Points (teleop)', display_order: 2 }, 
+    { id: 'autoPoints', title: 'Points (auto)', display_order: 3 },
+    { id: 'xTotalRotorPoints', title: ' Rotor Points', display_order: 4, visible: true }, 
+    { id: 'xTotalFuelPoints', title: 'Fuel Points', display_order: 5, visible: true },
+    { id: 'teleopTakeoffPoints', title: 'Takeoff Points (teleop)', display_order: 6, visible: true }, 
+    { id: 'autoMobilityPoints', title: 'Auto Mobility Points (auto)', display_order: 7, visible: true },
+
+    { id: 'teleopRotorPoints', title: 'Rotor Points (teleop)', display_order: 8 }, 
+    { id: 'autoRotorPoints', title: 'Rotor Points (auto)', display_order: 9 }, 
+
+    { id: 'teleopFuelPoints', title: 'Fuel Points (teleop)', display_order: 10 }, 
+    { id: 'autoFuelPoints', title: 'Fuel Points (auto)', display_order: 11 }, 
+
+    { id: 'teleopFuelHigh', title: 'High Goals (teleop)', display_order: 12 },
+    { id: 'teleopFuelLow', title: 'Low Goals (teleop)', display_order: 13 },
+    { id: 'autoFuelsHigh', title: 'High Fuels (auto)', display_order: 14 }, 
+    { id: 'autoFuelsLow', title: 'Low Fuels (auto)', display_order: 15 }
+    
   ],
   scouting_viz: [
     { id: 'rating_scoring_gears_made', title: 'Gears', display_order: 3, missed_id: '' }, 
