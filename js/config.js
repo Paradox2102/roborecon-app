@@ -66,26 +66,21 @@ var app_dashboard_config = {
       render: function (data) { return Math.round(data * 100) / 100; }
     },
     {
-      data: 'dprs', title: 'DPRS', orderSequence: ['desc', 'asc'], defaultContent: 0,
+      data: 'dprs', title: 'DPRS', orderSequence: ['desc', 'asc'], defaultContent: 0, visible: false,
       render: function (data) { return Math.round(data * 100) / 100; }
     },
     // aggregated category points/counts
-    { data: 'xTotalRotorPoints', title: 'Rotor Points', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'TOTAL POINTS', data: 'totalPoints', orderSequence: ['desc', 'asc'] },
+    { title: 'TELEOP Points', data: 'teleopPoints', orderSequence: ['desc', 'asc'], visible: false },
+    { title: 'AUTO Points', data: 'autoPoints', orderSequence: ['desc', 'asc'], visible: false },
+    { data: 'xTotalRotorPoints', title: 'ROTOR Points', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { data: 'xTotalFuelPoints', title: 'FUEL Points', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'TAKEOFF Points', data: 'teleopTakeoffPoints', orderSequence: ['desc', 'asc'] },
+    { title: 'MOBILITY Points (auto)', data: 'autoMobilityPoints', orderSequence: ['desc', 'asc'] },
+    // counts
     { data: 'xTotalRotorsEngaged', title: '# Rotors Engaged', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { data: 'xTotalFuelPoints', title: 'Fuel Points', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { data: 'xTotalHighFuels', title: 'High Fuels', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { data: 'xTotalLowFuels', title: 'Low Fuels', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    // totals
-    { title: 'Total Points', data: 'totalPoints', orderSequence: ['desc', 'asc'] },
-    { title: 'Teleop Points', data: 'teleopPoints', orderSequence: ['desc', 'asc'] },
-    { title: 'Auto Points', data: 'autoPoints', orderSequence: ['desc', 'asc'] },
-    // other ranking info
-    { title: 'Rotor Ranking Points', data: 'rotorRankingPointAchieved', orderSequence: ['desc', 'asc'] },
-    { title: 'Rotor Bonus Points', data: 'rotorBonusPoints', orderSequence: ['desc', 'asc'] },
-    { title: 'Fuel Ranking Points', data: 'kPaRankingPointAchieved', orderSequence: ['desc', 'asc'] },
-    { title: 'Fuel Bonus Points', data: 'kPaBonusPoints', orderSequence: ['desc', 'asc'] },
-    { title: 'Takeoff Points', data: 'teleopTakeoffPoints', orderSequence: ['desc', 'asc'] },
-    { title: 'Mobility Points (auto)', data: 'autoMobilityPoints', orderSequence: ['desc', 'asc'] },
+    { data: 'xTotalHighFuels', title: '# High Goals', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { data: 'xTotalLowFuels', title: '# Low Goals', orderSequence: ['desc', 'asc'], defaultContent: 0, visible: false },
     // rotor/fuel details
     { title: 'Auto Rotor Points', data: 'autoRotorPoints', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     { title: 'Teleop Rotor Points', data: 'teleopRotorPoints', orderSequence: ['desc', 'asc'], defaultContent: 0 },
@@ -93,8 +88,13 @@ var app_dashboard_config = {
     { title: 'Teleop Fuel Points', data: 'teleopFuelPoints', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     { title: 'Auto Fuel High', data: 'autoFuelHigh', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     { title: 'Teleop Fuel High', data: 'teleopFuelHigh', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { title: 'Auto Fuel Low', data: 'autoFuelLow', orderSequence: ['desc', 'asc'], defaultContent: 0 },
-    { title: 'Teleop Fuel Low', data: 'teleopFuelLow', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'Auto Fuel Low', data: 'autoFuelLow', orderSequence: ['desc', 'asc'], defaultContent: 0, visible: false },
+    { title: 'Teleop Fuel Low', data: 'teleopFuelLow', orderSequence: ['desc', 'asc'], defaultContent: 0, visible: false },
+    // other ranking info
+    { title: 'Rotor Ranking Points', data: 'rotorRankingPointAchieved', orderSequence: ['desc', 'asc'] },
+    { title: 'Rotor Bonus Points', data: 'rotorBonusPoints', orderSequence: ['desc', 'asc'] },
+    { title: 'Fuel Ranking Points', data: 'kPaRankingPointAchieved', orderSequence: ['desc', 'asc'] },
+    { title: 'Fuel Bonus Points', data: 'kPaBonusPoints', orderSequence: ['desc', 'asc'] },
     // other
     { title: 'Rotor 1 Engaged', data: 'rotor1Engaged', orderSequence: ['desc', 'asc'] },
     { title: 'Rotor 2 Engaged', data: 'rotor2Engaged', orderSequence: ['desc', 'asc'] },
