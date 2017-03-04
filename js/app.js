@@ -178,6 +178,9 @@ ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams, next
       // # of matches played thus far
       var matchesPlayed = v.scores.scores ? Object.keys(v.scores.scores).length: 0;
 
+      // # of scouting reports for team
+      var numScoutingReports = Object.keys(teamReports).length
+
       // get rating scores and counts (the number of times a team was rated for each rating category)
       var team_scouting_scores = {};
       $.each(teamReports, function(reportKey, report) {
@@ -229,8 +232,10 @@ ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams, next
           });
 
           var total_score_avgs = []
-          if (num_scout_ratings_used > 0) {
-            total_score_avgs.push( scout_scores_avgs.reduce(function(prevVal, avg) { return prevVal + avg; }, 0.0) / scout_scores_avgs.length );
+          if ( num_scout_ratings_used > 0 ) {
+            var avgScore = scout_scores_avgs.reduce(function(prevVal, avg) { return prevVal + avg; }, 0.0);
+            if ( attr.min || attr.max ) avgScore = avgScore / scout_scores_avgs.length;
+            total_score_avgs.push(avgScore)
           }
           if (num_match_categories_used > 0) {
             total_score_avgs.push( tot_match_scores / matchesPlayed );

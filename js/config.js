@@ -207,7 +207,7 @@ var app_match_intel_config = {
     { id: 'avgGearEff', title: 'Gear Efficiency',calc_type: 'avg', agg:['rating_overall_gear_efficiency', 'rating_overall_gear_efficiency_auto'], min: 1, max: 5 },
     { id: 'avgGearsMadeAuto', title: 'Avg. Gears (auto)',calc_type: 'avg', agg:['rating_scoring_gears_made_auto'] },
    
-    { id: 'avgHighGoals', title: 'Avg. High Goals',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto', 'rating_scoring_high_goals_made_auto'] },  
+    { id: 'avgHighGoals', title: 'Avg. High Goals',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto', 'rating_scoring_high_goals_made'] },  
     { id: 'avgHighGoalsAuto', title: 'Avg. High Goals (auto)',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto'] }, 
     { id: 'avgLowGoals', title: 'Avg. Low Goals', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto', 'rating_scoring_low_goals_made'] }, 
     { id: 'avgLowGoalsAuto', title: 'Avg. Low Goals (auto)', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto'] },
@@ -220,7 +220,7 @@ var app_match_intel_config = {
     { id: 'avgGearEff', title: 'Gear Efficiency',calc_type: 'avg', agg:['rating_overall_gear_efficiency', 'rating_overall_gear_efficiency_auto'], min: 1, max: 5 },
     { id: 'avgGearsMadeAuto', title: 'Avg. Gears (auto)',calc_type: 'avg', agg:['rating_scoring_gears_made_auto'] },
    
-    { id: 'avgHighGoals', title: 'Avg. High Goals',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto', 'rating_scoring_high_goals_made_auto'] },  
+    { id: 'avgHighGoals', title: 'Avg. High Goals',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto', 'rating_scoring_high_goals_made'] },  
     { id: 'avgHighGoalsAuto', title: 'Avg. High Goals (auto)',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto'] }, 
     { id: 'avgLowGoals', title: 'Avg. Low Goals', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto', 'rating_scoring_low_goals_made'] }, 
     { id: 'avgLowGoalsAuto', title: 'Avg. Low Goals (auto)', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto'] },
