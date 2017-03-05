@@ -145,17 +145,15 @@ var app_team_details_config = {
     
   ],
   scouting_viz: [
-    { id: 'rating_scoring_gears_made', title: 'Gears', display_order: 3, missed_id: '' }, 
-    { id: 'rating_scoring_gears_made_auto', title: 'Gears (auto)', display_order: 3, missed_id: '' }, 
+    { id: 'rating_scoring_gears_made', title: 'Avg. Gears (teleop)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_scoring_gears_made_auto', title: 'Avg. Gears (auto)', missed_id: '', calc_type: 'avg' }, 
 
-    { id: 'rating_scoring_high_goals_made', title: 'High Goals', display_order: 1, missed_id: '' }, 
-    { id: 'rating_scoring_high_goals_made_auto', title: 'High Goals (auto)', display_order: 1, missed_id: '' }, 
-    { id: 'rating_scoring_low_goals_made', title: 'Low Goals', display_order: 2, missed_id: '' }, 
-    { id: 'rating_scoring_low_goals_made_auto', title: 'Low Goals (auto)', display_order: 2, missed_id: '' }, 
+    { id: 'rating_scoring_high_goals_made', title: 'Avg. High Goals (teleop)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_scoring_high_goals_made_auto', title: 'Avg. High Goals (auto)', missed_id: '', calc_type: 'avg' }, 
     
-    { id: 'rating_scoring_airship_climb', title: 'Takeoff (teleop)', display_order: 4, missed_id: '' },
-    { id: 'rating_scoring_base_line_made_auto', title: 'Mobility (auto)', display_order: 4, missed_id: '' },
-    { id: 'rating_overall_robot_stability', title: 'Stability', display_order: 4, missed_id: '' }
+    { id: 'rating_scoring_airship_climb', title: 'Takeoff Counts', missed_id: '', calc_type: 'total' },
+    { id: 'rating_scoring_base_line_made_auto', title: 'Mobility Counts', missed_id: '', calc_type: 'total' },
+    { id: 'rating_overall_robot_stability', title: 'Avg. Stability (1-5)', missed_id: '', calc_type: 'avg' }
   ],
   scouting_viz_series: {  made_title: 'Made', missed_title: 'Missed' }
 };

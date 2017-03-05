@@ -154,17 +154,27 @@ permalink: /team-details/
         var categories = app_team_details_config.scouting_viz.map(function (el) { return el.title || el.id }); // ['High Goals', 'Low Goals, ..., 'Crossings']
         var missedData = Array.apply(null, { length: categories.length }).map(function () { return 0; });  // [0,0,0,0,0,0,0,0,0,0,0,0];
         var madeData = Array.apply(null, { length: categories.length }).map(function () { return 0; });  // [0,0,0,0,0,0,0,0,0,0,0,0];
+        var categoryRateCounts = Array.apply(null, { length: categories.length }).map(function () { return 0; });  // [0,0,0,0,0,0,0,0,0,0,0,0];
+        var categoryCalcType = Array.apply(null, { length: categories.length }).map(function () { return 0; });  // [0,0,0,0,0,0,0,0,0,0,0,0];
 
         // iterate over each report, adding scouting scores to previous scores
         $.each(data, function (rptKey, r) {
           // add each scouting category to viz using app_team_details_config
           app_team_details_config.scouting_viz.forEach(function (el, idx) {
+            categoryRateCounts[idx] += (r[el.id] || r[el.missed_id]) ? 1 : 0;
+            categoryCalcType[idx] = el.calc_type || 'total';
             madeData[idx] += parseFloat(r[el.id]) || 0;
             missedData[idx] += parseFloat(r[el.missed_id]) || 0;
           });
         });
 
-        var series = [{ name: app_team_details_config.scouting_viz_series.made_title, data: madeData }, { name: app_team_details_config.scouting_viz_series.missed_title, data: missedData }];
+        madeData.forEach(function(el, idx) {
+          if (categoryCalcType[idx] == 'avg') {
+            madeData[idx] = +((madeData[idx] / categoryRateCounts[idx]).toFixed(2));
+          }
+        });
+
+        var series =  [{ name: app_team_details_config.scouting_viz_series.made_title, data: madeData }, { name: app_team_details_config.scouting_viz_series.missed_title, data: missedData }];
 
         scoutingVizOptions.xAxis.categories = categories;
         scoutingVizOptions.series = series;
@@ -269,13 +279,13 @@ permalink: /team-details/
       },
       tooltip: {
         headerFormat: '<b>{point.x}</b><br/>',
-        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+        pointFormat: '{point.y}' //'{series.name}: <br/>Total: {point.stackTotal}'
       },
       plotOptions: {
         column: {
           stacking: 'normal',
           dataLabels: {
-            enabled: true,
+            enabled: false, //true,
             color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
           }
         }
