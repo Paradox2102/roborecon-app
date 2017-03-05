@@ -38,11 +38,14 @@ $(function() {
   var blueAlliance = [ AppUtility.getUrlParameter('b0'), AppUtility.getUrlParameter('b1'), AppUtility.getUrlParameter('b2') ];
   var redAlliance = [ AppUtility.getUrlParameter('r0'), AppUtility.getUrlParameter('r1'), AppUtility.getUrlParameter('r2') ];
 
-  ParadoxScout.getMatchIntelligence(null, blueAlliance, redAlliance, function(teamData) {
+  ParadoxScout.getMatchIntelligence(null, blueAlliance, redAlliance, function(teamData, blueAverages, redAverages) {
     
     // 1. iterate each team's info from TBA & scouting reports
     $.each(teamData, function(k,v) {
       
+      // used to comparing against their alliance partners
+      allianceAvgs = (k.startsWith('blue') ? blueAverages : redAverages);
+
       // determine strengths/weaknesses for team
       var strengthsWeaknesses = [];
       app_match_intel_config.strengths_weaknesses_stats.forEach(function(el) {
@@ -51,20 +54,32 @@ $(function() {
         var sw_html = '';
 
         if (el.calc_type === 'avg') {
-          if (v[el.id] <= 0.00) return;
-          sw_rating = (v[el.id] / el.max) * 100;
-          sw_html = `${sw_rating.toFixed(2)}%`;
+          // ignore ratings=0 for categories with a max value as it indicates they team hasn't been rated for it at all
+          if (el.max && v[el.id] <= 0.00) return;
+
+          // if category has a min/max, divide avg. value by the maximum to return probability as a percentage
+          if (el.max) {
+            sw_rating = (v[el.id] / el.max) * 100;
+            sw_html = `${ sw_rating.toFixed(2) }%`;
+          }
+          // 
+          else {
+            sw_rating = ((v[el.id] / allianceAvgs[el.id]) / 3) * 100;
+            sw_html = `${ sw_rating.toFixed(2) }%`;
+          }
         }
         else if (el.calc_type === 'accuracy') {
+          // ignore if no attempts
           if (v[el.id].made_count === 0 && v[el.id].missed_count === 0) return;
+
           sw_rating = parseFloat(v[el.id].accuracy);
-          sw_html = `${v[el.id].accuracy}% ( ${v[el.id].made_count} | ${v[el.id].missed_count} )`;
+          sw_html = `${ v[el.id].accuracy }% ( ${ v[el.id].made_count } | ${ v[el.id].missed_count } )`;
         }
         
         strengthsWeaknesses.push({ 
           name: el.title,
           calc_type: el.calc_type,
-          rating: sw_rating.toFixed(2),
+          rating: +sw_rating.toFixed(2),
           text: sw_html
         });
       });
@@ -72,11 +87,13 @@ $(function() {
       // sort strength/weakness ratings in asc. order (weakest to strongest)
       strengthsWeaknesses.sort(function(a, b){ return a.rating - b.rating; });
 
-      // get top 3 weaknesses and top 3 strengths
-      var sw_bottom3 = $.grep(strengthsWeaknesses, function (el) { return  el.rating < 70; }).slice(0,3);
+      // get top n weaknesses and top n strengths
+      var n = 4;
+      
+      var sw_bottom3 = $.grep(strengthsWeaknesses, function (el) { return  el.rating < 70; }).slice(0,n);
       if (sw_bottom3.length < 1) sw_bottom3.push({ name: 'N/A', text:'' });
 
-      var sw_top3 = $.grep(strengthsWeaknesses, function (el) { return el.rating >= 70; }).slice(-3).reverse();
+      var sw_top3 = $.grep(strengthsWeaknesses, function (el) { return el.rating >= 70; }).slice(-n).reverse();
       if (sw_top3.length < 1) sw_top3.push({ name: 'N/A', text:'' });
 
       // 2. build team summary html
@@ -119,23 +136,35 @@ $(function() {
       $el.append(team_stats_html + '</table>')
 
       // build strengths/weakness table
-      var $weakTbl = $('<table style="width:100%;">');
-      $.each(sw_bottom3, function (i, e) {
-        $weakTbl.append('<tr><td>' + e.name + ':</td><td class="match-intel-rating-val" data-rating-accuracy="' + e.rating + '">' + e.text + '</td></tr>');
-      });
+      var $weakTbl = $('<table style="width:100%;background-color:#4a0000;">');
+       for(var i = 0; i < n; i++) {
+        if (!sw_bottom3[i]) {
+          $weakTbl.append('<tr><td colspan="2">&nbsp;</td></tr>');
+        }
+        else {
+          $weakTbl.append('<tr><td>' + sw_bottom3[i].name + ':</td><td class="match-intel-rating-val" data-rating-accuracy="' + sw_bottom3[i].rating + '">' + sw_bottom3[i].text + '</td></tr>');
+        }  
+      } 
       $weakTbl.append('</table>');
 
-      var $strengthTbl = $('<table style="width:100%;">');
-      $.each(sw_top3, function (i,e) {
-        $strengthTbl.append('<tr><td>' + e.name + ':</td><td class="match-intel-rating-val" data-rating-accuracy="' + e.rating + '">' + e.text + '</td></tr>');
-      });
+      var $strengthTbl = $('<table style="width:100%;background-color:#013d01;">');
+      for(var i = 0; i < n; i++) {
+        if (!sw_top3[i]) {
+          $strengthTbl.append('<tr><td colspan="2">&nbsp;</td></tr>');
+        }
+        else {
+          $strengthTbl.append('<tr><td>' + sw_top3[i].name + ':</td><td class="match-intel-rating-val" data-rating-accuracy="' + sw_top3[i].rating + '">' + sw_top3[i].text + '</td></tr>');
+        }  
+      } 
       $strengthTbl.append('</table>');
 
-      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">TOP 3 WEAKNESSES</p>');
+      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">STRENGTHS</p>');
+      $el.append($strengthTbl);
+
+      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">WEAKNESSES</p>');
       $el.append($weakTbl);
 
-      $el.append('<p style="text-align:center;margin:5px 0px 5px; 0px;">TOP 3 STRENGTHS</p>');
-      $el.append($strengthTbl);
+      
     });
     
     // stylize ratings (< 3 then red and >=4 is green)

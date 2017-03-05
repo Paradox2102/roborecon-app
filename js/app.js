@@ -209,7 +209,7 @@ ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams, next
         // don't add key if already defaulted
         if (attr.id in summary[k]) 
         {
-          summary[k][attr.id] = summary[k][attr.id].toFixed(attr.decimal_places || 2);
+          summary[k][attr.id] = +summary[k][attr.id].toFixed(attr.decimal_places || 2);
           return;
         }
 
@@ -242,7 +242,7 @@ ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams, next
           }
 
           var final_avg = total_score_avgs.reduce(function(prevVal, avg) { return prevVal + avg; }, 0.0) / total_score_avgs.length;
-          summary[k][attr.id] = final_avg.toFixed(attr.decimal_places || 2);
+          summary[k][attr.id] = +final_avg.toFixed(attr.decimal_places || 2);
 
           return;
         }
@@ -270,15 +270,24 @@ ParadoxScout.getMatchIntelligence = function(eventKey, blueTeams, redTeams, next
           });
 
           var final_acc = (tot_made / (tot_made + tot_missed)) * 100.0 || 0.0;
-          summary[k][attr.id] = { accuracy: final_acc.toFixed(attr.decimal_places || 2), made_count: tot_made, missed_count: tot_missed };
+          summary[k][attr.id] = { accuracy: +final_acc.toFixed(attr.decimal_places || 2), made_count: tot_made, missed_count: tot_missed };
 
           return;
         }
       });
     });
 
+    var blueTeamAvgs = {};
+    var redTeamAvgs = {};
+    for (var k in summary) {
+      $.each(summary[k], function(attr,val) {
+        if (k.startsWith('blue')) blueTeamAvgs[attr] = (blueTeamAvgs[attr] || 0) + (val/3);
+        if (k.startsWith('red')) redTeamAvgs[attr] = (redTeamAvgs[attr] || 0) + (val/3);
+      });
+    };
+    
     //console.log(summary);
-    next(summary);
+    next(summary, blueTeamAvgs, redTeamAvgs);
   });
 };
 

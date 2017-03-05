@@ -205,21 +205,20 @@ var app_match_intel_config = {
     { id: 'avgRotorPointsAuto', title: 'Avg. Rotor Points (auto)', calc_type: 'avg', agg:['autoRotorPoints'] },
     { id: 'avgRotorsEngaged', title: 'Avg. Rotors Engaged', calc_type: 'avg', agg:['xTotalRotorsEngaged'] }, 
     { id: 'avgFuelPoints', title: 'Avg. Fuel Points', calc_type: 'avg', agg:['autoFuelPoints', 'teleopFuelPoints'] }, 
-    { id: 'avgFuelPointsAuto', title: 'Avg. Fuel Points (auto)', calc_type: 'avg', agg:['autoFuelPoints'] }
+    { id: 'avgFuelPointsAuto', title: 'Avg. Fuel Points (auto)', calc_type: 'avg', agg:['autoFuelPoints'] },
+    { id: 'avgTakeOffPonts', title: 'Avg. Takeoff Points', calc_type: 'avg', agg:['teleopTakeoffPoints'] }
   ],
   team_stats: [
     { id: 'avgRobotStability', title: 'Robot Stability', calc_type: 'avg', agg:['rating_overall_robot_stability'], min: 1, max: 5 }, 
-    { id: 'avgGearsMade', title: 'Avg. Gears',calc_type: 'avg', agg:['rating_scoring_gears_made', 'rating_scoring_gears_made_auto'] },
     { id: 'avgGearEff', title: 'Gear Efficiency',calc_type: 'avg', agg:['rating_overall_gear_efficiency', 'rating_overall_gear_efficiency_auto'], min: 1, max: 5 },
+    { id: 'avgGearsMade', title: 'Avg. Gears',calc_type: 'avg', agg:['rating_scoring_gears_made', 'rating_scoring_gears_made_auto'] },
     { id: 'avgGearsMadeAuto', title: 'Avg. Gears (auto)',calc_type: 'avg', agg:['rating_scoring_gears_made_auto'] },
    
     { id: 'avgHighGoals', title: 'Avg. High Goals',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto', 'rating_scoring_high_goals_made'] },  
     { id: 'avgHighGoalsAuto', title: 'Avg. High Goals (auto)',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto'] }, 
-    { id: 'avgLowGoals', title: 'Avg. Low Goals', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto', 'rating_scoring_low_goals_made'] }, 
-    { id: 'avgLowGoalsAuto', title: 'Avg. Low Goals (auto)', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto'] },
 
-    { id: 'avgClimbing', title: 'Climbing Accuracy', calc_type: 'avg', agg:['rating_scoring_airship_climb'], min: 0, max: 1 }, 
-    { id: 'avgMobility', title: 'Mobility Accuracy', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 } 
+    { id: 'avgClimbing', title: 'Climbing Probablity', calc_type: 'avg', agg:['rating_scoring_airship_climb'], min: 0, max: 1 }, 
+    { id: 'avgMobility', title: 'Mobility Probability', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 } 
   ],
   strengths_weaknesses_stats : [
     { id: 'avgGearsMade', title: 'Avg. Gears',calc_type: 'avg', agg:['rating_scoring_gears_made', 'rating_scoring_gears_made_auto'] },
@@ -228,11 +227,9 @@ var app_match_intel_config = {
    
     { id: 'avgHighGoals', title: 'Avg. High Goals',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto', 'rating_scoring_high_goals_made'] },  
     { id: 'avgHighGoalsAuto', title: 'Avg. High Goals (auto)',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto'] }, 
-    { id: 'avgLowGoals', title: 'Avg. Low Goals', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto', 'rating_scoring_low_goals_made'] }, 
-    { id: 'avgLowGoalsAuto', title: 'Avg. Low Goals (auto)', calc_type: 'avg', agg:['rating_scoring_low_goals_made_auto'] },
 
-    { id: 'avgClimbing', title: 'Climbing Accuracy', calc_type: 'avg', agg:['rating_scoring_airship_climb'], min: 0, max: 1 }, 
-    { id: 'avgMobility', title: 'Mobility Accuracy', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 } 
+    { id: 'avgClimbing', title: 'Climbing %', calc_type: 'avg', agg:['rating_scoring_airship_climb'], min: 0, max: 1 }, 
+    { id: 'avgMobility', title: 'Mobility %', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 } 
     // { id: 'accScale', title: 'Scale Accuracy', calc_type: 'accuracy',  made_ids: ['rating_scoring_tower_scale_made'], missed_ids: ['rating_scoring_tower_scale_missed'] }
   ]
 };
