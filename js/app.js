@@ -366,8 +366,8 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
         today > eventEnd.setDate(eventEnd.getDate() + 1) || 
         (minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) ) {
     
-      //next();
-      //return;
+      next();
+      return;
     }
     
     // fetch scores from TBA and update db
