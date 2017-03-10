@@ -24,6 +24,93 @@ permalink: /rate/
           </div>
 
           <div class="row">
+
+            <div class="col-md-6">
+              <div class="col-md-12 panel panel-default">Autonomous:</div>
+              <!--<div class="form-group">-->
+              <!--  <table style="width:100%;">-->
+              <!--    <tr>-->
+              <!--      <th>Action</th>-->
+              <!--      <th>Made</th>-->
+              <!--      <th>Missed</th>-->
+              <!--    </tr>-->
+              <!--    <tr>-->
+              <!--      <td><label class="control-label" for="rating_scoring_high_goal">High Goal:</label></td>-->
+              <!--      <td>-->
+              <!--        <button type="button" class="btn btn-default btn-circle-green btn-lg js-counter-btn" data-counter-for="rating_scoring_high_goals_made"><i class="fa fa-plus"></i></button>-->
+              <!--        <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_high_goals_made" value="0" />-->
+              <!--      </td>-->
+              <!--      <td>-->
+              <!--        <button type="button" class="btn btn-primary btn-circle-red btn-lg js-counter-btn" data-counter-for="rating_scoring_high_goals_missed"><i class="fa fa-times"></i></button>-->
+              <!--        <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_high_goals_missed" value="0"/>-->
+              <!--      </td>-->
+              <!--    </tr>-->
+              <!--    <tr>-->
+              <!--      <td><label class="control-label" for="rating_scoring_low_goal">Low Goal:</label></td>-->
+              <!--      <td>-->
+              <!--        <button type="button" class="btn btn-default btn-circle-green btn-lg js-counter-btn" data-counter-for="rating_scoring_low_goals_made"><i class="fa fa-plus"></i></button>-->
+              <!--        <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_low_goals_made" value="0" />-->
+              <!--      </td>-->
+              <!--      <td>-->
+              <!--        <button type="button" class="btn btn-primary btn-circle-red btn-lg js-counter-btn" data-counter-for="rating_scoring_low_goals_missed"><i class="fa fa-times"></i></button>-->
+              <!--        <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_low_goals_missed" value="0"/>-->
+              <!--      </td>-->
+              <!--    </tr>-->
+              <!--  </table>-->
+              <div class="form-group" >
+                <label class="col-md-4 control-label">High Goal:</label>
+                <div class="col-md-8" style="text-align: right;right:50px">   
+                    <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_scoring_high_goals_made_auto"><i class="fa fa-plus"></i></button>
+                    <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_high_goals_made_auto" value="0" />
+                </div>
+             </div> 
+              <!--</div>-->
+
+               <div class="form-group">
+                 <label class="col-md-4 control-label">Low Goal:</label>
+                 <div class="col-md-8" style="text-align: right;right:50px">  
+                     <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_scoring_low_goals_made_auto"><i class="fa fa-plus"></i></button>
+                    <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_low_goals_made_auto" value="0" />
+                   </div>
+               </div>
+
+               <hr class="divider-hor" style="width:500px">
+
+               <div class="form-group">
+                 <label class="col-md-4 control-label">Gears:</label>
+                 <div class="col-md-8" style="text-align: right;right:50px">  
+                     <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn-1" data-counter-for="rating_scoring_gears_made_auto"><i class="fa fa-plus"></i></button>
+                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_gears_made_auto" value="0"/>
+                   </div>
+               </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_overall_gear_efficiency">Gear Efficiency:</label>
+                <div class="col-md-8" style="text-align: right;right:50px">  
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_gear_efficiency_auto" id="rating_overall_gear_efficiency_auto_1" value="1" autocomplete="off">1</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_gear_efficiency_auto" id="rating_overall_gear_efficiency_auto_2" value="2" autocomplete="off">2</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_gear_efficiency_auto" id="rating_overall_gear_efficiency_auto_3" value="3" autocomplete="off">3</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_gear_efficiency_auto" id="rating_overall_gear_efficiency_auto_4" value="4" autocomplete="off">4</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_overall_gear_efficiency_auto" id="rating_overall_gear_efficiency_auto_5" value="5" autocomplete="off">5</label>
+                  </div>
+                </div>
+                </div>
+
+                <hr class="divider-hor" style="width:500px">
+
+                <div class="form-group">
+                <label class="col-md-4 control-label" for="rating_scoring_base_line_made_auto">Cross Base Line:</label>
+                <div class="col-md-8" style="text-align: right;right:50px">    
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_base_line_made_auto" id="rating_scoring_base_line_made_auto_1" value="1" autocomplete="off">Yes</label>
+                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_base_line_made_auto" id="rating_scoring_base_line_made_auto_0" value="0" autocomplete="off">No</label>
+                  </div>
+                </div>
+                </div>
+
+                </div>
+                
             <div class="col-md-6">
               <div class="col-md-12 panel panel-default">Teleoperated:</div>
               <!--<div class="form-group">-->
@@ -119,92 +206,6 @@ permalink: /rate/
                     <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_3" value="3" autocomplete="off">3</label>
                     <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_4" value="4" autocomplete="off">4</label>
                     <label class="btn btn-primary"><input type="radio" name="rating_overall_robot_stability" id="rating_overall_robot_stability_5" value="5" autocomplete="off">5</label>
-                  </div>
-                </div>
-                </div>
-
-                </div>
-
-            <div class="col-md-6">
-              <div class="col-md-12 panel panel-default">Autonomous:</div>
-              <!--<div class="form-group">-->
-              <!--  <table style="width:100%;">-->
-              <!--    <tr>-->
-              <!--      <th>Action</th>-->
-              <!--      <th>Made</th>-->
-              <!--      <th>Missed</th>-->
-              <!--    </tr>-->
-              <!--    <tr>-->
-              <!--      <td><label class="control-label" for="rating_scoring_high_goal">High Goal:</label></td>-->
-              <!--      <td>-->
-              <!--        <button type="button" class="btn btn-default btn-circle-green btn-lg js-counter-btn" data-counter-for="rating_scoring_high_goals_made"><i class="fa fa-plus"></i></button>-->
-              <!--        <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_high_goals_made" value="0" />-->
-              <!--      </td>-->
-              <!--      <td>-->
-              <!--        <button type="button" class="btn btn-primary btn-circle-red btn-lg js-counter-btn" data-counter-for="rating_scoring_high_goals_missed"><i class="fa fa-times"></i></button>-->
-              <!--        <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_high_goals_missed" value="0"/>-->
-              <!--      </td>-->
-              <!--    </tr>-->
-              <!--    <tr>-->
-              <!--      <td><label class="control-label" for="rating_scoring_low_goal">Low Goal:</label></td>-->
-              <!--      <td>-->
-              <!--        <button type="button" class="btn btn-default btn-circle-green btn-lg js-counter-btn" data-counter-for="rating_scoring_low_goals_made"><i class="fa fa-plus"></i></button>-->
-              <!--        <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_low_goals_made" value="0" />-->
-              <!--      </td>-->
-              <!--      <td>-->
-              <!--        <button type="button" class="btn btn-primary btn-circle-red btn-lg js-counter-btn" data-counter-for="rating_scoring_low_goals_missed"><i class="fa fa-times"></i></button>-->
-              <!--        <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_low_goals_missed" value="0"/>-->
-              <!--      </td>-->
-              <!--    </tr>-->
-              <!--  </table>-->
-              <div class="form-group" >
-                <label class="col-md-4 control-label">High Goal:</label>
-                <div class="col-md-8" style="text-align: right;right:50px">   
-                    <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_scoring_high_goals_made_auto"><i class="fa fa-plus"></i></button>
-                    <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_high_goals_made_auto" value="0" />
-                </div>
-             </div> 
-              <!--</div>-->
-
-               <div class="form-group">
-                 <label class="col-md-4 control-label">Low Goal:</label>
-                 <div class="col-md-8" style="text-align: right;right:50px">  
-                     <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn" data-counter-for="rating_scoring_low_goals_made_auto"><i class="fa fa-plus"></i></button>
-                    <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_low_goals_made_auto" value="0" />
-                   </div>
-               </div>
-
-               <hr class="divider-hor" style="width:500px">
-
-               <div class="form-group">
-                 <label class="col-md-4 control-label">Gears:</label>
-                 <div class="col-md-8" style="text-align: right;right:50px">  
-                     <button type="button" class="btn btn-default btn-circle green btn-lg js-counter-btn-1" data-counter-for="rating_scoring_gears_made_auto"><i class="fa fa-plus"></i></button>
-                     <input class="form-control js-counter-textbox" style="display:inline-block;width:60px;" type="number" name="rating_scoring_gears_made_auto" value="0"/>
-                   </div>
-               </div>
-
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_overall_gear_efficiency">Gear Efficiency:</label>
-                <div class="col-md-8" style="text-align: right;right:50px">  
-                  <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall_gear_efficiency_auto" id="rating_overall_gear_efficiency_auto_1" value="1" autocomplete="off">1</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall_gear_efficiency_auto" id="rating_overall_gear_efficiency_auto_2" value="2" autocomplete="off">2</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall_gear_efficiency_auto" id="rating_overall_gear_efficiency_auto_3" value="3" autocomplete="off">3</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall_gear_efficiency_auto" id="rating_overall_gear_efficiency_auto_4" value="4" autocomplete="off">4</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_overall_gear_efficiency_auto" id="rating_overall_gear_efficiency_auto_5" value="5" autocomplete="off">5</label>
-                  </div>
-                </div>
-                </div>
-
-                <hr class="divider-hor" style="width:500px">
-
-                <div class="form-group">
-                <label class="col-md-4 control-label" for="rating_scoring_base_line_made_auto">Cross Base Line:</label>
-                <div class="col-md-8" style="text-align: right;right:50px">    
-                  <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_base_line_made_auto" id="rating_scoring_base_line_made_auto_1" value="1" autocomplete="off">Yes</label>
-                    <label class="btn btn-primary"><input type="radio" name="rating_scoring_base_line_made_auto" id="rating_scoring_base_line_made_auto_0" value="0" autocomplete="off">No</label>
                   </div>
                 </div>
                 </div>
