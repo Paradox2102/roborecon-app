@@ -33,7 +33,12 @@ $(function() {
         var teamSummary = {};
         var scoutingData = reportSnapshot.val();
         $.each(scoutingData, function(k,v) { 
-            if (!(v.team_id in teamSummary)) teamSummary[v.team_id] = { team_key: v.team_id.replace('frc', ' ') };
+            if (!(v.team_id in teamSummary)) {
+              teamSummary[v.team_id] = { team_key: v.team_id.replace('frc', ''), scouting_count: 1 };
+            }
+            else {
+              teamSummary[v.team_id]['scouting_count'] += 1;
+            }
 
             $.each(v, function(attr, val) {
                 if (!attr.startsWith('rating_')) return;
@@ -43,6 +48,13 @@ $(function() {
 
         var teamData = [];
         $.each(teamSummary, function(k,v) {
+          var team_key = 'frc' + v.team_key;
+          var num_reports = teamSummary[team_key]['scouting_count'];
+
+          $.each(v, function(attr, val) {
+            if (!attr.startsWith('rating_')) return;
+              teamSummary[team_key][attr] = +(val / num_reports).toFixed(3);
+          });
           teamData.push(v);
         });
 
