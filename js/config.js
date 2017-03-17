@@ -153,7 +153,8 @@ var app_team_details_config = {
     
     { id: 'rating_scoring_airship_climb', title: 'Takeoff Counts', missed_id: '', calc_type: 'total' },
     { id: 'rating_scoring_base_line_made_auto', title: 'Mobility Counts', missed_id: '', calc_type: 'total' },
-    { id: 'rating_overall_robot_stability', title: 'Avg. Stability (1-5)', missed_id: '', calc_type: 'avg' }
+    { id: 'rating_overall_robot_stability', title: 'Avg. Stability (1-5)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_overall_pilot_competency', title: 'Avg. Pilot Competency (1-5)', missed_id: '', calc_type: 'avg' }
   ],
   scouting_viz_series: {  made_title: 'Made', missed_title: 'Missed' }
 };
@@ -166,6 +167,7 @@ var app_scouting_reports_config = {
     { id: 'rating_overall_gear_efficiency', title: 'Gear Efficiency', defaultValue: 'N/A' },
     { id: 'rating_overall_gear_efficiency_auto', title: 'Gear Efficiency Auto', defaultValue: 'N/A' },
     { id: 'rating_overall_robot_stability', title: 'Robot Stability', defaultValue: 'N/A' },
+    { id: 'rating_overall_pilot_competency', title: 'Pilot Competency', defaultValue: 'N/A' },
   ],
   cols: [
     {
@@ -208,6 +210,7 @@ var app_match_intel_config = {
   ],
   team_stats: [
     { id: 'avgRobotStability', title: 'Robot Stability', calc_type: 'avg', agg:['rating_overall_robot_stability'], min: 1, max: 5 }, 
+    { id: 'avgPilotCompetency', title: 'Pilot Competency', calc_type: 'avg', agg:['rating_overall_pilot_competency'], min: 1, max: 5 }, 
     { id: 'avgGearEff', title: 'Gear Efficiency',calc_type: 'avg', agg:['rating_overall_gear_efficiency', 'rating_overall_gear_efficiency_auto'], min: 1, max: 5 },
     { id: 'avgGearsMade', title: 'Avg. Gears',calc_type: 'avg', agg:['rating_scoring_gears_made', 'rating_scoring_gears_made_auto'] },
     { id: 'avgGearsMadeAuto', title: 'Avg. Gears (auto)',calc_type: 'avg', agg:['rating_scoring_gears_made_auto'] },
