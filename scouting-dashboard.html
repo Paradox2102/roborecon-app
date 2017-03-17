@@ -33,6 +33,10 @@ $(function() {
         var teamSummary = {};
         var scoutingData = reportSnapshot.val();
         $.each(scoutingData, function(k,v) { 
+          // only used last day?
+          // var scouted_date = new Date(v.scored_at);
+          // if (!moment(scouted_date).isSame(moment(), 'day')) return;
+
             if (!(v.team_id in teamSummary)) {
               teamSummary[v.team_id] = { team_key: v.team_id.replace('frc', ''), scouting_count: 1 };
             }
