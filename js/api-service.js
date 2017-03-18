@@ -22,7 +22,7 @@ ParadoxScout.ApiService = (function() {
   getDataFromBlueAlliance = function(apiUrl) {
     return $.ajax({
       beforeSend: function(request) {
-        request.setRequestHeader('X-TBA-App-Id', 'frc2102:scouting-system:v01');
+        request.setRequestHeader('X-TBA-App-Id', `frc${appTeamKey}:scouting-system:v01`);
       },
       url: apiUrl 
     });

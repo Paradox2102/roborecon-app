@@ -8,7 +8,8 @@ var ParadoxScout = ParadoxScout || {};
 
 ParadoxScout.DataService = (function() {
   // private attributes
-  var dbRootUrl = "{{ site.scout.firebase.rooturl }}",
+  var dbRootUrl = "{{ site.scout.firebase.rooturl}}",
+  appTeamKey = "{{site.scout.teamkey}}",
   // dbRef = new Firebase(dbRootUrl),   // init firebase db
   // Initialize Firebase
   config = {
@@ -199,7 +200,7 @@ ParadoxScout.DataService = (function() {
   },
 
   getTeamScoutingReports = function(eventKey, teamKey) {
-    return dbRef.child('/event_scouting_reports/' + eventKey).orderByChild('team_id').equalTo(teamKey).once('value');
+    return dbRef.child(`/event_scouting_reports/${eventKey}/${appTeamKey}`).orderByChild('team_id').equalTo(teamKey).once('value');
   },
 
   updateEventAndTeams = function(eventKey, eventData, teamsData, eventTeamsData, next) {
@@ -394,7 +395,7 @@ ParadoxScout.DataService = (function() {
   },
 
   addScoutingReport = function(eventKey, data, next) {
-    dbRef.child('/event_scouting_reports/' + eventKey).push(data)
+    dbRef.child(`/event_scouting_reports/${eventKey}/${appTeamKey}`).push(data)
     .then(next())
     .catch(function(error) { 
       console.log.bind(console);
@@ -448,7 +449,7 @@ ParadoxScout.DataService = (function() {
     if (typeof _scoutingReportsRef === 'object' && _scoutingReportsRef !== null) _scoutingReportsRef.off(eventListener);
 
     // update current ref
-    _scoutingReportsRef = dbRef.child('/event_scouting_reports/' + eventKey);
+    _scoutingReportsRef = dbRef.child(`/event_scouting_reports/${eventKey}/${appTeamKey}`);
     
     // get all reports for a team if specified, else get all reports for the event
     if (teamKey)

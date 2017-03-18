@@ -26,6 +26,7 @@ header:
 # These are the most imporant settings, choose carefully
 
 scout:
+    teamkey: 2102
     currentevent: 2017casd # the Event key for the event you want to scout, can be found on TBA
     firebase:
         rooturl: https://paradox-scout-dc256.firebaseio.com/ # Address of Firebase Server
