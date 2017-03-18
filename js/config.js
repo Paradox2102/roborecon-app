@@ -147,6 +147,7 @@ var app_team_details_config = {
   scouting_viz: [
     { id: 'rating_scoring_gears_made', title: 'Avg. Gears (teleop)', missed_id: '', calc_type: 'avg' }, 
     { id: 'rating_scoring_gears_made_auto', title: 'Avg. Gears (auto)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_overall_gear_placement_auto', title: 'Side Gear Placement (auto)', missed_id: '', calc_type: 'avg' }, 
 
     { id: 'rating_scoring_high_goals_made', title: 'Avg. High Goals (teleop)', missed_id: '', calc_type: 'avg' }, 
     { id: 'rating_scoring_high_goals_made_auto', title: 'Avg. High Goals (auto)', missed_id: '', calc_type: 'avg' }, 
@@ -166,6 +167,7 @@ var app_scouting_reports_config = {
   overall: [
     { id: 'rating_overall_gear_efficiency', title: 'Gear Efficiency', defaultValue: 'N/A' },
     { id: 'rating_overall_gear_efficiency_auto', title: 'Gear Efficiency Auto', defaultValue: 'N/A' },
+    { id: 'rating_overall_gear_placement_auto', title: 'Side Gear Placement Auto', defaultValue: 'N/A' },
     { id: 'rating_overall_robot_stability', title: 'Robot Stability', defaultValue: 'N/A' },
     { id: 'rating_overall_pilot_competency', title: 'Pilot Competency', defaultValue: 'N/A' },
   ],
@@ -214,6 +216,7 @@ var app_match_intel_config = {
     { id: 'avgGearEff', title: 'Gear Efficiency',calc_type: 'avg', agg:['rating_overall_gear_efficiency', 'rating_overall_gear_efficiency_auto'], min: 1, max: 5 },
     { id: 'avgGearsMade', title: 'Avg. Gears',calc_type: 'avg', agg:['rating_scoring_gears_made', 'rating_scoring_gears_made_auto'] },
     { id: 'avgGearsMadeAuto', title: 'Avg. Gears (auto)',calc_type: 'avg', agg:['rating_scoring_gears_made_auto'] },
+    { id: 'avgGearPlacementAuto', title: 'Side Gear Placement (auto)',calc_type: 'avg', agg:['rating_overall_gear_placement_auto'] },
    
     { id: 'avgHighGoals', title: 'Avg. High Goals',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto', 'rating_scoring_high_goals_made'] },  
     { id: 'avgHighGoalsAuto', title: 'Avg. High Goals (auto)',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto'] }, 
