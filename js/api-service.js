@@ -8,6 +8,7 @@ ParadoxScout.ApiService = (function() {
 
   // private attributes
   var rootApiUrl = 'https://www.thebluealliance.com',
+  appTeamKey = "{{site.scout.teamkey}}",
   eventsUrl = rootApiUrl + '/api/v2/events/{year}',
   eventUrl = rootApiUrl + '/api/v2/event/{event_key}',
   teamsUrl = rootApiUrl + '/api/v2/event/{event_key}/teams',

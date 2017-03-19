@@ -55,11 +55,11 @@ ParadoxScout.DataService = (function() {
 
         // clean the userKey and get auth object
         user_key = cleanUserKey(user.email);
-        return dbRef.child('user_whitelist/' + user_key).once('value');
+        return dbRef.child(`user_whitelist/${appTeamKey}/${user_key}`).once('value');
       })
       // 2. see if whitelisted user exists
       .then(function(u) {
-        return dbUsersRef.child(user_key).once('value');
+        return dbUsersRef.child(`${appTeamKey}/${user_key}`).once('value');
       })
       // 3. insert new users else update the given provider info for existing user
       .then(function(u) {
@@ -70,18 +70,18 @@ ParadoxScout.DataService = (function() {
 
         if (!u.exists()) {
           // 3a. add new user
-          return dbUsersRef.child(user_key).set({ name: name, email: email, user_authentications: user_auth });
+          return dbUsersRef.child(`${appTeamKey}/${user_key}`).set({ name: name, email: email, user_authentications: user_auth });
         }
         else {
           // 3b. update existing user (both profile and authentications)
-          dbUsersRef.child(user_key).update({ name: name, email: email });
-          dbUsersRef.child(user_key + '/user_authentications/' + provider_name).set(user.uid);
+          dbUsersRef.child(`${appTeamKey}/${user_key}`).update({ name: name, email: email });
+          dbUsersRef.child(`${appTeamKey}/${user_key}` + '/user_authentications/' + provider_name).set(user.uid);
           return;
         }
       })
       // 4. set the auth information under the user_authentications node as well
       .then(function() {
-        dbRef.child('user_authentications/' + user.uid).set({ user_id: user_key }, next);
+        dbRef.child('user_authentications/' + user.uid).set({ user_id: user_key, team_id: appTeamKey }, next);
       })
       .catch(function(error) {
         // destroy auth token
