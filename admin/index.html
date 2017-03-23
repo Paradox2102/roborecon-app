@@ -5,7 +5,7 @@ permalink: /admin/
 ---
 <div class="container">
   <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-8">
       <form class="form-horizontal">
         <div class="form-group">
           <label for="events" class="col-sm-2 control-label">Events</label>
@@ -19,8 +19,21 @@ permalink: /admin/
           </div>
         </div>
       </form>
-    </div>
+    </div>  
   </div>
+  <div class="row">
+      <div class="col-md-8">
+        <table id="emails" class="table table-bordered">
+          <tr><th>Email</th><th>Admin</th><th>&nbsp;</th></tr>
+          
+       </table>
+      </div>
+      <div class="col-md-4">
+        <textarea class="form-control" rows="10" id="newEmails"></textarea>
+        <!-- Standard button -->
+        <button type="button" id="addEmails" class="btn btn-success">Add Emails</button>
+      </div>
+    </div>
 </div>
 
 <script>
@@ -33,6 +46,7 @@ $(function() {
 
     var option = $("#events option:selected");
     var val = this.value;
+
 
     // console.log(option.val() + '-' + option.text());
     ParadoxScout.updateEventAndTeams(option.val(), function(error) {
@@ -47,10 +61,27 @@ $(function() {
     });
   });
 
+  $('#addEmails').click(function(){
+    var arrayOfLines = $('#newEmails').val().split('\n');
+    $.each(arrayOfLines, function(index, item){
+      var e = item.trim();
+      if(e === '') return;
+
+      console.log(e);
+    });
+  });
 
   // *** onload ***
 
   // load this year's events on load
   ParadoxScout.buildEventsDropdown($('#events'));
+  ParadoxScout.DataService.onEmailWhitelistChanged(function(emailSnapshot){
+    $('#emails').find("tr:gt(0)").remove();
+    emailSnapshot.forEach(function(childSnapshot){
+      var emailAddress = childSnapshot.key.replace(/\%2E/g,'.');
+      
+      $('#emails').append(`<tr><td>${emailAddress}</td><td>false</td><td>X</td></tr>`)
+    });
+  });
 });
 </script>

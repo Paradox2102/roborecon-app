@@ -458,6 +458,18 @@ ParadoxScout.DataService = (function() {
       return _scoutingReportsRef.orderByKey().on(eventListener, next, onError);
   },
 
+  _emailWhitelistRef = null,
+  onEmailWhitelistChanged = function(next, onError) {
+
+    // if ref already exists, turn off any exising handlers for the specified event listener
+    if(typeof _emailWhitelistRef === 'object' && _emailWhitelistRef !== null) _emailWhitelistRef.off(eventListener);
+  
+    _emailWhitelistRef = dbRef.child(`/user_whitelist/${appTeamKey}/`);
+    return _emailWhitelistRef.orderByKey().on('value', next, onError);
+
+  },
+
+
 
   // ----------------------------------------------------------------------
   // UTILITY METHODS
@@ -490,7 +502,9 @@ ParadoxScout.DataService = (function() {
     onTeamScoreAdded: onTeamScoreAdded,
     getEventScoutingData: getEventScoutingData,
     updateEventScoresAndMatchDetails: updateEventScoresAndMatchDetails,
-    addScoutingReport: addScoutingReport
+    addScoutingReport: addScoutingReport,
+
+    onEmailWhitelistChanged: onEmailWhitelistChanged
   };
 
 })();
