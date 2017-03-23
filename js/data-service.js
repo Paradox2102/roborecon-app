@@ -458,6 +458,53 @@ ParadoxScout.DataService = (function() {
       return _scoutingReportsRef.orderByKey().on(eventListener, next, onError);
   },
 
+
+  //admin stuff
+
+  updateEmailWhitelsit = function(data, next, onError){
+    var updateObj = {};
+    if(Object.keys(data).length === 0){
+      next();
+      return;
+    };
+
+    $.each(data, function(k, v){
+      updateObj[cleanUserKey(k)] = v;
+    })
+    dbRef.child(`/user_whitelist/${appTeamKey}/`).update(updateObj)
+      .then(function(){
+        next();
+        return;
+      })
+      .catch(function(err){
+        onError();
+      });
+  },
+
+  deleteUser = function(email, next, onError){
+    email = cleanUserKey(email);
+    var updates = {};
+    dbRef.child(`/users/${appTeamKey}/${email}/user_authentications/`).once('value', function(snapshot){
+      snapshot.forEach(function(childSnapshot){
+         updates[`/user_authentications/${childSnapshot.val()}`] = null;
+         
+
+      });
+      updates[`/user_whitelist/${appTeamKey}/${email}`] = null;
+      updates[`/users/${appTeamKey}/${email}`] = null;
+
+      return dbRef.update(updates)
+      .then(function(){
+          next();
+         return;
+       })
+       .catch(function(err){
+          onError();
+      });
+    });
+    
+  },
+
   _emailWhitelistRef = null,
   onEmailWhitelistChanged = function(next, onError) {
 
@@ -504,7 +551,9 @@ ParadoxScout.DataService = (function() {
     updateEventScoresAndMatchDetails: updateEventScoresAndMatchDetails,
     addScoutingReport: addScoutingReport,
 
-    onEmailWhitelistChanged: onEmailWhitelistChanged
+    onEmailWhitelistChanged: onEmailWhitelistChanged,
+    updateEmailWhitelsit: updateEmailWhitelsit,
+    deleteUser: deleteUser
   };
 
 })();

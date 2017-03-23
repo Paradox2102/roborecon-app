@@ -24,7 +24,7 @@ permalink: /admin/
   <div class="row">
       <div class="col-md-8">
         <table id="emails" class="table table-bordered">
-          <tr><th>Email</th><th>Admin</th><th>&nbsp;</th></tr>
+          <tr><th>Emails</th><th>Admin</th><th>&nbsp;</th></tr>
           
        </table>
       </div>
@@ -63,14 +63,32 @@ $(function() {
 
   $('#addEmails').click(function(){
     var arrayOfLines = $('#newEmails').val().split('\n');
+    var updateObj = {};
+
     $.each(arrayOfLines, function(index, item){
       var e = item.trim();
       if(e === '') return;
 
-      console.log(e);
+      updateObj[e] = true;
+      
+      
+
+    });
+
+    console.log(updateObj);
+
+    ParadoxScout.DataService.updateEmailWhitelsit(updateObj, function(){
+      console.log('emails Updated');
     });
   });
 
+  $('#emails').on("click", '[data-action="delete"]', function(){
+    var email = $(this).data("key");
+    console.log(email);
+    ParadoxScout.DataService.deleteUser(email, function(){
+      console.log("Success!")
+    });
+  });
   // *** onload ***
 
   // load this year's events on load
@@ -80,7 +98,7 @@ $(function() {
     emailSnapshot.forEach(function(childSnapshot){
       var emailAddress = childSnapshot.key.replace(/\%2E/g,'.');
       
-      $('#emails').append(`<tr><td>${emailAddress}</td><td>false</td><td>X</td></tr>`)
+      $('#emails').append(`<tr><td>${emailAddress}</td><td>false</td><td><button type="button" data-action="delete" data-key="${emailAddress}" class="btn btn-danger">X</button></td></tr>`)
     });
   });
 });
