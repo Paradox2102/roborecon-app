@@ -34,8 +34,8 @@ $(function() {
         var scoutingData = reportSnapshot.val();
         $.each(scoutingData, function(k,v) { 
           // only used last day?
-          // var scouted_date = new Date(v.scored_at);
-          // if (!moment(scouted_date).isSame(moment(), 'day')) return;
+          var scouted_date = new Date(v.scored_at);
+          if (!moment(scouted_date).isSame(moment(), 'day')) return;
 
             if (!(v.team_id in teamSummary)) {
               teamSummary[v.team_id] = { team_key: v.team_id.replace('frc', ''), scouting_count: 1 };
@@ -113,10 +113,10 @@ $(function() {
   // make column header sticky
   //new $.fn.dataTable.FixedHeader(dashboard, { headerOffset: $('#main-menu').height() });
 
-  // look for updated event scores every 30 sec.
+  // look for updated event scores every 5 mins.
   setInterval( function () {
     dashboard.ajax.reload( null, false ); // user paging is not reset on reload
-  }, 30000 );
+  }, 300000 );
 
 });
 </script>
