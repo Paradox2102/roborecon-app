@@ -10,7 +10,7 @@
   <!-- css -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link href='https://fonts.googleapis.com/css?family=Share+Tech+Mono' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.buttflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.css">
   <link rel="stylesheet" href="{{ site.baseurl}}/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/bs/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.10,b-1.1.0,b-colvis-1.1.0,b-html5-1.1.0,b-print-1.1.0,cr-1.3.0,fc-3.2.0,fh-3.1.0,r-2.0.0/datatables.min.css"/>
   <link rel="stylesheet" href="{{ site.baseurl}}/css/app.css">
@@ -20,7 +20,7 @@
   <script type="text/javascript" src="https://cdn.datatables.net/s/bs/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.10,b-1.1.0,b-colvis-1.1.0,b-html5-1.1.0,b-print-1.1.0,cr-1.3.0,fc-3.2.0,fh-3.1.0,r-2.0.0/datatables.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.buttflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.js"></script>
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <script src="{{ site.baseurl }}/js/knockout-3.4.0.js"></script>
@@ -30,6 +30,16 @@
   <script src="{{ site.baseurl }}/js/data-service.js"></script>
   <script src="{{ site.baseurl }}/js/api-service.js"></script>
   <script src="{{ site.baseurl }}/js/app.js"></script>
+  <!-- Tracking -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-62312902-2', 'auto');
+  ga('send', 'pageview');
+  </script>
   
   <script>
     var siteUrl = '{{ site.baseurl }}';
