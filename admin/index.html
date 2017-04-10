@@ -106,6 +106,25 @@ $(function() {
       console.log("Success!")
     });
   });
+
+  $('#emails').on("click", '[data-action="updateAdmin"]', function(){
+    var email = $(this).data("key");
+    var check = $(this).is(":checked");
+    if(check){
+      // ParadoxScout.DataService.addAdmin(email, function(){
+
+      // });
+      console.log($(this).data("key") + ` checked`)
+    }else{
+
+      // ParadoxScout.DataService.deleteAdmin(email, function(){
+
+      // });
+      console.log($(this).data("key") + ` unchecked`)
+    }
+  });
+
+  
   // *** onload ***
 
   // load this year's events on load
@@ -118,7 +137,7 @@ $(function() {
     emailSnapshot.forEach(function(childSnapshot){
       var emailAddress = childSnapshot.key.replace(/\%2E/g,'.');
       
-      $('#emails').append(`<tr><td>${emailAddress}</td><td><input type="checkbox" id="${emailAddress}"></td><td><button type="button" data-action="delete" data-key="${emailAddress}" class="btn btn-danger">X</button></td></tr>`)
+      $('#emails').append(`<tr><td>${emailAddress}</td><td><input type="checkbox" data-action="updateAdmin" data-key="${emailAddress}"></td><td><button type="button" data-action="delete" data-key="${emailAddress}" class="btn btn-danger">X</button></td></tr>`)
       
     });
 

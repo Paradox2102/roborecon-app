@@ -482,6 +482,23 @@ ParadoxScout.DataService = (function() {
   },
 
 
+  addAdmin = function(email, next, onError){
+    email = cleanUserKey(email);
+    var updates = {};
+
+    updates[`/user_roles/${appTeamKey}/${email}/is_admin`] = true;
+    
+    return dbRef.update(updates)
+      .then(function(){
+          next();
+         return;
+       })
+       .catch(function(err){
+          onError();
+      });
+  },
+
+
   //deletes a user from the whitelist
   deleteUser = function(email, next, onError){
     email = cleanUserKey(email);
@@ -507,6 +524,26 @@ ParadoxScout.DataService = (function() {
     
   },
 
+
+  deleteAdmin = function(email, next, onError){
+    email = cleanUserKey(email);
+    var updates = {};
+    
+
+      updates[`/user_roles/${appTeamKey}/${email}`] = null;
+
+      return dbRef.update(updates)
+      .then(function(){
+          next();
+         return;
+       })
+       .catch(function(err){
+          onError();
+      });
+    
+  },
+
+  
   
   
 
