@@ -39,6 +39,8 @@ permalink: /admin/
 <script>
 $(function() {
   // handle event selection
+
+  
   $( "#add_event" ).click(function(ev) {
     ev.preventDefault();
 
@@ -75,11 +77,26 @@ $(function() {
 
     });
 
+
+
     console.log(updateObj);
 
-    ParadoxScout.DataService.updateEmailWhitelsit(updateObj, function(){
+    ParadoxScout.DataService.updateEmailWhitelist(updateObj, function(error){
+      if (error) {
+        AppUtility.showErrorMsg("An error occurred!", error);
+      }
+      else {
+        AppUtility.showSuccessMsg("Emails Added to the whitelist!", '', function() {
+        $('textarea').val('');
+        } );
+      }
       console.log('emails Updated');
+      
+     
     });
+
+
+    
   });
 
   $('#emails').on("click", '[data-action="delete"]', function(){
@@ -93,13 +110,20 @@ $(function() {
 
   // load this year's events on load
   ParadoxScout.buildEventsDropdown($('#events'));
+
+
+  //update whitelist
   ParadoxScout.DataService.onEmailWhitelistChanged(function(emailSnapshot){
     $('#emails').find("tr:gt(0)").remove();
     emailSnapshot.forEach(function(childSnapshot){
       var emailAddress = childSnapshot.key.replace(/\%2E/g,'.');
       
-      $('#emails').append(`<tr><td>${emailAddress}</td><td>false</td><td><button type="button" data-action="delete" data-key="${emailAddress}" class="btn btn-danger">X</button></td></tr>`)
+      $('#emails').append(`<tr><td>${emailAddress}</td><td><input type="checkbox" id="${emailAddress}"></td><td><button type="button" data-action="delete" data-key="${emailAddress}" class="btn btn-danger">X</button></td></tr>`)
+      
     });
+
   });
+
+
 });
 </script>
