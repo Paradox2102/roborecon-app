@@ -481,24 +481,6 @@ ParadoxScout.DataService = (function() {
       });
   },
 
-
-  addAdmin = function(email, next, onError){
-    email = cleanUserKey(email);
-    var updates = {};
-
-    updates[`/user_roles/${appTeamKey}/${email}/is_admin`] = true;
-    
-    return dbRef.update(updates)
-      .then(function(){
-          next();
-         return;
-       })
-       .catch(function(err){
-          onError();
-      });
-  },
-
-
   //deletes a user from the whitelist
   deleteUser = function(email, next, onError){
     email = cleanUserKey(email);
@@ -524,29 +506,6 @@ ParadoxScout.DataService = (function() {
     
   },
 
-
-  deleteAdmin = function(email, next, onError){
-    email = cleanUserKey(email);
-    var updates = {};
-    
-
-      updates[`/user_roles/${appTeamKey}/${email}`] = null;
-
-      return dbRef.update(updates)
-      .then(function(){
-          next();
-         return;
-       })
-       .catch(function(err){
-          onError();
-      });
-    
-  },
-
-  
-  
-  
-
   _emailWhitelistRef = null,
   onEmailWhitelistChanged = function(next, onError) {
 
@@ -556,6 +515,20 @@ ParadoxScout.DataService = (function() {
     _emailWhitelistRef = dbRef.child(`/user_whitelist/${appTeamKey}/`);
     return _emailWhitelistRef.orderByKey().on('value', next, onError);
 
+  },
+
+  makeAdmin = function (email, isAdmin) {
+    var email = cleanUserKey(email);
+    if( isAdmin ) {
+      return dbRef.child(`/user_roles/${appTeamKey}/${email}`).update({ is_admin: true });
+    }
+    else {
+      return dbRef.child(`/user_roles/${appTeamKey}/${email}`).remove();
+    }
+  },
+
+  getTeamAdmins = function() {
+    return dbRef.child(`/user_roles/${appTeamKey}/`).once('value');
   },
 
 
@@ -597,7 +570,9 @@ ParadoxScout.DataService = (function() {
     //admin functions
     onEmailWhitelistChanged: onEmailWhitelistChanged,
     updateEmailWhitelist: updateEmailWhitelist,
-    deleteUser: deleteUser
+    deleteUser: deleteUser,
+    getTeamAdmins: getTeamAdmins,
+    makeAdmin: makeAdmin
   };
 
 })();
