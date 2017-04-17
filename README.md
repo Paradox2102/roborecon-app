@@ -1,5 +1,5 @@
 # RoboRecon
-[![Build Status]https://travis-ci.org/Paradox2102/roborecon-app.svg?branch=master)](https://travis-ci.org/Paradox2102/roborecon-app)
+[![Build Status](https://travis-ci.org/Paradox2102/roborecon-app.svg?branch=master)](https://travis-ci.org/Paradox2102/roborecon-app)
 RoboRecon is a FRC scouting application designed by FIRST Team Paradox 2102. This software was developed to assist FRC teams in more easily analyzing match data for FIRST Robotics Competitions. 
 
 ## RoboRecon is a Open Source FRC Scouting software
