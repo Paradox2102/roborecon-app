@@ -461,7 +461,7 @@ ParadoxScout.DataService = (function() {
 
   //admin stuff
 
-  updateEmailWhitelsit = function(data, next, onError){
+  updateEmailWhitelist = function(data, next, onError){
     var updateObj = {};
     if(Object.keys(data).length === 0){
       next();
@@ -481,6 +481,7 @@ ParadoxScout.DataService = (function() {
       });
   },
 
+  //deletes a user from the whitelist
   deleteUser = function(email, next, onError){
     email = cleanUserKey(email);
     var updates = {};
@@ -488,8 +489,8 @@ ParadoxScout.DataService = (function() {
       snapshot.forEach(function(childSnapshot){
          updates[`/user_authentications/${childSnapshot.val()}`] = null;
          
-
       });
+
       updates[`/user_whitelist/${appTeamKey}/${email}`] = null;
       updates[`/users/${appTeamKey}/${email}`] = null;
 
@@ -514,6 +515,20 @@ ParadoxScout.DataService = (function() {
     _emailWhitelistRef = dbRef.child(`/user_whitelist/${appTeamKey}/`);
     return _emailWhitelistRef.orderByKey().on('value', next, onError);
 
+  },
+
+  makeAdmin = function (email, isAdmin) {
+    var email = cleanUserKey(email);
+    if( isAdmin ) {
+      return dbRef.child(`/user_roles/${appTeamKey}/${email}`).update({ is_admin: true });
+    }
+    else {
+      return dbRef.child(`/user_roles/${appTeamKey}/${email}`).remove();
+    }
+  },
+
+  getTeamAdmins = function() {
+    return dbRef.child(`/user_roles/${appTeamKey}/`).once('value');
   },
 
 
@@ -551,9 +566,13 @@ ParadoxScout.DataService = (function() {
     updateEventScoresAndMatchDetails: updateEventScoresAndMatchDetails,
     addScoutingReport: addScoutingReport,
 
+
+    //admin functions
     onEmailWhitelistChanged: onEmailWhitelistChanged,
-    updateEmailWhitelsit: updateEmailWhitelsit,
-    deleteUser: deleteUser
+    updateEmailWhitelist: updateEmailWhitelist,
+    deleteUser: deleteUser,
+    getTeamAdmins: getTeamAdmins,
+    makeAdmin: makeAdmin
   };
 
 })();
