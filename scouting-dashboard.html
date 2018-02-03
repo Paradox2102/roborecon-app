@@ -1,5 +1,6 @@
 ---
 layout: page
+permalink: /scouting-dashboard/
 ---
 <div id="dashboard-container" class="container-fluid">
   <div class="row">
@@ -34,20 +35,20 @@ $(function() {
         var scoutingData = reportSnapshot.val();
         $.each(scoutingData, function(k,v) { 
           // only used last day?
-          var scouted_date = new Date(v.scored_at);
-          if (!moment(scouted_date).isSame(moment(), 'day')) return;
+          // var scouted_date = new Date(v.scored_at);
+          // if (!moment(scouted_date).isSame(moment(), 'day')) return;
 
-            if (!(v.team_id in teamSummary)) {
-              teamSummary[v.team_id] = { team_key: v.team_id.replace('frc', ''), scouting_count: 1 };
-            }
-            else {
-              teamSummary[v.team_id]['scouting_count'] += 1;
-            }
+          if (!(v.team_id in teamSummary)) {
+            teamSummary[v.team_id] = { team_key: v.team_id.replace('frc', ''), scouting_count: 1 };
+          }
+          else {
+            teamSummary[v.team_id]['scouting_count'] += 1;
+          }
 
-            $.each(v, function(attr, val) {
-                if (!attr.startsWith('rating_')) return;
-                teamSummary[v.team_id][attr] = parseInt(val) + (teamSummary[v.team_id][attr] || 0 );
-            });
+          $.each(v, function(attr, val) {
+              if (!attr.startsWith('rating_')) return;
+              teamSummary[v.team_id][attr] = parseInt(val) + (teamSummary[v.team_id][attr] || 0 );
+          });
         });
 
         var teamData = [];
