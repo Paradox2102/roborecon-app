@@ -17,7 +17,7 @@ url: "http://RoboRecon.org" # the base hostname & protocol for your site
 # Customise to how you want
 header:
     title: Team Paradox 2102 # the bold, bigger main text
-    accent: 2017 Scouting System # the smaller, but informative accenting text
+    accent: 2018 Scouting System # the smaller, but informative accenting text
     logo: "/images/paradox_logo_2016.png" # FULL path to image in the header 150x150 works well
 
 ### Footer Settings ###
