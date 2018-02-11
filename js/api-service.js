@@ -1,3 +1,5 @@
+---
+---
 'use strict';
 // will create app namespace *unless* it already exists because another .js
 // file using the same namespace was loaded first
@@ -9,21 +11,22 @@ ParadoxScout.ApiService = (function() {
   // private attributes
   var rootApiUrl = 'https://www.thebluealliance.com',
   appTeamKey = "{{site.scout.teamkey}}",
-  eventsUrl = rootApiUrl + '/api/v2/events/{year}',
-  eventUrl = rootApiUrl + '/api/v2/event/{event_key}',
-  teamsUrl = rootApiUrl + '/api/v2/event/{event_key}/teams',
-  matchesUrl = rootApiUrl + '/api/v2/event/{event_key}/matches',
-  statsUrl = rootApiUrl + '/api/v2/event/{event_key}/stats',
-  rankingsUrl = rootApiUrl + '/api/v2/event/{event_key}/rankings',
+  tbaApiKey = "{{site.scout.tbaApiKey}}", 
+  eventsUrl = rootApiUrl + '/api/v3/events/{year}',
+  eventUrl = rootApiUrl + '/api/v3/event/{event_key}',
+  teamsUrl = rootApiUrl + '/api/v3/event/{event_key}/teams',
+  matchesUrl = rootApiUrl + '/api/v3/event/{event_key}/matches',
+  statsUrl = rootApiUrl + '/api/v3/event/{event_key}/oprs',
+  rankingsUrl = rootApiUrl + '/api/v3/event/{event_key}/rankings',
 
-  teamEventsUrl = rootApiUrl + '/api/v2/team/{team_key}/events',
-  teamEventMatchesUrl = rootApiUrl + '/api/v2/team/{team_key}/event/{event_key}/matches',
+  teamEventsUrl = rootApiUrl + '/api/v3/team/{team_key}/events',
+  teamEventMatchesUrl = rootApiUrl + '/api/v3/team/{team_key}/event/{event_key}/matches',
 
   // private methods 
   getDataFromBlueAlliance = function(apiUrl) {
     return $.ajax({
       beforeSend: function(request) {
-        request.setRequestHeader('X-TBA-App-Id', `frc${appTeamKey}:scouting-system:v01`);
+        request.setRequestHeader('X-TBA-Auth-Key', tbaApiKey);
       },
       url: apiUrl 
     });

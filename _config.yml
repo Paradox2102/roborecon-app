@@ -35,6 +35,7 @@ footer:
 
 scout:
     teamkey: 2102
+    tbaApiKey: J9XyDSN69eZMHqanEDaevzAywDjxL9iyBYAQh2erLJJ9MtZVG60HsEYeKVwloFGe
     currentevent: 2017casd # the Event key for the event you want to scout, can be found on TBA
     firebase:
         rooturl: https://paradox-scout-dc256.firebaseio.com/ # Address of Firebase Server

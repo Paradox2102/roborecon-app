@@ -362,13 +362,13 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
 
     // ONLY call API and update db if last scoring update > 5 mins ago AND event is happening!!!
     // if(minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) {
-    if (today < eventStart || 
-        today > eventEnd.setDate(eventEnd.getDate() + 1) || 
-        (minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) ) {
+    // if (today < eventStart || 
+    //     today > eventEnd.setDate(eventEnd.getDate() + 1) || 
+    //     (minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) ) {
     
-      next();
-      return;
-    }
+    //   next();
+    //   return;
+    // }
     
     // fetch scores from TBA and update db
     ParadoxScout.ApiService.getAllMatchDetails(eventKey, next)
@@ -437,7 +437,7 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
          }); 
           
           
-          $.each (match.alliances.blue.teams, function(i, team) {
+          $.each (match.alliances.blue.team_keys, function(i, team) {
             delete match.score_breakdown.blue['']
             $.each(match.score_breakdown.blue, function(k,v) {
               if (typeof(v) === 'boolean') match.score_breakdown.blue[k] = +v
@@ -445,7 +445,7 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
             teamScores.push({ matchKey: match.key, match_time: match.time, teamKey: team, scores: match.score_breakdown.blue });
           });
 
-          $.each (match.alliances.red.teams, function(i, team) {
+          $.each (match.alliances.red.team_keys, function(i, team) {
             delete match.score_breakdown.red['']
             $.each(match.score_breakdown.red, function(k,v) {
               if (typeof(v) === 'boolean') match.score_breakdown.red[k] = +v
@@ -471,23 +471,31 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
               competition_id: ParadoxScout.CompetitionYear, 
               updated_at: updatedAt, 
               scores: firstMatch,
-              oprs: (statsData && statsData.oprs) ? statsData.oprs[score.teamKey.replace('frc','')] || 0 : 0,
-              ccwms: (statsData && statsData.ccwms) ? statsData.ccwms[score.teamKey.replace('frc','')] || 0 : 0,
-              dprs: (statsData && statsData.dprs) ? statsData.dprs[score.teamKey.replace('frc','')] || 0: 0//,
-              
-
+              oprs: (statsData && statsData.oprs) ? statsData.oprs[score.teamKey] || 0 : 0,
+              ccwms: (statsData && statsData.ccwms) ? statsData.ccwms[score.teamKey] || 0 : 0,
+              dprs: (statsData && statsData.dprs) ? statsData.dprs[score.teamKey] || 0: 0//,
             };
           }
         });
 
-        $.each (rankingData, function(index, arr) { 
-          if (index === 0 || arr.length < 1) return;
-
-          var tk = 'frc' + arr[1];
+        $.each (rankingData.rankings, function(index, r) { 
+          var tk = r.team_key;
           if (!tk in teamEventDetails) return;
 
           tba_api_ranking_config.forEach(function (el) {
-            teamEventDetails[tk][el.id] = arr[el.arr_index];
+            // if value is always in ranking dictionary
+            if ('key' in el) {
+              if (el.key === 'record') {
+                teamEventDetails[tk][el.id] = `${r.record.wins}-${r.record.losses}-${r.record.ties}`;
+              }
+              else {
+                teamEventDetails[tk][el.id] = r[el.key];
+              }
+            }
+            // if value changes for each comp.
+            else if ('arr_index' in el) {
+              teamEventDetails[tk][el.id] = r.sort_orders[el.arr_index];
+            }
           });
         });
 
