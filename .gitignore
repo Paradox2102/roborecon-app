@@ -1,9 +1,9 @@
 _site
+vendor
+
 .sass-cache
 .jekyll-metadata
 .bundle
 _config.c9.yml
-
-vendor
 
 .DS_Store #Dang Mac Users
