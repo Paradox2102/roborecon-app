@@ -10,7 +10,7 @@ RoboRecon is a FRC scouting application designed by FIRST Team Paradox 2102. Thi
 
 ### Setup
 
-1. Submit your team number, an administrator e-mail, and preferred subdomain using [this form](http://s.team2102.com/roborecon).  We will notify you after your team has been added to the scouting database. ***NOTE: the administrator's e-mail MUST either be a Gmail account or associated to a Github account.***
+1. Submit your team number, an administrator e-mail, and preferred subdomain using [this form](https://goo.gl/forms/U9m5MNoIu6P4GNiD3).  We will notify you after your team has been added to the scouting database. ***NOTE: the administrator's e-mail MUST either be a Gmail account or associated to a Github account.***
 
 2. Fork this repo and configure your repository as desired
 
