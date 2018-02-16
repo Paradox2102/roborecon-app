@@ -4,26 +4,26 @@
 var tba_api_ranking_config = [
   { id: 'ranking', title: 'Rank', display_order: 1, key: 'rank' },
   { id: 'rankingScore', title: 'Ranking Score', display_order: 2, arr_index: 0 },
-  { id: 'rankingMatchPoints', title: 'Match Points', display_order: 2, arr_index: 1 },
-  { id: 'rankingAuto', title: 'Auto', display_order: 3, arr_index: 2 },
-  { id: 'rankingRotor', title: 'Rotor', display_order: 4, arr_index: 3 },
-  { id: 'rankingTouchpad', title: 'Touchpad', display_order: 5, arr_index: 4 },
-  { id: 'Pressure', title: 'Pressure', display_order: 6, arr_index: 5 },
-  { id: 'rankingRecord', title: 'Record (W-L-T)', display_order: 7, key: 'record'},
-  { id: 'rankingPlayed', title: 'Played', display_order: 8, key: 'matches_played' }
+  { id: 'rankingMatchPoints', title: 'Match Points', display_order: 3, arr_index: 1 },
+  { id: 'rankingAuto', title: 'Auto', display_order: 4, arr_index: 2 },
+  { id: 'rankingRotor', title: 'Rotor', display_order: 5, arr_index: 3 },
+  { id: 'rankingTouchpad', title: 'Touchpad', display_order: 6, arr_index: 4 },
+  { id: 'Pressure', title: 'Pressure', display_order: 7, arr_index: 5 },
+  { id: 'rankingRecord', title: 'Record (W-L-T)', display_order: 8, key: 'record'},
+  { id: 'rankingPlayed', title: 'Played', display_order: 9, key: 'matches_played' }
 ];
 
 var tba_api_scoring_config = [
   {
-    id: 'xTotalRotorsEngaged',
-    title: 'Rotors Engaged',
-    dtype: 'bool',
-    agg: ['rotor1Engaged', 'rotor2Engaged', 'rotor3Engaged', 'rotor4Engaged']
-  }, {
-    id: 'xTotalRotorPoints',
-    title: 'Rotor Points',
+    id: 'xTotalSwitchOwnershipSec',
+    title: 'Switch Ownership Seconds',
     dtype: 'int',
-    agg: ['autoRotorPoints', 'teleopRotorPoints']
+    agg: ['autoSwitchOwnershipSec', 'teleopSwitchOwnershipSec', 'teleopSwitchBoostSec']
+  }, {
+    id: 'xLeftOverForceCubes',
+    title: 'Unused Force Cubes',
+    dtype: 'int',
+    subtraction: ['vaultForceTotal', 'vaultForcePlayed']
   }, {
     id: 'xTotalFuelPoints',
     title: 'Fuel Points',

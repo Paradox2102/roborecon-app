@@ -402,15 +402,64 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
           // 2016 - combine obstacles names and crossings into ONE key
           
          
-         var tba_subs = tba_api_scoring_config.filter(function(d) {
-             return('sub' in d);
+         var tba_substitution = tba_api_scoring_config.filter(function(d) {
+             return('substitution' in d);
          });
         
-         tba_subs.forEach(function(obj) {
-            match.score_breakdown.blue[match.score_breakdown.blue[obj.id]] = parseInt(match.score_breakdown.blue[obj.sub]) || 0;
-            match.score_breakdown.red[match.score_breakdown.red[obj.id]] = parseInt(match.score_breakdown.red[obj.sub]) || 0;
+         tba_substitution.forEach(function(obj) {
+            match.score_breakdown.blue[match.score_breakdown.blue[obj.id]] = parseInt(match.score_breakdown.blue[obj.substitution]) || 0;
+            match.score_breakdown.red[match.score_breakdown.red[obj.id]] = parseInt(match.score_breakdown.red[obj.substitution]) || 0;
          });
          
+         var tba_subtraction = tba_api_scoring_config.filter(function(d) {
+             return('subtraction' in d);
+         });
+         
+         tba_subtraction.forEach(function(obj){
+          var val = 0;
+          if (obj.dtype === 'bool') {
+            val = match.score_breakdown.blue[obj.sub[0]] === true ? 1 : 0; 
+          }
+          else if (obj.dtype === 'int'){
+            val = parseInt(match.score_breakdown.blue[obj.sub[0]]);
+          } else{
+            val = parseFloat(match.score_breakdown.blue[obj.sub[0]]);
+          }
+        
+          for(var i=1; i<obj.sub.length; i++){
+            if (obj.dtype === 'bool') {
+              val -= match.score_breakdown.blue[obj.sub[0]] === true ? 1 : 0; 
+            }
+            else if (obj.dtype === 'int'){
+              val -= parseInt(match.score_breakdown.blue[obj.sub[0]]);
+            } else{
+              val -= parseFloat(match.score_breakdown.blue[obj.sub[0]]);
+            }
+          }
+          match.score_breakdown.blue[obj.id] = val || 0;
+
+          val = 0;
+          if (obj.dtype === 'bool') {
+            val = match.score_breakdown.red[obj.sub[0]] === true ? 1 : 0; 
+          }
+          else if (obj.dtype === 'int'){
+            val = parseInt(match.score_breakdown.red[obj.sub[0]]);
+          } else{
+            val = parseFloat(match.score_breakdown.red[obj.sub[0]]);
+          }
+        
+          for(var i=1; i<obj.sub.length; i++){
+            if (obj.dtype === 'bool') {
+              val -= match.score_breakdown.red[obj.sub[0]] === true ? 1 : 0; 
+            }
+            else if (obj.dtype === 'int'){
+              val -= parseInt(match.score_breakdown.red[obj.sub[0]]);
+            } else{
+              val -= parseFloat(match.score_breakdown.red[obj.sub[0]]);
+            }
+          }
+          match.score_breakdown.red[obj.id] = val || 0;
+         }); 
          
          var tba_aggs = tba_api_scoring_config.filter(function(d) {
              return('agg' in d);
@@ -418,7 +467,7 @@ ParadoxScout.updateEventScores = function(eventKey, next) {
          
          tba_aggs.forEach(function(obj){
                 match.score_breakdown.blue[obj.id] = obj.agg.reduce(function (preVal, el) {
-                  if (obj.dtype == 'bool') {
+                  if (obj.dtype === 'bool') {
                     return preVal + (match.score_breakdown.blue[el] === true ? 1 : 0);
                   }
                   else {
