@@ -82,18 +82,18 @@ $(function() {
         var tdClass= full.blue_score > full.red_score ? 'class="matches-winning-alliance"' : '';
 
         return '<table class="table table-bordered matches-alliance-blue" ><tr>' +
-                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + data + '">'+ data.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + data + '"><i>Rate Team</i></a></small>' + '</a></td>' +
-                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + full.blue_alliance_1 + '">'+ full.blue_alliance_1.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + full.blue_alliance_1 + '"><i>Rate Team</i></a></small>' + '</a></td>' +
-                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + full.blue_alliance_2 + '">'+ full.blue_alliance_2.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + full.blue_alliance_2 + '"><i>Rate Team</i></a></small>' + '</a></td>' +
+                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + data + '">'+ data.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + data + '&match_key=' + full.match_key + '"><i>Rate Team</i></a></small>' + '</a></td>' +
+                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + full.blue_alliance_1 + '">'+ full.blue_alliance_1.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + full.blue_alliance_1 + '&match_key=' + full.match_key + '"><i>Rate Team</i></a></small>' + '</a></td>' +
+                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + full.blue_alliance_2 + '">'+ full.blue_alliance_2.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + full.blue_alliance_2 + '&match_key=' + full.match_key + '"><i>Rate Team</i></a></small>' + '</a></td>' +
                 '</tr></table>'; } 
       },
       { title: 'Red Alliance', data: 'red_alliance_0', render: function(data, type, full, meta) { 
         var tdClass= full.red_score > full.blue_score ? 'class="matches-winning-alliance"' : '';
 
         return '<table class="table table-bordered matches-alliance-red"><tr>' +
-                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + data + '">'+ data.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + data + '"><i>Rate Team</i></a></small>' + '</a></td>' +
-                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + full.red_alliance_1 + '">'+ full.red_alliance_1.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + full.red_alliance_1 + '"><i>Rate Team</i></a></small>' + '</a></td>' +
-                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + full.red_alliance_2 + '">'+ full.red_alliance_2.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + full.red_alliance_2 + '"><i>Rate Team</i></a></small>' + '</a></td>' +
+                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + data + '">'+ data.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + data + '&match_key=' + full.match_key + '"><i>Rate Team</i></a></small>' + '</a></td>' +
+                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + full.red_alliance_1 + '">'+ full.red_alliance_1.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + full.red_alliance_1 + '&match_key=' + full.match_key + '"><i>Rate Team</i></a></small>' + '</a></td>' +
+                  '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + full.red_alliance_2 + '">'+ full.red_alliance_2.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + full.red_alliance_2 + '&match_key=' + full.match_key + '"><i>Rate Team</i></a></small>' + '</a></td>' +
                 '</tr></table>'; } 
       },
       { title: 'Scores', data: 'blue_score', render: function(data, type, full, meta) { 
