@@ -265,7 +265,9 @@ $(function() {
       data[v.name] = v.value;
     });
 
+    var match_key = AppUtility.getUrlParameter('match_key');
  
+    if(match_key) data['match_key'] = match_key;
     //console.log(data);
 
     // add scouting report
