@@ -470,8 +470,10 @@ ParadoxScout.updateEventScores = function (eventKey, next) {
               if (obj.dtype === 'bool') {
                 return preVal + (match.score_breakdown.blue[el] === true ? 1 : 0);
               }
-              else {
+              else if(obj,dtype === 'int') {
                 return preVal + parseInt(match.score_breakdown.blue[el] || (obj.default_value || 0));
+              }else {
+                return preVal + parseFloat(match.score_breakdown.blue[el] || (obj.default_value || 0));
               }
             }, 0);
 
