@@ -1,6 +1,6 @@
 ---
-  ---
-  'use strict';
+---
+'use strict';
 
 // will create app namespace *unless* it already exists because another .js
 // file using the same namespace was loaded first
