@@ -7,7 +7,7 @@ branches:
   - gh-pages
 script:
   - echo "Building Site"
-  - bundle exec "jekyll build --profile --baseurl ''"
+  - bundle exec "jekyll build --profile"
   - echo "Testing Site"
   - bundle exec htmlproofer ./_site --disable-external --check-html --assume-extension --allow-hash-href
 env:
