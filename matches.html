@@ -82,9 +82,9 @@ $(function() {
         var tdClass= full.blue_score > full.red_score ? 'class="matches-winning-alliance"' : '';
 
         var headerRow = '';
-        if(meta.row === 0){
+        // if(meta.row === 0){
           headerRow = '<tr><td>Scouter 1</td><td>Scouter 2</td><td>Scouter 3</td></tr>';
-        }
+        // }
 
         return '<table class="table table-bordered matches-alliance-blue" >'+headerRow+'<tr>' +
                   '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + data + '">'+ data.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + data + '&match_key=' + full.match_key + '"><i>Rate Team</i></a></small>' + '</a></td>' +
@@ -96,9 +96,9 @@ $(function() {
         var tdClass= full.red_score > full.blue_score ? 'class="matches-winning-alliance"' : '';
 
         var headerRow = '';
-        if(meta.row === 0){
+        // if(meta.row === 0){
           headerRow = '<tr><td>Scouter 4</td><td>Scouter 5</td><td>Scouter 6</td></tr>';
-        }
+        // }
 
         return '<table class="table table-bordered matches-alliance-red">'+headerRow+'<tr>' +
                   '<td ' + tdClass + '><a href="{{ site.baseurl }}/team-details?team_id=' + data + '">'+ data.replace('frc', '') + '<small><br><a href="{{ site.baseurl }}/rate?team_id=' + data + '&match_key=' + full.match_key + '"><i>Rate Team</i></a></small>' + '</a></td>' +
@@ -110,7 +110,7 @@ $(function() {
         var blueClass = full.blue_score > full.red_score ? 'class="matches-winning-alliance"' : '';
         var redClass = full.red_score > full.blue_score ? 'class="matches-winning-alliance"' : '';
 
-        var headerRow = '';
+        var headerRow = '<tr><td style="background-color:#2295C7;">&nbsp;</td><td style="background-color:#D44829;">&nbsp;</td></tr>';;
         if(meta.row === 0){
           headerRow = '<tr><td style="background-color:#2295C7;">Blue</td><td style="background-color:#D44829;">Red</td></tr>';
         }
