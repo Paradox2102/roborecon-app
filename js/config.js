@@ -25,15 +25,15 @@ var tba_api_scoring_config = [
     dtype: 'int',
     subtraction: ['vaultForceTotal', 'vaultForcePlayed']
   }, {
-    id: 'xTotalFuelPoints',
-    title: 'Fuel Points',
+    id: 'xTotalScaleOwnershipSec',
+    title: 'Scalse Ownership Seconds',
     dtype: 'int',
-    agg: ['autoFuelPoints', 'teleopFuelPoints']
+    agg: ['autoScaleOwnershipSec', 'teleopScaleOwnershipSec', 'teleopScaleBoostSec']
   }, {
-    id: 'xTotalHighFuels',
-    title: 'High Fuels',
+    id: 'xLeftOverBoostCubes',
+    title: 'Unused Boost Cubes',
     dtype: 'int',
-    agg: ['autoFuelHigh', 'teleopFuelHigh']
+    subtraction: ['vaultBoostTotal', 'vaultBoostPlayed']
   }, {
     id: 'xTotalLowFuels',
     title: 'Low Fuels',
