@@ -56,6 +56,8 @@ var app_dashboard_config = {
     // major statistical cats
     { data: 'ranking', title: 'Rank', orderSequence: ['asc', 'desc'], defaultContent: 0 },
     { data: 'rankingScore', title: 'RS', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { data: 'rp', title: 'Ranking Points', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { data: 'tba_rpEarned', title: 'Winning Rps', orderSequence: ['desc', 'asc'], defaultContent: 0, visible: false },
     {
       data: 'oprs', title: 'OPRS', orderSequence: ['desc', 'asc'], defaultContent: 0,
       render: function (data) { return Math.round(data * 100) / 100; }
@@ -93,15 +95,9 @@ var app_dashboard_config = {
     { title: 'Force Total', data: 'vaultForceTotal', orderSequence: ['desc', 'asc'], defaultContent: 0, visible: false },
     { title: 'Force Played', data: 'vaultForcePlayed', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     // other ranking info
-    { title: 'Rotor Ranking Points', data: 'rotorRankingPointAchieved', orderSequence: ['desc', 'asc'] },
-    { title: 'Rotor Bonus Points', data: 'rotorBonusPoints', orderSequence: ['desc', 'asc'] },
-    { title: 'Fuel Ranking Points', data: 'kPaRankingPointAchieved', orderSequence: ['desc', 'asc'] },
-    { title: 'Fuel Bonus Points', data: 'kPaBonusPoints', orderSequence: ['desc', 'asc'] },
-    // other
-    { title: 'Rotor 1 Engaged', data: 'rotor1Engaged', orderSequence: ['desc', 'asc'] },
-    { title: 'Rotor 2 Engaged', data: 'rotor2Engaged', orderSequence: ['desc', 'asc'] },
-    { title: 'Rotor 3 Engaged', data: 'rotor3Engaged', orderSequence: ['desc', 'asc'] },
-    { title: 'Rotor 4 Engaged', data: 'rotor4Engaged', orderSequence: ['desc', 'asc'] },
+    { title: 'Auto Quest Ranking Point', data: 'autoQuestRankingPoint', orderSequence: ['desc', 'asc'] },
+    { title: 'Face the Boss Ranking Point', data: 'faceTheBossRankingPoint', orderSequence: ['desc', 'asc'] },
+    //Foul Points
     { title: 'Adjust Points', data: 'adjustPoints', orderSequence: ['desc', 'asc'] },
     { title: 'Foul Points', data: 'foulPoints', orderSequence: ['desc', 'asc'] },
     { title: 'Foul Count', data: 'foulCount', orderSequence: ['desc', 'asc'] },
