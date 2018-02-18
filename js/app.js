@@ -124,7 +124,7 @@ ParadoxScout.updateEventAndTeams = function (eventKey, next) {
       end_date: eventData[0].end_date,
       name: eventData[0].name,
       start_date: eventData[0].start_date,
-      venue_address: eventData[0].venue_address,
+      venue_address: eventData[0].address,
     };
 
     // build teams & event-teams json
@@ -134,8 +134,8 @@ ParadoxScout.updateEventAndTeams = function (eventKey, next) {
       eventTeams[item.key] = true;
 
       teams[item.key] = {
-        country_name: item.country_name,
-        location: item.location,
+        country_name: item.country,
+        location: item.location_name,
         nickname: item.nickname,
         rookie_year: item.rookie_year,
         team_number: item.team_number,
@@ -417,44 +417,44 @@ ParadoxScout.updateEventScores = function (eventKey, next) {
           tba_subtraction.forEach(function (obj) {
             var val = 0;
             if (obj.dtype === 'bool') {
-              val = match.score_breakdown.blue[obj.sub[0]] === true ? 1 : 0;
+              val = match.score_breakdown.blue[obj.subtraction[0]] === true ? 1 : 0;
             }
             else if (obj.dtype === 'int') {
-              val = parseInt(match.score_breakdown.blue[obj.sub[0]]);
+              val = parseInt(match.score_breakdown.blue[obj.subtraction[0]]);
             } else {
-              val = parseFloat(match.score_breakdown.blue[obj.sub[0]]);
+              val = parseFloat(match.score_breakdown.blue[obj.subtraction[0]]);
             }
 
-            for (var i = 1; i < obj.sub.length; i++) {
+            for (var i = 1; i < obj.subtraction.length; i++) {
               if (obj.dtype === 'bool') {
-                val -= match.score_breakdown.blue[obj.sub[0]] === true ? 1 : 0;
+                val -= match.score_breakdown.blue[obj.subtraction[0]] === true ? 1 : 0;
               }
               else if (obj.dtype === 'int') {
-                val -= parseInt(match.score_breakdown.blue[obj.sub[0]]);
+                val -= parseInt(match.score_breakdown.blue[obj.subtraction[0]]);
               } else {
-                val -= parseFloat(match.score_breakdown.blue[obj.sub[0]]);
+                val -= parseFloat(match.score_breakdown.blue[obj.subtraction[0]]);
               }
             }
             match.score_breakdown.blue[obj.id] = val || 0;
 
             val = 0;
             if (obj.dtype === 'bool') {
-              val = match.score_breakdown.red[obj.sub[0]] === true ? 1 : 0;
+              val = match.score_breakdown.red[obj.subtraction[0]] === true ? 1 : 0;
             }
             else if (obj.dtype === 'int') {
-              val = parseInt(match.score_breakdown.red[obj.sub[0]]);
+              val = parseInt(match.score_breakdown.red[obj.subtraction[0]]);
             } else {
-              val = parseFloat(match.score_breakdown.red[obj.sub[0]]);
+              val = parseFloat(match.score_breakdown.red[obj.subtraction[0]]);
             }
 
-            for (var i = 1; i < obj.sub.length; i++) {
+            for (var i = 1; i < obj.subtraction.length; i++) {
               if (obj.dtype === 'bool') {
-                val -= match.score_breakdown.red[obj.sub[0]] === true ? 1 : 0;
+                val -= match.score_breakdown.red[obj.subtraction[0]] === true ? 1 : 0;
               }
               else if (obj.dtype === 'int') {
-                val -= parseInt(match.score_breakdown.red[obj.sub[0]]);
+                val -= parseInt(match.score_breakdown.red[obj.subtraction[0]]);
               } else {
-                val -= parseFloat(match.score_breakdown.red[obj.sub[0]]);
+                val -= parseFloat(match.score_breakdown.red[obj.subtraction[0]]);
               }
             }
             match.score_breakdown.red[obj.id] = val || 0;
@@ -470,7 +470,7 @@ ParadoxScout.updateEventScores = function (eventKey, next) {
               if (obj.dtype === 'bool') {
                 return preVal + (match.score_breakdown.blue[el] === true ? 1 : 0);
               }
-              else if(obj,dtype === 'int') {
+              else if(obj.dtype === 'int') {
                 return preVal + parseInt(match.score_breakdown.blue[el] || (obj.default_value || 0));
               }else {
                 return preVal + parseFloat(match.score_breakdown.blue[el] || (obj.default_value || 0));
