@@ -14,6 +14,11 @@ var tba_api_ranking_config = [
 
 var tba_api_scoring_config = [
   {
+    id: 'xTotalOwnershipPoints',
+    title: 'Ownership Points',
+    dtype: 'int',
+    agg: ['autoOwnershipPoints', 'teleopOwnershipPoints']
+  },{
     id: 'xTotalSwitchOwnershipSec',
     title: 'Switch Ownership Seconds',
     dtype: 'int',
@@ -114,9 +119,9 @@ var app_team_details_config = {
     { id: 'view_pointsPerMatch', title: 'Points/Match', decimal_places: 2, display_order: 2 },
     { id: 'ranking', title: 'Rank', display_order: 3 },
     { id: 'rankingScore', title: 'Ranking Score', display_order: 4 },
-    { id: 'rankingRotor', title: 'Rotor', display_order: 4, arr_index: 5 },
-    { id: 'rankingTouchpad', title: 'Touchpad', display_order: 5, arr_index: 6 },
-    { id: 'Pressure', title: 'Pressure', display_order: 6, arr_index: 7 },
+    { id: 'rankingOwnership', title: 'Ownership', display_order: 4, arr_index: 3 },
+    { id: 'rankingVault', title: 'Vault', display_order: 5, arr_index: 4 },
+    { id: 'rankingParkClimbPoints', title: 'Park/Climb', display_order: 6, arr_index: 1 },
     { id: 'oprs', title: 'OPRS', tooltip: 'Offensive Power Rating: expected points contribution per match', decimal_places: 2, display_order: 8 },
     { id: 'ccwms', title: 'CCWMS', tooltip: 'Calculated Contribution to Winning Margin', decimal_places: 2, display_order: 9 },
     { id: 'dprs', title: 'DPRS', tooltip: 'Defensive Power Rating', decimal_places: 2, display_order: 10 }
@@ -125,22 +130,23 @@ var app_team_details_config = {
     { id: 'totalPoints', title: 'Total Points', display_order: 1 }, 
     { id: 'teleopPoints', title: 'Points (teleop)', display_order: 2 }, 
     { id: 'autoPoints', title: 'Points (auto)', display_order: 3 },
-    { id: 'xTotalRotorPoints', title: ' Rotor Points', display_order: 4, visible: true }, 
-    { id: 'xTotalFuelPoints', title: 'Fuel Points', display_order: 5, visible: true },
-    { id: 'teleopTakeoffPoints', title: 'Takeoff Points (teleop)', display_order: 6, visible: true }, 
-    { id: 'autoMobilityPoints', title: 'Auto Mobility Points (auto)', display_order: 7, visible: true },
+    { id: 'endgamePoints', title: ' End Game (teleop)', display_order: 4, visible: true },
+    { id: 'vaultPoints', title: ' Vault Ponts (teleop)', display_order: 5 },
+    { id: 'xTotalOwnershipPoints', title: ' Ownership Points', display_order: 6, visible: true }, 
+    { id: 'xTotalSwitchOwnershipSec', title: 'Switch Ownership Sec', display_order: 7, visible: true },
+    { id: 'xTotalScaleOwnershipSec', title: 'Scale Ownership Sec', display_order: 8, visible: true }, 
+    { id: 'autoRunPoints', title: 'CROSSING Points (auto)', display_order: 9 },
 
-    { id: 'teleopRotorPoints', title: 'Rotor Points (teleop)', display_order: 8 }, 
-    { id: 'autoRotorPoints', title: 'Rotor Points (auto)', display_order: 9 }, 
+    { id: 'teleopSwitchOwnershipSec', title: 'Switch Ownership (teleop)', display_order: 10 }, 
+    { id: 'autoSwitchOwnershipSec', title: 'Switch Ownership (auto)', display_order: 11 }, 
 
-    { id: 'teleopFuelPoints', title: 'Fuel Points (teleop)', display_order: 10 }, 
-    { id: 'autoFuelPoints', title: 'Fuel Points (auto)', display_order: 11 }, 
+    { id: 'teleopScaleOwnershipSec', title: 'Scale Ownership (teleop)', display_order: 12 }, 
+    { id: 'autoScaleOwnershipSec', title: 'Scale Ownership (auto)', display_order: 13 }, 
 
-    { id: 'teleopFuelHigh', title: 'High Goals (teleop)', display_order: 12 },
-    { id: 'teleopFuelLow', title: 'Low Goals (teleop)', display_order: 13 },
-    { id: 'autoFuelsHigh', title: 'High Fuels (auto)', display_order: 14 }, 
-    { id: 'autoFuelsLow', title: 'Low Fuels (auto)', display_order: 15 }
-    
+    { id: 'vaultBoostPlayed', title: 'Boost Played (teleop)', display_order: 14 },
+    { id: 'vaultForcePlayed', title: 'Force Played (teleop)', display_order: 15 },
+    { id: 'vaultLevitatePlayed', title: 'Levitate Played (auto)', display_order: 16 }, 
+        
   ],
   scouting_viz: [
     { id: 'rating_scoring_gears_made', title: 'Avg. Gears (teleop)', missed_id: '', calc_type: 'avg' }, 
