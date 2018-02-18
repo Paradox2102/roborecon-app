@@ -202,16 +202,16 @@ var app_scouting_reports_config = {
 // ------------------------------------------------------------------------
 var app_match_intel_config = {
   summary_panel: [
-    { id: 'oprs', title: 'OPRS', tooltip: 'Offensive Power Rating: expected points contribution per match', decimal_places: 2 },
-    { id: 'ccwms', title: 'CCWMS', tooltip: 'Calculated Contribution to Winning Margin', decimal_places: 2 },
+    { id: 'oprs', title: 'OPR', tooltip: 'Offensive Power Rating: expected points contribution per match', decimal_places: 2 },
+    { id: 'ccwms', title: 'CCWM', tooltip: 'Calculated Contribution to Winning Margin', decimal_places: 2 },
     { id: 'avgPoints', title: 'Avg.', calc_type: 'avg', agg:['totalPoints'], decimal_places: 2 }
   ],
   match_stats: [
-    { id: 'avgRotorPoints', title: 'Avg. Rotor Points', calc_type: 'avg', agg:['autoRotorPoints', 'teleopRotorPoints'] },
-    { id: 'avgRotorPointsAuto', title: 'Avg. Rotor Points (auto)', calc_type: 'avg', agg:['autoRotorPoints'] },
-    { id: 'avgRotorsEngaged', title: 'Avg. Rotors Engaged', calc_type: 'avg', agg:['xTotalRotorsEngaged'] }, 
-    { id: 'avgFuelPoints', title: 'Avg. Fuel Points', calc_type: 'avg', agg:['autoFuelPoints', 'teleopFuelPoints'] }, 
-    { id: 'avgFuelPointsAuto', title: 'Avg. Fuel Points (auto)', calc_type: 'avg', agg:['autoFuelPoints'] },
+    { id: 'avgOwnershipPoints', title: 'Avg. Ownership Points', calc_type: 'avg', agg:['xTotalOwnershipPoints'] },
+    { id: 'avgSwitchOwnershipSec', title: 'Avg. Switch Ownership Sec', calc_type: 'avg', agg:['xTotalSwitchOwnershipSec'] },
+    { id: 'avgScaleOwnershipSec', title: 'Avg. Scale Ownership Sec', calc_type: 'avg', agg:['xTotalScaleOwnershipSec'] }, 
+    { id: 'avgEndGamePoints', title: 'Avg. End Game Points', calc_type: 'avg', agg:[ 'endgamePoints'] }, 
+    { id: 'avgVaultPoints', title: 'Avg. Vault Points', calc_type: 'avg', agg:['vaultPoints'] },
     { id: 'avgTakeOffPonts', title: 'Avg. Takeoff Points', calc_type: 'avg', agg:['teleopTakeoffPoints'] }
   ],
   team_stats: [
