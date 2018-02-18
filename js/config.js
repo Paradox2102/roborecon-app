@@ -212,7 +212,9 @@ var app_match_intel_config = {
     { id: 'avgScaleOwnershipSec', title: 'Avg. Scale Ownership Sec', calc_type: 'avg', agg:['xTotalScaleOwnershipSec'] }, 
     { id: 'avgEndGamePoints', title: 'Avg. End Game Points', calc_type: 'avg', agg:[ 'endgamePoints'] }, 
     { id: 'avgVaultPoints', title: 'Avg. Vault Points', calc_type: 'avg', agg:['vaultPoints'] },
-    { id: 'avgTakeOffPonts', title: 'Avg. Takeoff Points', calc_type: 'avg', agg:['teleopTakeoffPoints'] }
+    { id: 'avgLevitatePlayed', title: 'Avg. Levitate Played', calc_type: 'avg', agg:['vaultLevitatePlayed'] },
+    { id: 'avgBoostPlayed', title: 'Avg. Boost Played', calc_type: 'avg', agg:['vaultBoostPlayed'] },
+    { id: 'avgForcePlayed', title: 'Avg. Force Played', calc_type: 'avg', agg:['vaultForcePlayed'] },
   ],
   team_stats: [
     { id: 'avgRobotStability', title: 'Robot Stability', calc_type: 'avg', agg:['rating_overall_robot_stability'], min: 1, max: 5 }, 
