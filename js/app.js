@@ -400,7 +400,7 @@ ParadoxScout.updateEventScores = function (eventKey, next) {
 
           //REASSIGN: reassigns a TBA given attribute and sets it equal to the value of another TBA field 
           var tba_reassign = tba_api_scoring_config.filter(function (d) {
-            return ('reassign_value_to' in d);
+            return ('scoring_type' in d && d.scoring_type === 'reassign_value');
           });
 
           tba_reassign.forEach(function (obj) {
@@ -427,50 +427,50 @@ ParadoxScout.updateEventScores = function (eventKey, next) {
 
           //subtraction takes the first value and then subtracts the rest of the values from it
           var tba_subtraction = tba_api_scoring_config.filter(function (d) {
-            return ('subtraction' in d);
+            return ('scoring_type' in d && d.scoring_type === 'diff');
           });
 
           tba_subtraction.forEach(function (obj) {
             var val = 0;
             if (obj.dtype === 'bool') {
-              val = match.score_breakdown.blue[obj.subtraction[0]] === true ? 1 : 0;
+              val = match.score_breakdown.blue[obj.tbaFields[0]] === true ? 1 : 0;
             }
             else if (obj.dtype === 'int') {
-              val = parseInt(match.score_breakdown.blue[obj.subtraction[0]]);
+              val = parseInt(match.score_breakdown.blue[obj.tbaFields[0]]);
             } else {
-              val = parseFloat(match.score_breakdown.blue[obj.subtraction[0]]);
+              val = parseFloat(match.score_breakdown.blue[obj.tbaFields[0]]);
             }
 
-            for (var i = 1; i < obj.subtraction.length; i++) {
+            for (var i = 1; i < obj.tbaFields.length; i++) {
               if (obj.dtype === 'bool') {
-                val -= match.score_breakdown.blue[obj.subtraction[0]] === true ? 1 : 0;
+                val -= match.score_breakdown.blue[obj.tbaFields[0]] === true ? 1 : 0;
               }
               else if (obj.dtype === 'int') {
-                val -= parseInt(match.score_breakdown.blue[obj.subtraction[0]]);
+                val -= parseInt(match.score_breakdown.blue[obj.tbaFields[0]]);
               } else {
-                val -= parseFloat(match.score_breakdown.blue[obj.subtraction[0]]);
+                val -= parseFloat(match.score_breakdown.blue[obj.tbaFields[0]]);
               }
             }
             match.score_breakdown.blue[obj.id] = val || 0;
 
             val = 0;
             if (obj.dtype === 'bool') {
-              val = match.score_breakdown.red[obj.subtraction[0]] === true ? 1 : 0;
+              val = match.score_breakdown.red[obj.tbaFields[0]] === true ? 1 : 0;
             }
             else if (obj.dtype === 'int') {
-              val = parseInt(match.score_breakdown.red[obj.subtraction[0]]);
+              val = parseInt(match.score_breakdown.red[obj.tbaFields[0]]);
             } else {
-              val = parseFloat(match.score_breakdown.red[obj.subtraction[0]]);
+              val = parseFloat(match.score_breakdown.red[obj.tbaFields[0]]);
             }
 
-            for (var i = 1; i < obj.subtraction.length; i++) {
+            for (var i = 1; i < obj.tbaFields.length; i++) {
               if (obj.dtype === 'bool') {
-                val -= match.score_breakdown.red[obj.subtraction[0]] === true ? 1 : 0;
+                val -= match.score_breakdown.red[obj.tbaFields[0]] === true ? 1 : 0;
               }
               else if (obj.dtype === 'int') {
-                val -= parseInt(match.score_breakdown.red[obj.subtraction[0]]);
+                val -= parseInt(match.score_breakdown.red[obj.tbaFields[0]]);
               } else {
-                val -= parseFloat(match.score_breakdown.red[obj.subtraction[0]]);
+                val -= parseFloat(match.score_breakdown.red[obj.tbaFields[0]]);
               }
             }
             match.score_breakdown.red[obj.id] = val || 0;
@@ -478,11 +478,11 @@ ParadoxScout.updateEventScores = function (eventKey, next) {
 
           //aggergation takes all the values and adds them together
           var tba_aggs = tba_api_scoring_config.filter(function (d) {
-            return ('agg' in d);
+            return ('scoring_type' in d && d.scoring_type === 'sum');
           });
 
           tba_aggs.forEach(function (obj) {
-            match.score_breakdown.blue[obj.id] = obj.agg.reduce(function (preVal, el) {
+            match.score_breakdown.blue[obj.id] = obj.tbaFields.reduce(function (preVal, el) {
               if (obj.dtype === 'bool') {
                 return preVal + (match.score_breakdown.blue[el] === true ? 1 : 0);
               }
@@ -493,7 +493,7 @@ ParadoxScout.updateEventScores = function (eventKey, next) {
               }
             }, 0);
 
-            match.score_breakdown.red[obj.id] = obj.agg.reduce(function (preVal, el) {
+            match.score_breakdown.red[obj.id] = obj.tbaFields.reduce(function (preVal, el) {
               if (obj.dtype == 'bool') {
                 return preVal + (match.score_breakdown.red[el] === true ? 1 : 0);
               }

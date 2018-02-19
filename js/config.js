@@ -82,6 +82,7 @@ var tba_api_scoring_config = [
   //   id: 'position2',
   //   title: 'Position Two',
   //   dtype: 'int',
+  //   scoring_type: 'reassign_value',
   //   reassign_value_to: 'position2crossings'
   // }
 
