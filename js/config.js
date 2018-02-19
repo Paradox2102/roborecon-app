@@ -205,7 +205,7 @@ var app_team_details_config = {
     { id: 'rating_overall_exchange_efficiency', title: 'Avg. Exchange Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_scoring_park', title: 'Avg. Park (0-1)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_scoring_climb', title: 'Avg. Climb (0-1)', missed_id: '', calc_type: 'avg' },
-    { id: 'rating_overall_number_of_robots_lifted', title: 'Avg. # of Robots Lifted (0-3)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_scoring_number_of_robots_lifted', title: 'Avg. # of Robots Lifted (0-3)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_overall_robot_stability', title: 'Avg. Robot Stability (1-5)', missed_id: '', calc_type: 'avg' },
   ],
   scouting_viz_series: {  made_title: 'Made', missed_title: 'Missed' }
@@ -230,7 +230,7 @@ var app_scouting_reports_config = {
         { id: 'rating_scoring_cubes_exchanged', title: 'Cubes Exchanged', defaultValue: '0' },
         { id: 'rating_scoring_park', title: 'Parking', defaultValue: '0' },
         { id: 'rating_scoring_climb', title: 'Climbing', defaultValue: '0' },
-        { id: 'rating_overall_number_of_robots_lifted', title: '# of Robots Lifted', defaultValue: '0' },
+        { id: 'rating_scoring_number_of_robots_lifted', title: '# of Robots Lifted', defaultValue: '0' },
       ]
     },
     {
@@ -280,7 +280,7 @@ var app_match_intel_config = {
 
     { id: 'avgParking', title: 'Parking Probablity', calc_type: 'avg', agg:['rating_scoring_park'], min: 0, max: 1 }, 
     { id: 'avgClimbing', title: 'Climbing Probablity', calc_type: 'avg', agg:['rating_scoring_climb'], min: 0, max: 1 }, 
-    { id: 'avgRobotsLifted', title: 'Avg. # of Robots Lifted', calc_type: 'avg', agg:['rating_overall_number_of_robots_lifted'], min: 0, max: 3 },
+    { id: 'avgRobotsLifted', title: 'Avg. # of Robots Lifted', calc_type: 'avg', agg:['rating_scoring_number_of_robots_lifted'], min: 0, max: 3 },
     { id: 'avgMobility', title: 'Mobility Probability', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 }
   ],
   strengths_weaknesses_stats : [
@@ -297,7 +297,7 @@ var app_match_intel_config = {
 
     { id: 'avgPark', title: 'Parking %', calc_type: 'avg', agg:['rating_scoring_park'], min: 0, max: 1 },
     { id: 'avgClimbing', title: 'Climbing %', calc_type: 'avg', agg:['rating_scoring_climb'], min: 0, max: 1 },
-    { id: 'avgNumLifted', title: '# of Robots Lifted %', calc_type: 'avg', agg:['rating_overall_number_of_robots_lifted'], min: 0, max: 3 },
+    { id: 'avgNumLifted', title: '# of Robots Lifted %', calc_type: 'avg', agg:['rating_scoring_number_of_robots_lifted'], min: 0, max: 3 },
 
     // { id: 'accScale', title: 'Scale Accuracy', calc_type: 'accuracy',  made_ids: ['rating_scoring_tower_scale_made'], missed_ids: ['rating_scoring_tower_scale_missed'] }
   ]
