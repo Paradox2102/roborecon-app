@@ -199,7 +199,7 @@ var app_team_details_config = {
     { id: 'rating_scoring_boxes_on_switch', title: 'Avg. Boxes on Switch (teleop)', missed_id: '', calc_type: 'avg' }, 
     { id: 'rating_scoring_boxes_on_scale', title: 'Avg. Boxes on Scale (teleop)', missed_id: '', calc_type: 'avg' }, 
     
-    { id: 'rating_scoring_cubes_in_vault', title: 'Avg. Cubes in Vault (teleop)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_scoring_cubes_exchanged', title: 'Avg. Cubes in Vault (teleop)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_overall_switch_efficiency', title: 'Avg. Switch Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_overall_scale_efficiency', title: 'Avg. Scale Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_overall_exchange_efficiency', title: 'Avg. Exchange Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
@@ -216,28 +216,28 @@ var app_team_details_config = {
 // ------------------------------------------------------------------------
 var app_scouting_reports_config = {
   overall: [
-    { id: 'rating_overall_gear_efficiency', title: 'Gear Efficiency', defaultValue: 'N/A' },
-    { id: 'rating_overall_gear_efficiency_auto', title: 'Gear Efficiency Auto', defaultValue: 'N/A' },
-    { id: 'rating_overall_gear_placement_auto', title: 'Side Gear Placement Auto', defaultValue: 'N/A' },
     { id: 'rating_overall_robot_stability', title: 'Robot Stability', defaultValue: 'N/A' },
-    { id: 'rating_overall_pilot_competency', title: 'Pilot Competency', defaultValue: 'N/A' },
+    { id: 'rating_overall_switch_efficiency', title: 'Switch Efficiency', defaultValue: 'N/A' },
+    { id: 'rating_overall_scale_efficiency', title: 'Scale Efficiency', defaultValue: 'N/A' },
+    { id: 'rating_overall_exchange_efficiency', title: 'Exchange Efficiency', defaultValue: 'N/A' },
   ],
   cols: [
     {
       header_title: 'Teleoperated', 
       col_data: [
-        { id: 'rating_scoring_high_goals_made', title: 'High Goals', defaultValue: '0' },
-        { id: 'rating_scoring_low_goals_made', title: 'Low Goals', defaultValue: '0' },
-        { id: 'rating_scoring_gears_made', title: 'Gears', defaultValue: '0' },
-        { id: 'rating_scoring_airship_climb', title: 'Climbing', defaultValue: 'N/A' },
+        { id: 'rating_scoring_boxes_on_switch', title: 'Boxes on Switch', defaultValue: '0' },
+        { id: 'rating_scoring_boxes_on_scale', title: 'Boxes on Scale', defaultValue: '0' },
+        { id: 'rating_scoring_cubes_exchanged', title: 'Cubes through Exchange', defaultValue: '0' },
+        { id: 'rating_scoring_park', title: 'Parking', defaultValue: '0' },
+        { id: 'rating_scoring_climb', title: 'Climbing', defaultValue: '0' },
+        { id: 'rating_overall_number_of_robots_lifted', title: '# of Robots Lifted', defaultValue: '0' },
       ]
     },
     {
       header_title: 'Autonomous', 
       col_data: [
-        { id: 'rating_scoring_high_goals_made_auto', title: 'High Goals', defaultValue: '0' },
-        { id: 'rating_scoring_low_goals_made_auto', title: 'Low Goals', defaultValue: '0' },
-        { id: 'rating_scoring_gears_made_auto', title: 'Gears', defaultValue: '0' },
+        { id: 'rating_scoring_boxes_on_switch_auto', title: 'Boxes on Switch', defaultValue: '0' },
+        { id: 'rating_scoring_boxes_on_scale_auto', title: 'Boxes on Scale', defaultValue: '0' },
         { id: 'rating_scoring_base_line_made_auto', title: 'Cross Base Line', defaultValue: 'N/A' },
       ]
     },
