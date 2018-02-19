@@ -261,7 +261,7 @@ var app_match_intel_config = {
     { id: 'avgLevitatePlayed', title: 'Avg. Levitate Played', calc_type: 'avg', agg:['vaultLevitatePlayed'] },
     { id: 'avgBoostPlayed', title: 'Avg. Boost Played', calc_type: 'avg', agg:['vaultBoostPlayed'] },
     { id: 'avgForcePlayed', title: 'Avg. Force Played', calc_type: 'avg', agg:['vaultForcePlayed'] },
-    { id: 'avgAutoPoints', title: 'Avg. Auto Points', calc_type: 'avg', agg:['autoPoints'] },
+    { id: 'avgAutoPoints', title: 'Avg. AUTO POINTS', calc_type: 'avg', agg:['autoPoints'] },
     { id: 'avgAutoRunCount', title: 'Avg. Auto Run Counts', calc_type: 'avg', agg:['xAutoRobotRuns'] },
   ],
   team_stats: [
