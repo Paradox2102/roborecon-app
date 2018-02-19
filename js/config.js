@@ -17,50 +17,56 @@ var tba_api_scoring_config = [
     id: 'xTotalOwnershipPoints',
     title: 'Ownership Points',
     dtype: 'int',
-    agg: ['autoOwnershipPoints', 'teleopOwnershipPoints']
+    scoring_type: 'sum',
+    tbaFields: ['autoOwnershipPoints', 'teleopOwnershipPoints']
   },{
     id: 'xTotalSwitchOwnershipSec',
     title: 'Switch Ownership Seconds',
     dtype: 'int',
-    agg: ['autoSwitchOwnershipSec', 'teleopSwitchOwnershipSec', 'teleopSwitchBoostSec']
+    scoring_type: 'sum',
+    tbaFields: ['autoSwitchOwnershipSec', 'teleopSwitchOwnershipSec', 'teleopSwitchBoostSec']
   }, {
     id: 'xTotalScaleOwnershipSec',
     title: 'Scalse Ownership Seconds',
     dtype: 'int',
-    agg: ['autoScaleOwnershipSec', 'teleopScaleOwnershipSec', 'teleopScaleBoostSec']
+    scoring_type: 'sum',
+    tbaFields: ['autoScaleOwnershipSec', 'teleopScaleOwnershipSec', 'teleopScaleBoostSec']
   }, {
     id: 'xLeftOverLevitateCubes',
     title: 'Unused Levitate Cubes',
     dtype: 'int',
-    subtraction: ['vaultLevitateTotal', 'vaultLevitatePlayed']
+    scoring_type: 'diff',
+    tbaFields: ['vaultLevitateTotal', 'vaultLevitatePlayed']
   }, {
     id: 'xLeftOverBoostCubes',
     title: 'Unused Boost Cubes',
     dtype: 'int',
-    subtraction: ['vaultBoostTotal', 'vaultBoostPlayed']
+    scoring_type: 'diff',
+    tbaFields: ['vaultBoostTotal', 'vaultBoostPlayed']
   }, {
     id: 'xLeftOverForceCubes',
     title: 'Unused Force Cubes',
     dtype: 'int',
-    subtraction: ['vaultForceTotal', 'vaultForcePlayed']
+    scoring_type: 'diff',
+    tbaFields: ['vaultForceTotal', 'vaultForcePlayed']
   }, {
     id: 'xEndGameClimbs',
     title: 'EndGame Climbs',
-    dtype: 'int',
+    dtype: 'str',
     scoring_type: 'count',
     tbaFields: ['endgameRobot1', 'endgameRobot2', 'endgameRobot3'],
     tbaValue: 'Climbing'
   }, {
     id: 'xEndGameParks',
     title: 'EndGame Parks',
-    dtype: 'int',
+    dtype: 'str',
     scoring_type: 'count',
     tbaFields: ['endgameRobot1', 'endgameRobot2', 'endgameRobot3'],
     tbaValue: 'Parking'
   }, {
     id: 'xEndGameLevitates',
     title: 'EndGame Levitates',
-    dtype: 'int',
+    dtype: 'str',
     scoring_type: 'count',
     tbaFields: ['endgameRobot1', 'endgameRobot2', 'endgameRobot3'],
     tbaValue: 'Levitate'
