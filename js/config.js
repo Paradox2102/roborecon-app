@@ -64,6 +64,13 @@ var tba_api_scoring_config = [
     scoring_type: 'count',
     tbaFields: ['endgameRobot1', 'endgameRobot2', 'endgameRobot3'],
     tbaValue: 'Levitate'
+  }, {
+    id: 'xAutoRobotRuns',
+    title: 'Auto Runs',
+    dtype: 'str',
+    scoring_type: 'count',
+    tbaFields: ['autoRobot1', 'autoRobot2', 'autoRobot3'],
+    tbaValue: 'AutoRun'
   }];
   // { keeping this in here so we remember we can do reassigns
   //   id: 'position2',
@@ -104,6 +111,9 @@ var app_dashboard_config = {
     { title: 'SCALE Seconds', data: 'xTotalScaleOwnershipSec', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     { title: 'ENDGAME Points', data: 'endgamePoints', orderSequence: ['desc', 'asc'] },
     { title: 'CROSSING Points (auto)', data: 'autoRunPoints', orderSequence: ['desc', 'asc'] },
+    //Auto Mobility
+    { title: 'Auto Run Counts(Match)', data: 'xAutoRobotRuns', orderSequence: ['desc', 'asc'] },
+
     // switch/scale details
     { title: 'Auto Switch Seconds', data: 'autoSwitchOwnershipSec', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     { title: 'Teleop Switch Seconds', data: 'teleopSwitchOwnershipSec', orderSequence: ['desc', 'asc'], defaultContent: 0 },
@@ -244,6 +254,8 @@ var app_match_intel_config = {
     { id: 'avgLevitatePlayed', title: 'Avg. Levitate Played', calc_type: 'avg', agg:['vaultLevitatePlayed'] },
     { id: 'avgBoostPlayed', title: 'Avg. Boost Played', calc_type: 'avg', agg:['vaultBoostPlayed'] },
     { id: 'avgForcePlayed', title: 'Avg. Force Played', calc_type: 'avg', agg:['vaultForcePlayed'] },
+    { id: 'avgAutoPoints', title: 'Avg. Auto Points', calc_type: 'avg', agg:['autoPoints'] },
+    { id: 'avgAutoRunCount', title: 'Avg. Auto Run Counts', calc_type: 'avg', agg:['xAutoRobotRuns'] },
   ],
   team_stats: [
     { id: 'avgRobotStability', title: 'Robot Stability', calc_type: 'avg', agg:['rating_overall_robot_stability'], min: 1, max: 5 }, 
