@@ -24,25 +24,25 @@ var tba_api_scoring_config = [
     dtype: 'int',
     agg: ['autoSwitchOwnershipSec', 'teleopSwitchOwnershipSec', 'teleopSwitchBoostSec']
   }, {
-    id: 'xLeftOverForceCubes',
-    title: 'Unused Force Cubes',
-    dtype: 'int',
-    subtraction: ['vaultForceTotal', 'vaultForcePlayed']
-  }, {
     id: 'xTotalScaleOwnershipSec',
     title: 'Scalse Ownership Seconds',
     dtype: 'int',
     agg: ['autoScaleOwnershipSec', 'teleopScaleOwnershipSec', 'teleopScaleBoostSec']
+  }, {
+    id: 'xLeftOverLevitateCubes',
+    title: 'Unused Levitate Cubes',
+    dtype: 'int',
+    subtraction: ['vaultLevitateTotal', 'vaultLevitatePlayed']
   }, {
     id: 'xLeftOverBoostCubes',
     title: 'Unused Boost Cubes',
     dtype: 'int',
     subtraction: ['vaultBoostTotal', 'vaultBoostPlayed']
   }, {
-    id: 'xLeftOverLevitateCubes',
-    title: 'Unused Levitate Cubes',
+    id: 'xLeftOverForceCubes',
+    title: 'Unused Force Cubes',
     dtype: 'int',
-    subtraction: ['vaultLevitateTotal', 'vaultLevitatePlayed']
+    subtraction: ['vaultForceTotal', 'vaultForcePlayed']
   }, {
     id: 'xEndGameClimbs',
     title: 'EndGame Climbs',
@@ -104,7 +104,7 @@ var app_dashboard_config = {
     { title: 'SCALE Seconds', data: 'xTotalScaleOwnershipSec', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     { title: 'ENDGAME Points', data: 'endgamePoints', orderSequence: ['desc', 'asc'] },
     { title: 'CROSSING Points (auto)', data: 'autoRunPoints', orderSequence: ['desc', 'asc'] },
-    // Switch/Scale details
+    // switch/scale details
     { title: 'Auto Switch Seconds', data: 'autoSwitchOwnershipSec', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     { title: 'Teleop Switch Seconds', data: 'teleopSwitchOwnershipSec', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     { title: 'Switch Boost Seconds', data: 'teleopSwitchBoostSec', orderSequence: ['desc', 'asc'], defaultContent: 0, visible: false },
@@ -113,6 +113,7 @@ var app_dashboard_config = {
     { title: 'Teleop Scale Seconds', data: 'teleopScaleOwnershipSec', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     { title: 'Scale Boost Seconds', data: 'teleopScaleBoostSec', orderSequence: ['desc', 'asc'], defaultContent: 0, visible: false },
     { title: 'Scale Force Seconds', data: 'teleopScaleForceSec', orderSequence: ['desc', 'asc'], defaultContent: 0, visible: false },
+    // vault and powerup details
     { title: 'Vault Total', data: 'vaultPoints', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     { title: 'Levitate Total', data: 'vaultLevitateTotal', orderSequence: ['desc', 'asc'], defaultContent: 0, visible: false },
     { title: 'Levitate Played', data: 'vaultLevitatePlayed', orderSequence: ['desc', 'asc'], defaultContent: 0 },
@@ -120,10 +121,14 @@ var app_dashboard_config = {
     { title: 'Boost Played', data: 'vaultBoostPlayed', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     { title: 'Force Total', data: 'vaultForceTotal', orderSequence: ['desc', 'asc'], defaultContent: 0, visible: false },
     { title: 'Force Played', data: 'vaultForcePlayed', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    // endgame details
+    { title: 'EndGame Climbs', data: 'xEndGameClimbs', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'EndGame Parks', data: 'xEndGameParks', orderSequence: ['desc', 'asc'], defaultContent: 0 },
+    { title: 'EndGame Levitates', data: 'xEndGameLevitates', orderSequence: ['desc', 'asc'], defaultContent: 0 },
     // other ranking info
     { title: 'Auto Quest Ranking Point', data: 'autoQuestRankingPoint', orderSequence: ['desc', 'asc'] },
     { title: 'Face the Boss Ranking Point', data: 'faceTheBossRankingPoint', orderSequence: ['desc', 'asc'] },
-    //Foul Points
+    // foul Points
     { title: 'Adjust Points', data: 'adjustPoints', orderSequence: ['desc', 'asc'] },
     { title: 'Foul Points', data: 'foulPoints', orderSequence: ['desc', 'asc'] },
     { title: 'Foul Count', data: 'foulCount', orderSequence: ['desc', 'asc'] },
