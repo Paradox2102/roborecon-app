@@ -284,15 +284,21 @@ var app_match_intel_config = {
     { id: 'avgMobility', title: 'Mobility Probability', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 }
   ],
   strengths_weaknesses_stats : [
-    { id: 'avgGearsMade', title: 'Avg. Gears',calc_type: 'avg', agg:['rating_scoring_gears_made', 'rating_scoring_gears_made_auto'] },
-    { id: 'avgGearEff', title: 'Gear Efficiency',calc_type: 'avg', agg:['rating_overall_gear_efficiency', 'rating_overall_gear_efficiency_auto'], min: 1, max: 5 },
-    { id: 'avgGearsMadeAuto', title: 'Avg. Gears (auto)',calc_type: 'avg', agg:['rating_scoring_gears_made_auto'] },
-   
-    { id: 'avgHighGoals', title: 'Avg. High Goals',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto', 'rating_scoring_high_goals_made'] },  
-    { id: 'avgHighGoalsAuto', title: 'Avg. High Goals (auto)',calc_type: 'avg', agg:['rating_scoring_high_goals_made_auto'] }, 
+    { id: 'avgBoxesOnSwitch', title: 'Avg. Boxes on Switch',calc_type: 'avg', agg:['rating_scoring_boxes_on_switch', 'rating_scoring_boxes_on_switch_auto'] },
+    { id: 'avgSwitchEff', title: 'Avg. Switch Eff',calc_type: 'avg', agg:['rating_overall_switch_efficiency'], min: 1, max: 5 },
+    { id: 'avgBoxesOnscale', title: 'Avg. Boxes on Scale',calc_type: 'avg', agg:['rating_scoring_boxes_on_scale', 'rating_scoring_boxes_on_scale_auto'] },
+    { id: 'avgscaleEff', title: 'Avg. Scale Eff',calc_type: 'avg', agg:['rating_overall_scale_efficiency'], min: 1, max: 5 },
+    { id: 'avgBoxesOnexchange', title: 'Avg. Boxes on Exchange',calc_type: 'avg', agg:['rating_scoring_boxes_on_exchange'] },
+    { id: 'avgexchangeEff', title: 'Avg. Exchange Eff',calc_type: 'avg', agg:['rating_overall_exchange_efficiency'], min: 1, max: 5 },
 
-    { id: 'avgClimbing', title: 'Climbing %', calc_type: 'avg', agg:['rating_scoring_airship_climb'], min: 0, max: 1 }, 
-    { id: 'avgMobility', title: 'Mobility %', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 } 
+    { id: 'avgMobility', title: 'Mobility %', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 } ,
+    { id: 'avgBoxesOnSwitchAuto', title: 'Avg. Boxes on Switch (auto)',calc_type: 'avg', agg:['rating_scoring_boxes_on_switch_auto'] },  
+    { id: 'avgBoxesOnScaleAuto', title: 'Avg. Boxes on Scale (auto)',calc_type: 'avg', agg:['rating_scoring_boxes_on_scale_auto'] }, 
+
+    { id: 'avgPark', title: 'Parking %', calc_type: 'avg', agg:['rating_scoring_park'], min: 0, max: 1 },
+    { id: 'avgClimbing', title: 'Climbing %', calc_type: 'avg', agg:['rating_scoring_climb'], min: 0, max: 1 },
+    { id: 'avgNumLifted', title: '# of Robots Lifted %', calc_type: 'avg', agg:['rating_overall_number_of_robots_lifted'], min: 0, max: 3 },
+
     // { id: 'accScale', title: 'Scale Accuracy', calc_type: 'accuracy',  made_ids: ['rating_scoring_tower_scale_made'], missed_ids: ['rating_scoring_tower_scale_missed'] }
   ]
 };
