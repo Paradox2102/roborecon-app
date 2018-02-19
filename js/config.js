@@ -199,7 +199,7 @@ var app_team_details_config = {
     { id: 'rating_scoring_boxes_on_switch', title: 'Avg. Boxes on Switch (teleop)', missed_id: '', calc_type: 'avg' }, 
     { id: 'rating_scoring_boxes_on_scale', title: 'Avg. Boxes on Scale (teleop)', missed_id: '', calc_type: 'avg' }, 
     
-    { id: 'rating_scoring_cubes_exchanged', title: 'Avg. Cubes in Vault (teleop)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_scoring_cubes_exchanged', title: 'Avg. Cubes Exchanged (teleop)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_overall_switch_efficiency', title: 'Avg. Switch Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_overall_scale_efficiency', title: 'Avg. Scale Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_overall_exchange_efficiency', title: 'Avg. Exchange Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
@@ -227,7 +227,7 @@ var app_scouting_reports_config = {
       col_data: [
         { id: 'rating_scoring_boxes_on_switch', title: 'Boxes on Switch', defaultValue: '0' },
         { id: 'rating_scoring_boxes_on_scale', title: 'Boxes on Scale', defaultValue: '0' },
-        { id: 'rating_scoring_cubes_exchanged', title: 'Cubes through Exchange', defaultValue: '0' },
+        { id: 'rating_scoring_cubes_exchanged', title: 'Cubes Exchanged', defaultValue: '0' },
         { id: 'rating_scoring_park', title: 'Parking', defaultValue: '0' },
         { id: 'rating_scoring_climb', title: 'Climbing', defaultValue: '0' },
         { id: 'rating_overall_number_of_robots_lifted', title: '# of Robots Lifted', defaultValue: '0' },
@@ -274,9 +274,9 @@ var app_match_intel_config = {
     { id: 'avgScaleEff', title: 'Avg. Scale Efficiency',calc_type: 'avg', agg:['rating_overall_scale_efficiency'] , min: 1, max: 5},
     { id: 'avgExchangeEff', title: 'Avg. Exchange Efficiency',calc_type: 'avg', agg:['rating_overall_exchange_efficiency'], min: 1, max: 5 },
    
-    { id: 'avgBoxesOnSwitch', title: 'Avg. Boxes on Switch (auto/teleop)',calc_type: 'avg', agg:['rating_scoring_boxes_on_switch', 'rating_scoring_boxes_on_switch_auto'] },   
-    { id: 'avgBoxesOnScale', title: 'Avg. Boxes on Scale (auto/teleop)',calc_type: 'avg', agg:['rating_scoring_boxes_on_scale', 'rating_scoring_boxes_on_scale_auto'] },   
-    { id: 'avgBoxesExchanged', title: 'Avg. Boxes Exchnaged (teleop)',calc_type: 'avg', agg:['rating_scoring_cubes_exchanged'] },   
+    { id: 'avgBoxesOnSwitch', title: 'Avg. Cubes on Switch (auto/teleop)',calc_type: 'avg', agg:['rating_scoring_boxes_on_switch', 'rating_scoring_boxes_on_switch_auto'] },   
+    { id: 'avgBoxesOnScale', title: 'Avg. Cubes on Scale (auto/teleop)',calc_type: 'avg', agg:['rating_scoring_boxes_on_scale', 'rating_scoring_boxes_on_scale_auto'] },   
+    { id: 'avgBoxesExchanged', title: 'Avg. Cubes Exchnaged (teleop)',calc_type: 'avg', agg:['rating_scoring_cubes_exchanged'] },   
 
     { id: 'avgParking', title: 'Parking Probablity', calc_type: 'avg', agg:['rating_scoring_park'], min: 0, max: 1 }, 
     { id: 'avgClimbing', title: 'Climbing Probablity', calc_type: 'avg', agg:['rating_scoring_climb'], min: 0, max: 1 }, 
