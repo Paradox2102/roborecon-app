@@ -398,16 +398,32 @@ ParadoxScout.updateEventScores = function (eventKey, next) {
           // if match isn't scored yet!
           if (!match.score_breakdown) return;
 
-          //substitution adds a new attribute based on a TBA given attribute and sets it equal
-          // to the value of substitution  
-          var tba_substitution = tba_api_scoring_config.filter(function (d) {
-            return ('substitution' in d);
+          //REASSIGN: reassigns a TBA given attribute and sets it equal to the value of another TBA field 
+          var tba_reassign = tba_api_scoring_config.filter(function (d) {
+            return ('reassign_value_to' in d);
           });
 
-          tba_substitution.forEach(function (obj) {
-            match.score_breakdown.blue[match.score_breakdown.blue[obj.id]] = parseInt(match.score_breakdown.blue[obj.substitution]) || 0;
-            match.score_breakdown.red[match.score_breakdown.red[obj.id]] = parseInt(match.score_breakdown.red[obj.substitution]) || 0;
+          tba_reassign.forEach(function (obj) {
+            match.score_breakdown.blue[match.score_breakdown.blue[obj.id]] = parseInt(match.score_breakdown.blue[obj.reassign_value_to]) || 0;
+            match.score_breakdown.red[match.score_breakdown.red[obj.id]] = parseInt(match.score_breakdown.red[obj.reassign_value_to]) || 0;
           });
+          // end reassing -----------------------------------------------------------------
+
+          // COUNTS: count the # of times "tbaValue" appears in all the "tbaFields"
+          var tba_counts = tba_api_scoring_config.filter(function (d) {
+            return ('scoring_type' in d && d.scoring_type === 'count');
+          });
+
+          tba_counts.forEach(function (obj) {
+            match.score_breakdown.blue[obj.id] = obj.tbaFields.reduce(function (preVal, el) {
+              return preVal + (match.score_breakdown.blue[el] === obj.tbaValue ? 1 : 0); 
+            }, 0);
+
+            match.score_breakdown.red[obj.id] = obj.tbaFields.reduce(function (preVal, el) {
+              return preVal + (match.score_breakdown.red[el] === obj.tbaValue ? 1 : 0); 
+            }, 0);
+          });
+          // end counts -------------------------------------------------------------------
 
           //subtraction takes the first value and then subtracts the rest of the values from it
           var tba_subtraction = tba_api_scoring_config.filter(function (d) {

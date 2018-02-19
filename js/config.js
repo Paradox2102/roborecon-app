@@ -43,12 +43,33 @@ var tba_api_scoring_config = [
     title: 'Unused Levitate Cubes',
     dtype: 'int',
     subtraction: ['vaultLevitateTotal', 'vaultLevitatePlayed']
+  }, {
+    id: 'xEndGameClimbs',
+    title: 'EndGame Climbs',
+    dtype: 'int',
+    scoring_type: 'count',
+    tbaFields: ['endgameRobot1', 'endgameRobot2', 'endgameRobot3'],
+    tbaValue: 'Climbing'
+  }, {
+    id: 'xEndGameParks',
+    title: 'EndGame Parks',
+    dtype: 'int',
+    scoring_type: 'count',
+    tbaFields: ['endgameRobot1', 'endgameRobot2', 'endgameRobot3'],
+    tbaValue: 'Parking'
+  }, {
+    id: 'xEndGameLevitates',
+    title: 'EndGame Levitates',
+    dtype: 'int',
+    scoring_type: 'count',
+    tbaFields: ['endgameRobot1', 'endgameRobot2', 'endgameRobot3'],
+    tbaValue: 'Levitate'
   }];
-  // { keeping this in here so we remember we can do substitutions
+  // { keeping this in here so we remember we can do reassigns
   //   id: 'position2',
   //   title: 'Position Two',
   //   dtype: 'int',
-  //   substitution: 'position2crossings'
+  //   reassign_value_to: 'position2crossings'
   // }
 
 
@@ -207,11 +228,14 @@ var app_match_intel_config = {
     { id: 'avgPoints', title: 'Avg.', calc_type: 'avg', agg:['totalPoints'], decimal_places: 2 }
   ],
   match_stats: [
-    { id: 'avgOwnershipPoints', title: 'Avg. Ownership Points', calc_type: 'avg', agg:['xTotalOwnershipPoints'] },
+    { id: 'avgOwnershipPoints', title: 'AVG. OWNERSHIP POINTS', calc_type: 'avg', agg:['xTotalOwnershipPoints'] },
     { id: 'avgSwitchOwnershipSec', title: 'Avg. Switch Ownership Sec', calc_type: 'avg', agg:['xTotalSwitchOwnershipSec'] },
     { id: 'avgScaleOwnershipSec', title: 'Avg. Scale Ownership Sec', calc_type: 'avg', agg:['xTotalScaleOwnershipSec'] }, 
-    { id: 'avgEndGamePoints', title: 'Avg. End Game Points', calc_type: 'avg', agg:[ 'endgamePoints'] }, 
-    { id: 'avgVaultPoints', title: 'Avg. Vault Points', calc_type: 'avg', agg:['vaultPoints'] },
+    { id: 'avgEndGamePoints', title: 'AVG. END GAME POINTS', calc_type: 'avg', agg:[ 'endgamePoints'] }, 
+    { id: 'avgEndGameClimbs', title: 'Avg. End Game Climbs', calc_type: 'avg', agg:[ 'xEndGameClimbs'] }, 
+    { id: 'avgEndGameParks', title: 'Avg. End Game Parks', calc_type: 'avg', agg:[ 'xEndGameParks'] }, 
+    { id: 'avgEndGameLevitates', title: 'Avg. End Game Levitates', calc_type: 'avg', agg:[ 'xEndGameLevitates'] }, 
+    { id: 'avgVaultPoints', title: 'AVG. VAULT POINTS', calc_type: 'avg', agg:['vaultPoints'] },
     { id: 'avgLevitatePlayed', title: 'Avg. Levitate Played', calc_type: 'avg', agg:['vaultLevitatePlayed'] },
     { id: 'avgBoostPlayed', title: 'Avg. Boost Played', calc_type: 'avg', agg:['vaultBoostPlayed'] },
     { id: 'avgForcePlayed', title: 'Avg. Force Played', calc_type: 'avg', agg:['vaultForcePlayed'] },
