@@ -192,17 +192,21 @@ var app_team_details_config = {
         
   ],
   scouting_viz: [
-    { id: 'rating_scoring_gears_made', title: 'Avg. Gears (teleop)', missed_id: '', calc_type: 'avg' }, 
-    { id: 'rating_scoring_gears_made_auto', title: 'Avg. Gears (auto)', missed_id: '', calc_type: 'avg' }, 
-    { id: 'rating_overall_gear_placement_auto', title: 'Side Gear Placement (auto)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_scoring_boxes_on_switch_auto', title: 'Avg. Boxes on Switch (auto)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_scoring_boxes_on_scale_auto', title: 'Avg. Boxes on Scale (auto)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_scoring_base_line_made_auto', title: 'Avg. Mobility Counts', missed_id: '', calc_type: 'avg' }, 
 
-    { id: 'rating_scoring_high_goals_made', title: 'Avg. High Goals (teleop)', missed_id: '', calc_type: 'avg' }, 
-    { id: 'rating_scoring_high_goals_made_auto', title: 'Avg. High Goals (auto)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_scoring_boxes_on_switch', title: 'Avg. Boxes on Switch (teleop)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_scoring_boxes_on_scale', title: 'Avg. Boxes on Scale (teleop)', missed_id: '', calc_type: 'avg' }, 
     
-    { id: 'rating_scoring_airship_climb', title: 'Takeoff Counts', missed_id: '', calc_type: 'total' },
-    { id: 'rating_scoring_base_line_made_auto', title: 'Mobility Counts', missed_id: '', calc_type: 'total' },
-    { id: 'rating_overall_robot_stability', title: 'Avg. Stability (1-5)', missed_id: '', calc_type: 'avg' },
-    { id: 'rating_overall_pilot_competency', title: 'Avg. Pilot Competency (1-5)', missed_id: '', calc_type: 'avg' }
+    { id: 'rating_scoring_cubes_in_vault', title: 'Avg. Cubes in Vault (teleop)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_overall_switch_efficiency', title: 'Avg. Switch Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_overall_scale_efficiency', title: 'Avg. Scale Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_overall_exchange_efficiency', title: 'Avg. Exchange Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_scoring_park', title: 'Avg. Park (0-1)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_scoring_climb', title: 'Avg. Climb (0-1)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_overall_number_of_robots_lifted', title: 'Avg. # of Robots Lifted (0-3)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_overall_robot_stability', title: 'Avg. Robot Stability (1-5)', missed_id: '', calc_type: 'avg' },
   ],
   scouting_viz_series: {  made_title: 'Made', missed_title: 'Missed' }
 };
