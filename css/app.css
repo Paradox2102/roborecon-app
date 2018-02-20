@@ -92,6 +92,8 @@
 .ps-match-intel-team td { padding:3px; }
 .ps-match-intel-team .match-intel-rating-val { width: 140px; }
 
+.ps-match-intel-score-section { background-color: #171c23; }
+
 
 /* ------------------------------------------------------------------
     3rd party component overrides ***/
@@ -358,7 +360,7 @@
 			float: none;
 			margin: 0 auto 20px;
 		}
-}
+  }
 }
 
 .scouting-report {
