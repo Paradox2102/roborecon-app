@@ -124,7 +124,7 @@ permalink: /admin/
           $('#emails').append(`<tr><td>${emailAddress}</td><td><input type="checkbox" data-action="updateAdmin" data-key="${emailAddress}"></td><td><button type="button" data-action="delete" data-key="${emailAddress}" class="btn btn-danger">X</button></td></tr>`)
         });
 
-        // update admin checkboxes
+        // update admin check boxes
         teamAdminSnapshot.forEach(function(childSnapshot) {
           var emailAddress = childSnapshot.key.replace(/\%2E/g, '.');
           var u = childSnapshot.val();
