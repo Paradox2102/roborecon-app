@@ -114,11 +114,13 @@ $(function() {
       $el.append('<p style="clear:both;text-align:center;margin:5px 0px 5px; 0px;">MATCH STATS</p>');
       var match_stats_html = '<table style="width:100%;">'
       app_match_intel_config.match_stats.forEach(function(el) {
+        var css = ('css' in el) ? ` class="${el.css}"` : ''
+
         if (el.calc_type === 'accuracy') {
-          match_stats_html += `<tr><td>${el.title}</td><td class="match-intel-rating-val" data-rating-accuracy="${v[el.id].accuracy}">${v[el.id].accuracy}% ( ${v[el.id].made_count} | ${v[el.id].missed_count} )</td></tr>`
+          match_stats_html += `<tr${css}><td>${el.title}</td><td class="match-intel-rating-val" data-rating-accuracy="${v[el.id].accuracy}">${v[el.id].accuracy}% ( ${v[el.id].made_count} | ${v[el.id].missed_count} )</td></tr>`
         }
         else {
-          match_stats_html += `<tr><td>${el.title}:</td><td>${v[el.id]}</td></tr>`;
+          match_stats_html += `<tr${css}><td>${el.title}:</td><td>${v[el.id]}</td></tr>`;
         }
       });
       $el.append(match_stats_html + '</table>')
@@ -127,11 +129,13 @@ $(function() {
       $el.append('<p style="clear:both; text-align:center;margin:5px 0px 5px; 0px;">TEAM STATS</p>');
       var team_stats_html = '<table style="width:100%;">'
       app_match_intel_config.team_stats.forEach(function(el) {
+        var css = ('css' in el) ? ` class="${el.css}"` : ''
+        
         if (el.calc_type === 'accuracy') {
-          team_stats_html += `<tr><td>${el.title}</td><td class="match-intel-rating-val" data-rating-accuracy="${v[el.id].accuracy}">${v[el.id].accuracy}% ( ${v[el.id].made_count} | ${v[el.id].missed_count} )</td></tr>`
+          team_stats_html += `<tr${css}><td>${el.title}</td><td class="match-intel-rating-val" data-rating-accuracy="${v[el.id].accuracy}">${v[el.id].accuracy}% ( ${v[el.id].made_count} | ${v[el.id].missed_count} )</td></tr>`
         }
         else {
-          team_stats_html += `<tr><td>${el.title}:</td><td>${v[el.id]}</td></tr>`;
+          team_stats_html += `<tr${css}><td>${el.title}:</td><td>${v[el.id]}</td></tr>`;
         }
       });
       $el.append(team_stats_html + '</table>')

@@ -254,42 +254,42 @@ var app_match_intel_config = {
     { id: 'avgPoints', title: 'Avg.', calc_type: 'avg', agg:['totalPoints'], decimal_places: 2 }
   ],
   match_stats: [
-    { id: 'avgOwnershipPoints', title: 'AVG. OWNERSHIP POINTS', calc_type: 'avg', agg:['xTotalOwnershipPoints'] },
+    { id: 'avgOwnershipPoints', title: 'AVG. OWNERSHIP POINTS', calc_type: 'avg', agg:['xTotalOwnershipPoints'] , css:'ps-match-intel-score-section' },
     { id: 'avgSwitchOwnershipSec', title: 'Avg. Switch Ownership Sec', calc_type: 'avg', agg:['xTotalSwitchOwnershipSec'] },
     { id: 'avgScaleOwnershipSec', title: 'Avg. Scale Ownership Sec', calc_type: 'avg', agg:['xTotalScaleOwnershipSec'] }, 
 
-    { id: 'avgEndGamePoints', title: 'AVG. END GAME POINTS', calc_type: 'avg', agg:[ 'endgamePoints'] }, 
+    { id: 'avgEndGamePoints', title: 'AVG. END GAME POINTS', calc_type: 'avg', agg:[ 'endgamePoints'], css:'ps-match-intel-score-section' }, 
     { id: 'avgEndGameClimbs', title: 'Avg. End Game Climbs', calc_type: 'avg', agg:[ 'xEndGameClimbs'] }, 
     { id: 'avgEndGameParks', title: 'Avg. End Game Parks', calc_type: 'avg', agg:[ 'xEndGameParks'] }, 
     { id: 'avgEndGameLevitates', title: 'Avg. End Game Levitates', calc_type: 'avg', agg:[ 'xEndGameLevitates'] },
 
-    { id: 'avgVaultPoints', title: 'AVG. VAULT POINTS', calc_type: 'avg', agg:['vaultPoints'] },
+    { id: 'avgVaultPoints', title: 'AVG. VAULT POINTS', calc_type: 'avg', agg:['vaultPoints'], css:'ps-match-intel-score-section' },
     { id: 'avgLevitatePlayed', title: 'Avg. Levitate Played', calc_type: 'avg', agg:['vaultLevitatePlayed'] },
     { id: 'avgBoostPlayed', title: 'Avg. Boost Played', calc_type: 'avg', agg:['vaultBoostPlayed'] },
     { id: 'avgForcePlayed', title: 'Avg. Force Played', calc_type: 'avg', agg:['vaultForcePlayed'] },
-    
-    { id: 'avgAutoPoints', title: 'Avg. AUTO POINTS', calc_type: 'avg', agg:['autoPoints'] },
+
+    { id: 'avgAutoPoints', title: 'Avg. AUTO POINTS', calc_type: 'avg', agg:['autoPoints'], css:'ps-match-intel-score-section' },
     { id: 'avgAutoRunCount', title: 'Avg. Auto Run Counts', calc_type: 'avg', agg:['xAutoRobotRuns'] },
   ],
   team_stats: [
     { id: 'avgRobotStability', title: 'Robot Stability', calc_type: 'avg', agg:['rating_overall_robot_stability'], min: 1, max: 5 }, 
 
-    { id: 'avgBoxesOnSwitch', title: 'AVG. BOXES ON SWITCH',calc_type: 'avg', agg:['rating_scoring_boxes_on_switch', 'rating_scoring_boxes_on_switch_auto'] },   
+    { id: 'avgBoxesOnSwitch', title: 'AVG. BOXES ON SWITCH',calc_type: 'avg', agg:['rating_scoring_boxes_on_switch', 'rating_scoring_boxes_on_switch_auto'], css:'ps-match-intel-score-section' },   
     { id: 'avgBoxesOnSwitchAuto', title: 'Avg. Boxes on Switch (auto)',calc_type: 'avg', agg:['rating_scoring_boxes_on_switch_auto'] }, 
     { id: 'avgSwitchEff', title: 'Avg. Switch Efficiency',calc_type: 'avg', agg:['rating_overall_switch_efficiency'], min: 1, max: 5 },
 
-    { id: 'avgBoxesOnScale', title: 'AVG. BOXES ON SCALE',calc_type: 'avg', agg:['rating_scoring_boxes_on_scale', 'rating_scoring_boxes_on_scale_auto'] },  
+    { id: 'avgBoxesOnScale', title: 'AVG. BOXES ON SCALE',calc_type: 'avg', agg:['rating_scoring_boxes_on_scale', 'rating_scoring_boxes_on_scale_auto'], css:'ps-match-intel-score-section'  },  
     { id: 'avgBoxesOnScaleAuto', title: 'Avg. Boxes on Scale (auto)',calc_type: 'avg', agg:['rating_scoring_boxes_on_scale_auto'] },  
     { id: 'avgScaleEff', title: 'Avg. Scale Efficiency',calc_type: 'avg', agg:['rating_overall_scale_efficiency'] , min: 1, max: 5},
     
-    { id: 'avgBoxesExchanged', title: 'AVG. CUBES EXCHANGED (teleop)',calc_type: 'avg', agg:['rating_scoring_cubes_exchanged'] },   
+    { id: 'avgBoxesExchanged', title: 'AVG. CUBES EXCHANGED (teleop)',calc_type: 'avg', agg:['rating_scoring_cubes_exchanged'], css:'ps-match-intel-score-section'  },   
     { id: 'avgExchangeEff', title: 'Avg. Exchange Efficiency',calc_type: 'avg', agg:['rating_overall_exchange_efficiency'], min: 1, max: 5 },
    
-    { id: 'avgParking', title: 'Parking Probablity', calc_type: 'avg', agg:['rating_scoring_park'], min: 0, max: 1 }, 
+    { id: 'avgParking', title: 'Parking Probablity', calc_type: 'avg', agg:['rating_scoring_park'], min: 0, max: 1, css:'ps-match-intel-score-section'  }, 
     { id: 'avgClimbing', title: 'Climbing Probablity', calc_type: 'avg', agg:['rating_scoring_climb'], min: 0, max: 1 }, 
     { id: 'avgRobotsLifted', title: 'Avg. # of Robots Lifted', calc_type: 'avg', agg:['rating_scoring_number_of_robots_lifted'], min: 0, max: 3 },
 
-    { id: 'avgMobility', title: 'Mobility Probability', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 }
+    { id: 'avgMobility', title: 'Mobility Probability', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1, css:'ps-match-intel-score-section'  }
   ],
   strengths_weaknesses_stats : [
     { id: 'avgBoxesOnSwitch', title: 'Avg. Boxes on Switch',calc_type: 'avg', agg:['rating_scoring_boxes_on_switch', 'rating_scoring_boxes_on_switch_auto'] },
