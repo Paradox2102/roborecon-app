@@ -192,14 +192,14 @@ var app_team_details_config = {
         
   ],
   scouting_viz: [
-    { id: 'rating_scoring_cubes_on_switch_auto', title: 'Avg. Cubes on Switch (auto)', missed_id: '', calc_type: 'avg' }, 
-    { id: 'rating_scoring_cubes_on_scale_auto', title: 'Avg. Cubes on Scale (auto)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_scoring_Cubes_on_switch_auto', title: 'Avg. Cubes on Switch (auto)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_scoring_Cubes_on_scale_auto', title: 'Avg. Cubes on Scale (auto)', missed_id: '', calc_type: 'avg' }, 
     { id: 'rating_scoring_base_line_made_auto', title: 'Avg. Mobility Counts', missed_id: '', calc_type: 'avg' }, 
 
-    { id: 'rating_scoring_cubes_on_switch', title: 'Avg. Cubes on Switch (teleop)', missed_id: '', calc_type: 'avg' }, 
-    { id: 'rating_scoring_cubes_on_scale', title: 'Avg. Cubes on Scale (teleop)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_scoring_Cubes_on_switch', title: 'Avg. Cubes on Switch (teleop)', missed_id: '', calc_type: 'avg' }, 
+    { id: 'rating_scoring_Cubes_on_scale', title: 'Avg. Cubes on Scale (teleop)', missed_id: '', calc_type: 'avg' }, 
     
-    { id: 'rating_scoring_cubes_exchanged', title: 'Avg. Cubes Exchanged (teleop)', missed_id: '', calc_type: 'avg' },
+    { id: 'rating_scoring_Cubes_exchanged', title: 'Avg. Cubes Exchanged (teleop)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_overall_switch_efficiency', title: 'Avg. Switch Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_overall_scale_efficiency', title: 'Avg. Scale Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
     { id: 'rating_overall_exchange_efficiency', title: 'Avg. Exchange Efficiency (1-5)', missed_id: '', calc_type: 'avg' },
@@ -226,9 +226,9 @@ var app_scouting_reports_config = {
       header_title: 'Teleoperated', 
       col_data: [
 
-        { id: 'rating_scoring_cubes_on_switch', title: 'Cubes on Switch', defaultValue: '0' },
-        { id: 'rating_scoring_cubes_on_scale', title: 'Cubes on Scale', defaultValue: '0' },
-        { id: 'rating_scoring_cubes_exchanged', title: 'Cubes through Exchange', defaultValue: '0' },
+        { id: 'rating_scoring_Cubes_on_switch', title: 'Cubes on Switch', defaultValue: '0' },
+        { id: 'rating_scoring_Cubes_on_scale', title: 'Cubes on Scale', defaultValue: '0' },
+        { id: 'rating_scoring_Cubes_exchanged', title: 'Cubes through Exchange', defaultValue: '0' },
 
         { id: 'rating_scoring_park', title: 'Parking', defaultValue: '0' },
         { id: 'rating_scoring_climb', title: 'Climbing', defaultValue: '0' },
@@ -238,8 +238,8 @@ var app_scouting_reports_config = {
     {
       header_title: 'Autonomous', 
       col_data: [
-        { id: 'rating_scoring_cubes_on_switch_auto', title: 'Cubes on Switch', defaultValue: '0' },
-        { id: 'rating_scoring_cubes_on_scale_auto', title: 'Cubes on Scale', defaultValue: '0' },
+        { id: 'rating_scoring_Cubes_on_switch_auto', title: 'Cubes on Switch', defaultValue: '0' },
+        { id: 'rating_scoring_Cubes_on_scale_auto', title: 'Cubes on Scale', defaultValue: '0' },
         { id: 'rating_scoring_base_line_made_auto', title: 'Cross Base Line', defaultValue: 'N/A' },
       ]
     },
@@ -284,12 +284,12 @@ var app_match_intel_config = {
     { id: 'avgBoxesOnScaleAuto', title: 'Avg. Boxes on Scale (auto)',calc_type: 'avg', agg:['rating_scoring_boxes_on_scale_auto'] },  
     { id: 'avgScaleEff', title: 'Avg. Scale Efficiency',calc_type: 'avg', agg:['rating_overall_scale_efficiency'] , min: 1, max: 5},
     
-    { id: 'avgBoxesExchanged', title: 'AVG. CUBES EXCHANGED (teleop)',calc_type: 'avg', agg:['rating_scoring_cubes_exchanged'], css:'ps-match-intel-score-section'  },   
+    { id: 'avgBoxesExchanged', title: 'AVG. CUBES EXCHANGED (teleop)',calc_type: 'avg', agg:['rating_scoring_Cubes_exchanged'], css:'ps-match-intel-score-section'  },   
     { id: 'avgExchangeEff', title: 'Avg. Exchange Efficiency',calc_type: 'avg', agg:['rating_overall_exchange_efficiency'], min: 1, max: 5 },
 
-    { id: 'avgcubesOnSwitch', title: 'Avg. Cubes on Switch (auto/teleop)',calc_type: 'avg', agg:['rating_scoring_cubes_on_switch', 'rating_scoring_cubes_on_switch_auto'] },   
-    { id: 'avgcubesOnScale', title: 'Avg. Cubes on Scale (auto/teleop)',calc_type: 'avg', agg:['rating_scoring_cubes_on_scale', 'rating_scoring_cubes_on_scale_auto'] },   
-    { id: 'avgcubesExchanged', title: 'Avg. Cubes Exchnaged (teleop)',calc_type: 'avg', agg:['rating_scoring_cubes_exchanged'] },   
+    { id: 'avgCubesOnSwitch', title: 'Avg. Cubes on Switch (auto/teleop)',calc_type: 'avg', agg:['rating_scoring_Cubes_on_switch', 'rating_scoring_Cubes_on_switch_auto'] },   
+    { id: 'avgCubesOnScale', title: 'Avg. Cubes on Scale (auto/teleop)',calc_type: 'avg', agg:['rating_scoring_Cubes_on_scale', 'rating_scoring_Cubes_on_scale_auto'] },   
+    { id: 'avgCubesExchanged', title: 'Avg. Cubes Exchnaged (teleop)',calc_type: 'avg', agg:['rating_scoring_Cubes_exchanged'] },   
 
     { id: 'avgParking', title: 'Parking Probablity', calc_type: 'avg', agg:['rating_scoring_park'], min: 0, max: 1 }, 
 
@@ -300,16 +300,16 @@ var app_match_intel_config = {
   ],
   strengths_weaknesses_stats : [
 
-    { id: 'avgcubesOnSwitch', title: 'Avg. Cubes on Switch',calc_type: 'avg', agg:['rating_scoring_cubes_on_switch', 'rating_scoring_cubes_on_switch_auto'] },
+    { id: 'avgCubesOnSwitch', title: 'Avg. Cubes on Switch',calc_type: 'avg', agg:['rating_scoring_Cubes_on_switch', 'rating_scoring_Cubes_on_switch_auto'] },
     { id: 'avgSwitchEff', title: 'Avg. Switch Eff',calc_type: 'avg', agg:['rating_overall_switch_efficiency'], min: 1, max: 5 },
-    { id: 'avgcubesOnscale', title: 'Avg. Cubes on Scale',calc_type: 'avg', agg:['rating_scoring_cubes_on_scale', 'rating_scoring_cubes_on_scale_auto'] },
+    { id: 'avgCubesOnscale', title: 'Avg. Cubes on Scale',calc_type: 'avg', agg:['rating_scoring_Cubes_on_scale', 'rating_scoring_Cubes_on_scale_auto'] },
     { id: 'avgscaleEff', title: 'Avg. Scale Eff',calc_type: 'avg', agg:['rating_overall_scale_efficiency'], min: 1, max: 5 },
-    { id: 'avgcubesOnexchange', title: 'Avg. Cubes on Exchange',calc_type: 'avg', agg:['rating_scoring_cubes_on_exchange'] },
+    { id: 'avgCubesOnexchange', title: 'Avg. Cubes on Exchange',calc_type: 'avg', agg:['rating_scoring_Cubes_on_exchange'] },
     { id: 'avgexchangeEff', title: 'Avg. Exchange Eff',calc_type: 'avg', agg:['rating_overall_exchange_efficiency'], min: 1, max: 5 },
 
     { id: 'avgMobility', title: 'Mobility %', calc_type: 'avg', agg:['rating_scoring_base_line_made_auto'], min: 0, max: 1 } ,
-    { id: 'avgcubesOnSwitchAuto', title: 'Avg. Cubes on Switch (auto)',calc_type: 'avg', agg:['rating_scoring_cubes_on_switch_auto'] },  
-    { id: 'avgcubesOnScaleAuto', title: 'Avg. Cubes on Scale (auto)',calc_type: 'avg', agg:['rating_scoring_cubes_on_scale_auto'] }, 
+    { id: 'avgCubesOnSwitchAuto', title: 'Avg. Cubes on Switch (auto)',calc_type: 'avg', agg:['rating_scoring_Cubes_on_switch_auto'] },  
+    { id: 'avgCubesOnScaleAuto', title: 'Avg. Cubes on Scale (auto)',calc_type: 'avg', agg:['rating_scoring_Cubes_on_scale_auto'] }, 
 
     { id: 'avgBoxesExchanged', title: 'Avg. Boxes on Exchange',calc_type: 'avg', agg:['rating_scoring_boxes_on_exchange'] },
     { id: 'avgExchangeEff', title: 'Avg. Exchange Eff',calc_type: 'avg', agg:['rating_overall_exchange_efficiency'], min: 1, max: 5 },
