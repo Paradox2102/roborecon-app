@@ -102,7 +102,6 @@ $(function() {
 
       // build summary_panel
       $el.append('<h4 style="float:left;"><a href="{{ site.baseurl }}/team-details?team_id=' + v.team_key + '">Team: ' + v.team_key.replace(/frc/i, '') + '</a></h4>');
-      $el.append('<a style="float:left;margin-top:10px;margin-left:10px;color:#efc819;font-size:16px;" href="{{ site.baseurl }}/rate?team_id=' + v.team_key + '"><i class="fa fa-star-o"> Rate</i></a>');
 
       var summary_panel_html = '<div style="clear:both;">'
       app_match_intel_config.summary_panel.forEach(function(el) {
