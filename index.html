@@ -62,8 +62,8 @@ $(function() {
         render: function(data,type,full,meta) { 
           if (type === 'display') {
             return '<span><a style="color:#ccc;font-weight:bold;" href="{{ site.baseurl }}/team-details?team_id=' + full.team_key + '">' + full.team_name + '</a></span><br>' +
-              '<span>[ <a style="color:#D59E2A;" href="{{ site.baseurl }}/rate?team_id=' + full.team_key + '"><i class="fa fa-star-o"> Rate</i></a> | ' +
-              '<a style="color:#D59E2A;" href="{{ site.baseurl }}/scouting-reports?team_id=' + full.team_key + '"><i class="fa fa-files-o"> View Reports</i></a> ]</span>' 
+              '<span>' +
+              '<a style="color:#D59E2A;" href="{{ site.baseurl }}/scouting-reports?team_id=' + full.team_key + '"><i class="fa fa-files-o"> View Reports</i></a></span>' 
           }
           else {
             return data;
