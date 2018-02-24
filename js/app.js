@@ -320,6 +320,29 @@ ParadoxScout.getScoutingReports = function (eventKey, teamKey, eventListener, ne
   });
 };
 
+ParadoxScout.getPitReports = function (eventKey, teamKey, eventListener, next) {
+  eventKey = verifyEventKey(eventKey);
+
+  // callback signature varies from 'value' to 'child_added' | 'child_changed' | 'child_removed'
+  var callback = null;
+  if (eventListener === 'value') {
+    callback = function (snap) {
+      next(snap);
+    };
+  }
+  else {
+    callback = function (childSnap, prevChildKey) {
+      next(childSnap, prevChildKey);
+    };
+  }
+
+  // listen for scouting reports
+  ParadoxScout.DataService.onPitReportAdded(eventKey, teamKey, eventListener, callback, function (error) {
+    AppUtility.showErrorMsg(error);
+    next(null, null);
+  });
+};
+
 ParadoxScout.onTeamScoreAdded = function (eventKey, teamKey, eventListener, next) {
   eventKey = verifyEventKey(eventKey);
 

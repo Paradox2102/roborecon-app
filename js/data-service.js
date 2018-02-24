@@ -467,6 +467,24 @@ ParadoxScout.DataService = (function() {
       return _scoutingReportsRef.orderByKey().on(eventListener, next, onError);
   },
 
+  _pitReportsRef = null,
+  onPitReportAdded = function(eventKey, teamKey, eventListener, next, onError) {
+    // default event listener to 'child_added'
+    if (!eventListener) eventListener = 'child_added';
+
+    // if ref already exists, turn off any exising handlers for the specified event listener
+    if (typeof _pitReportsRef === 'object' && _pitReportsRef !== null) _pitReportsRef.off(eventListener);
+
+    // update current ref
+    _pitReportsRef = dbRef.child(`/event_pit_reports/${eventKey}/${appTeamKey}`);
+    
+    // get all reports for a team if specified, else get all reports for the event
+    if (teamKey)
+      return _pitReportsRef.orderByChild('team_id').equalTo(teamKey).on(eventListener, next, onError);
+    else
+      return _pitReportsRef.orderByKey().on(eventListener, next, onError);
+  },
+
 
   //admin stuff
 
@@ -570,6 +588,7 @@ ParadoxScout.DataService = (function() {
     updateEventAndTeams: updateEventAndTeams,
 
     onScoutingReportAdded: onScoutingReportAdded,
+    onPitReportAdded: onPitReportAdded,
     onTeamScoreAdded: onTeamScoreAdded,
     getEventScoutingData: getEventScoutingData,
     updateEventScoresAndMatchDetails: updateEventScoresAndMatchDetails,
