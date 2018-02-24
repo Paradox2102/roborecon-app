@@ -479,10 +479,10 @@ ParadoxScout.DataService = (function() {
     _pitReportsRef = dbRef.child(`/event_pit_reports/${eventKey}/${appTeamKey}`);
     
     // get all reports for a team if specified, else get all reports for the event
-    if (teamKey)
-      return _pitReportsRef.orderByChild('team_id').equalTo(teamKey).on(eventListener, next, onError);
-    else
-      return _pitReportsRef.orderByKey().on(eventListener, next, onError);
+    // if (teamKey)
+    //   return _pitReportsRef.orderByChild('team_id').equalTo(teamKey).on(eventListener, next, onError);
+    // else
+      return _pitReportsRef.orderByChild('team_id').on(eventListener, next, onError);
   },
 
 
