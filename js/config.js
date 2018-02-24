@@ -283,6 +283,10 @@ var app_match_intel_config = {
     { id: 'ccwms', title: 'CCWM', tooltip: 'Calculated Contribution to Winning Margin', decimal_places: 2 },
     { id: 'avgPoints', title: 'Avg.', calc_type: 'avg', agg:['totalPoints'], decimal_places: 2 }
   ],
+  pit_stats:[
+    { id: 'pit_rating_drive_train', title: 'Drive Train'},
+    { id: 'pit_rating_weight', title: 'Weight'}
+  ],
   match_stats: [
     { id: 'avgOwnershipPoints', title: 'AVG. OWNERSHIP POINTS', calc_type: 'avg', agg:['xTotalOwnershipPoints'] , css:'ps-match-intel-score-section' },
     { id: 'avgSwitchOwnershipSec', title: 'Avg. Switch Ownership Sec', calc_type: 'avg', agg:['xTotalSwitchOwnershipSec'] },

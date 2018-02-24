@@ -174,7 +174,7 @@ ParadoxScout.getMatchIntelligence = function (eventKey, blueTeams, redTeams, nex
 
       var matchScores = $.map(v.scores.scores, function (item) { return item; });
       var teamReports = $.map(v.reports, function (item) { return item; });
-      var pitReports =  $.map(v.pit, function (item) { return item; });
+      var pitReport =  v.pit || {};
 
       // # of matches played thus far
       var matchesPlayed = v.scores.scores ? Object.keys(v.scores.scores).length : 0;
@@ -196,6 +196,7 @@ ParadoxScout.getMatchIntelligence = function (eventKey, blueTeams, redTeams, nex
       // include standard scoring/rating attributes
       summary[k] = {
         team_key: v.team_key,
+        pit_report: pitReport,
         oprs: v.scores.oprs || 0,
         ccwms: v.scores.ccwms || 0,
         matches_played: matchesPlayed,

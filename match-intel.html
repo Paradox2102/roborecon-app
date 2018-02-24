@@ -109,6 +109,18 @@ $(function() {
       });
       $el.append(summary_panel_html + '</div>')
         
+      $el.append('<p style="clear:both;text-align:center;margin:5px 0px 5px; 0px;">MATCH STATS</p>');
+      var pit_stats_html = '<table style="width:100%;">'
+      app_match_intel_config.pit_stats.forEach(function(el) {
+        var css = ('css' in el) ? ` class="${el.css}"` : ''
+        if(el.id in v.pit_report){
+          pit_stats_html += `<tr${css}><td>${el.title}:</td><td>${v.pit_report[el.id]}</td></tr>`;
+        }else{
+          pit_stats_html += `<tr${css}><td>${el.title}:</td><td>&nbsp;</td></tr>`;
+        }
+      });
+      $el.append(pit_stats_html + '</table>')
+
       // build match status
       $el.append('<p style="clear:both;text-align:center;margin:5px 0px 5px; 0px;">MATCH STATS</p>');
       var match_stats_html = '<table style="width:100%;">'
