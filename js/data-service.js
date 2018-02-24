@@ -203,6 +203,10 @@ ParadoxScout.DataService = (function() {
     return dbRef.child(`/event_scouting_reports/${eventKey}/${appTeamKey}`).orderByChild('team_id').equalTo(teamKey).once('value');
   },
 
+  getTeamPitReport = function(eventKey, teamKey) {
+    return dbRef.child(`/event_pit_reports/${eventKey}/${appTeamKey}/${teamKey}`).once('value');
+  },
+
   updateEventAndTeams = function(eventKey, eventData, teamsData, eventTeamsData, next) {
     dbRef.child('/events/' + eventKey).set(eventData)
       .then(function() {
@@ -270,39 +274,45 @@ ParadoxScout.DataService = (function() {
   getMatchIntelligence = function(eventKey, blueTeams, redTeams, next) {
     // wtg 4/22/16 - there is probably a better way via redesigning the FB db
     Promise.all([ 
-      getTeamScoringDetails(eventKey, blueTeams[0]), getTeamScoutingReports(eventKey, blueTeams[0]),
-      getTeamScoringDetails(eventKey, blueTeams[1]), getTeamScoutingReports(eventKey, blueTeams[1]),
-      getTeamScoringDetails(eventKey, blueTeams[2]), getTeamScoutingReports(eventKey, blueTeams[2]), 
-      getTeamScoringDetails(eventKey, redTeams[0]), getTeamScoutingReports(eventKey, redTeams[0]), 
-      getTeamScoringDetails(eventKey, redTeams[1]), getTeamScoutingReports(eventKey, redTeams[1]), 
-      getTeamScoringDetails(eventKey, redTeams[2]), getTeamScoutingReports(eventKey, redTeams[2])
+      getTeamScoringDetails(eventKey, blueTeams[0]), getTeamScoutingReports(eventKey, blueTeams[0]), getTeamPitReport(eventKey, blueTeams[0]),
+      getTeamScoringDetails(eventKey, blueTeams[1]), getTeamScoutingReports(eventKey, blueTeams[1]), getTeamPitReport(eventKey, blueTeams[1]),
+      getTeamScoringDetails(eventKey, blueTeams[2]), getTeamScoutingReports(eventKey, blueTeams[2]), getTeamPitReport(eventKey, blueTeams[2]),
+      getTeamScoringDetails(eventKey, redTeams[0]), getTeamScoutingReports(eventKey, redTeams[0]), getTeamPitReport(eventKey, redTeams[0]),
+      getTeamScoringDetails(eventKey, redTeams[1]), getTeamScoutingReports(eventKey, redTeams[1]), getTeamPitReport(eventKey, redTeams[1]),
+      getTeamScoringDetails(eventKey, redTeams[2]), getTeamScoutingReports(eventKey, redTeams[2]), getTeamPitReport(eventKey, redTeams[2])
     ])
     .then(function(snapshots) {
       var blueScoring0 = snapshots[0].val();
       var blueScouting0 = snapshots[1].val();
+      var bluePit0 = snapshots[2].val();
 
-      var blueScoring1 = snapshots[2].val();
-      var blueScouting1 = snapshots[3].val();
+      var blueScoring1 = snapshots[3].val();
+      var blueScouting1 = snapshots[4].val();
+      var bluePit1 = snapshots[5].val();
 
-      var blueScoring2 = snapshots[4].val();
-      var blueScouting2 = snapshots[5].val();
+      var blueScoring2 = snapshots[6].val();
+      var blueScouting2 = snapshots[7].val();
+      var bluePit2 = snapshots[8].val();
 
-      var redScoring0 = snapshots[6].val();
-      var redScouting0 = snapshots[7].val();
+      var redScoring0 = snapshots[9].val();
+      var redScouting0 = snapshots[10].val();
+      var redPit0 = snapshots[11].val();
 
-      var redScoring1 = snapshots[8].val();
-      var redScouting1 = snapshots[9].val();
+      var redScoring1 = snapshots[12].val();
+      var redScouting1 = snapshots[13].val();
+      var redPit1 = snapshots[14].val();
 
-      var redScoring2 = snapshots[10].val();
-      var redScouting2 = snapshots[11].val();
+      var redScoring2 = snapshots[15].val();
+      var redScouting2 = snapshots[16].val();
+      var redPit2 = snapshots[17].val();
 
       next({
-        blue0: { team_key: blueTeams[0], scores: blueScoring0, reports: blueScouting0 }, 
-        blue1: { team_key: blueTeams[1], scores: blueScoring1, reports: blueScouting1 }, 
-        blue2: { team_key: blueTeams[2], scores: blueScoring2, reports: blueScouting2 }, 
-        red0: { team_key: redTeams[0], scores: redScoring0, reports: redScouting0 }, 
-        red1: { team_key: redTeams[1], scores: redScoring1, reports: redScouting1 }, 
-        red2: { team_key: redTeams[2], scores: redScoring2, reports: redScouting2 } 
+        blue0: { team_key: blueTeams[0], scores: blueScoring0, reports: blueScouting0, pit: bluePit0 }, 
+        blue1: { team_key: blueTeams[1], scores: blueScoring1, reports: blueScouting1, pit: bluePit1 }, 
+        blue2: { team_key: blueTeams[2], scores: blueScoring2, reports: blueScouting2, pit: bluePit2}, 
+        red0: { team_key: redTeams[0], scores: redScoring0, reports: redScouting0, pit: redPit0 }, 
+        red1: { team_key: redTeams[1], scores: redScoring1, reports: redScouting1, pit: redPit1 }, 
+        red2: { team_key: redTeams[2], scores: redScoring2, reports: redScouting2, pit: redPit2 } 
       });
     });
   },

@@ -174,6 +174,7 @@ ParadoxScout.getMatchIntelligence = function (eventKey, blueTeams, redTeams, nex
 
       var matchScores = $.map(v.scores.scores, function (item) { return item; });
       var teamReports = $.map(v.reports, function (item) { return item; });
+      var pitReports =  $.map(v.pit, function (item) { return item; });
 
       // # of matches played thus far
       var matchesPlayed = v.scores.scores ? Object.keys(v.scores.scores).length : 0;
