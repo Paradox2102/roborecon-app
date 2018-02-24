@@ -39,7 +39,7 @@ permalink: /pit-reports/
 
       var htmlReport = [
         '<div id="' + data.rpt.rptKey + '" class="col-sm-12 ps-scouting-report">',
-        ' <h4>Team: ' + data.rpt.team_id.replace('frc', '') + '<br>',
+        ' <h4>Team: ' + data.rpt.team_id + '<br>',
         ' <small><span class="fb-ts" data-fb-ts="' + data.rpt.scored_at + '">' + moment(new Date(data.rpt.scored_at)).fromNow() + '</span> by ' + data.rpt.scored_by.name + '</small></h4>',
         buildOverall(data),
         buildColumns(data),
@@ -80,9 +80,9 @@ permalink: /pit-reports/
       return html.join('');
     }
 
-      $('#reports').prepend($(htmlReport.join('\n')));
+      $('#reports').append($(htmlReport.join('\n')));
     });
-    
+
     // 2. prepare report _template
     var reportTemplate = _.template($('#reportTemplate').html());
 

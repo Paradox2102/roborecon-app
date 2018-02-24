@@ -624,6 +624,7 @@ ParadoxScout.addPitReport = function (data, next) {
     data.event_id = eventKey;
     data.scored_at = firebase.database.ServerValue.TIMESTAMP; // new Date().getTime() -> e.g., 1456101425447 -or- (new Date()).toString();
     data.scored_by = { user_key: u.key, name: u.name, email: u.email };
+    data.team_id = parseInt(data.team_id.replace('frc', ''));
 
     // console.log(data);
     ParadoxScout.DataService.addPitReport(eventKey, data, next);
