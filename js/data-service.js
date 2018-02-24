@@ -404,7 +404,7 @@ ParadoxScout.DataService = (function() {
   },
 
   addPitReport = function(eventKey, data, next) {
-    dbRef.child(`/event_pit_reports/${eventKey}/${appTeamKey}`).push(data)
+    dbRef.child(`/event_pit_reports/${eventKey}/${appTeamKey}/${data.team_id}`).set(data)
     .then(next())
     .catch(function(error) { 
       console.log.bind(console);
