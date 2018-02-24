@@ -591,6 +591,22 @@ ParadoxScout.addScoutingReport = function (data, next) {
   });
 };
 
+// add user scouting report
+ParadoxScout.addPitReport = function (data, next) {
+  var eventKey = verifyEventKey(null);
+
+  // get current user
+  var user = ParadoxScout.DataService.getCurrentUser(function (u) {
+    // add in scouting metadata
+    data.event_id = eventKey;
+    data.scored_at = firebase.database.ServerValue.TIMESTAMP; // new Date().getTime() -> e.g., 1456101425447 -or- (new Date()).toString();
+    data.scored_by = { user_key: u.key, name: u.name, email: u.email };
+
+    // console.log(data);
+    ParadoxScout.DataService.addPitReport(eventKey, data, next);
+  });
+};
+
 
 // ----------------------------------------------------------------------
 // UTILITY METHODS

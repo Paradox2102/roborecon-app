@@ -403,6 +403,15 @@ ParadoxScout.DataService = (function() {
     });
   },
 
+  addPitReport = function(eventKey, data, next) {
+    dbRef.child(`/event_pit_reports/${eventKey}/${appTeamKey}`).push(data)
+    .then(next())
+    .catch(function(error) { 
+      console.log.bind(console);
+      next(error);
+    });
+  },
+
   updateEventScoresAndMatchDetails = function(eventKey, scoringData, matchData, next) {
     // update all scoring data
     dbRef.child('/event_scores/' + eventKey).set(scoringData)
@@ -565,6 +574,7 @@ ParadoxScout.DataService = (function() {
     getEventScoutingData: getEventScoutingData,
     updateEventScoresAndMatchDetails: updateEventScoresAndMatchDetails,
     addScoutingReport: addScoutingReport,
+    addPitReport: addPitReport,
 
 
     //admin functions
