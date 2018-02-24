@@ -28,10 +28,10 @@ permalink: /rate-pit/
             <div class="form-group">
               <label class="col-md-2 control-label" for="pit_rating_drive_train">Drive Train:</label>
               <select class="scouting-report" name="pit_rating_drive_train">
-                <option name="pit_rating_drive_train" id="pit_rating_drive_train_tank_drive" value="tank_drive">Tank Drive</option>
-                <option name="pit_rating_drive_train" id="pit_rating_drive_train_omni_drive" value="omni_drive">Omni Drive</option>
-                <option name="pit_rating_drive_train" id="pit_rating_drive_train_mecanum_drive" value="mecanum_drive">Mecanum Drive</option>
-                <option name="pit_rating_drive_train" id="pit_rating_drive_train_swerve_drive" value="swerve_drive">Swerve Drive</option>
+                <option name="pit_rating_drive_train" id="pit_rating_drive_train_tank_drive" value="Tank Drive">Tank Drive</option>
+                <option name="pit_rating_drive_train" id="pit_rating_drive_train_omni_drive" value="Omni Drive">Omni Drive</option>
+                <option name="pit_rating_drive_train" id="pit_rating_drive_train_mecanum_drive" value="Mecanum Drive">Mecanum Drive</option>
+                <option name="pit_rating_drive_train" id="pit_rating_drive_train_swerve_drive" value="Swerve rive">Swerve Drive</option>
               </select>
             </div>
 
@@ -102,7 +102,7 @@ permalink: /rate-pit/
         }
         else {
           AppUtility.showSuccessMsg("Scouting Report Saved!", '', function () {
-            setTimeout("location.href = '" + siteUrl + "/matches'", 3000);
+            setTimeout("location.href = '" + siteUrl + "/pit-reports'", 3000);
           });
         }
       });

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: View Team Details
-permalink: /scouting-pit-reports/
+permalink: /pit-reports/
 ---
 <div class="container">
   <div class="row">
@@ -18,7 +18,7 @@ permalink: /scouting-pit-reports/
                     <option value="-99">- Select which scouting reports you want to view -</option>
                     <option value="-1">All Teams</option>
                   </select>
-                  <a id="details-link" style="color:#ccc;font-weight:bold;font-size:18px;float:right;display:none;" href="#"><i class="fa fa-files-o"> View Details & Stats for this team</i></a>
+                  <a id="details-link" style="color:#ccc;font-weight:bold;font-size:18px;float:right;" href="/rate-pit"><i class="fa fa-files-o">Pit Scout a Team</i></a>
                 </div>
               </div>
             </div>
@@ -56,9 +56,6 @@ permalink: /scouting-pit-reports/
       ParadoxScout.getPitReports(null, teamKey, null, function (reportSnapshot, prevReportKey) {
         // if nothing returned
         if (!reportSnapshot) return;
-
-        $('#details-link').attr('href', '{{ site.baseurl }}/team-details?team_id=' + selectedVal);
-        $('#details-link').show();
 
         // build <div> for report and then append
         var rpt = reportSnapshot.val();
