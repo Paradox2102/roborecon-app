@@ -246,6 +246,28 @@ var app_scouting_reports_config = {
   ]
 }
 
+var app_pit_reports_config = {
+  overall: [
+    { id: 'pit_rating_drive_train', title: 'Robot Drive Train', defaultValue: 'N/A' },
+    { id: 'pit_rating_weight', title: 'Robot Weight', defaultValue: 'N/A' },
+  ],
+  cols: [
+    {
+      header_title: 'Elevator', 
+      col_data: [
+
+        { id: 'pit_rating_elevator_height', title: 'Elevator Height', defaultValue: '0' },
+      ]
+    },{
+      header_title: 'Autonomous', 
+      col_data: [
+
+        { id: 'pit_rating_cross_base_line', title: 'Cross Base Line', defaultValue: '0' },
+      ]
+    },
+  ]
+}
+
 // ------------------------------------------------------------------------
 // Configuration - For the team-details view
 // ------------------------------------------------------------------------
