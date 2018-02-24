@@ -10,8 +10,8 @@ permalink: /pit-reports/
         <fieldset>
 
           <div class="row">
-            <div class="col-md-6">
-              <a id="details-link" style="color:#ccc;font-weight:bold;font-size:18px;float:right;" href="/rate-pit"><i class="fa fa-files-o">Pit Scout a Team</i></a>
+            <div class="col-md-12" style="text-align:center;">
+              <a id="details-link" style="color:#ccc;font-weight:bold;font-size:18px;" href="/rate-pit"><i class="fa fa-files-o">Pit Scout a Team</i></a>
             </div>
           </div>
 
@@ -75,7 +75,8 @@ permalink: /pit-reports/
     function buildColumnData(colData, data) {
       var html=[];
       colData.forEach(function(el){
-        html.push('<tr><td style="background-color:#000;">' + el.title + '</td><td style="background-color:#000;">' + (data.rpt[el.id] || el.defaultValue) + '</td></tr>');
+        var titleTd = el.title == ''? '' : '<td style="background-color:#000;">' + el.title + '</td>'
+        html.push('<tr>'+titleTd+'<td style="background-color:#000;">' + (data.rpt[el.id] || el.defaultValue).replace(/\r\n/g, '<br>') + '</td></tr>');
       });
       return html.join('');
     }

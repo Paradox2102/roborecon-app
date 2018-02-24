@@ -264,6 +264,12 @@ var app_pit_reports_config = {
 
         { id: 'pit_rating_cross_base_line', title: 'Cross Base Line', defaultValue: '0' },
       ]
+    },{
+      header_title: 'Notes', 
+      col_data: [
+
+        { id: 'pit_rating_notes', title: '', defaultValue: '' },
+      ]
     },
   ]
 }
