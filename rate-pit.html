@@ -1,0 +1,153 @@
+---
+layout: page
+title: Rate a Team
+permalink: /rate-pit/
+---
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <form id="reportForm" class="form-horizontal">
+        <fieldset>
+
+          <div class="scouting-report">Pit Report</div>
+
+          <div class="row">
+            <div class="col-md-5">
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="teams">Team to Rate:</label>
+                <div class="col-md-8">
+                  <select id="teams" name="team_id" class="form-control">
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 panel panel-default">Overall Robot:</div>
+          <div class="row">
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="pit_rating_drive_train">Drive Train:</label>
+              <select class="scouting-report" name="pit_rating_drive_train">
+                <option name="pit_rating_drive_train" id="pit_rating_drive_train_tank_drive" value="tank_drive">Tank Drive</option>
+                <option name="pit_rating_drive_train" id="pit_rating_drive_train_omni_drive" value="omni_drive">Omni Drive</option>
+                <option name="pit_rating_drive_train" id="pit_rating_drive_train_mecanum_drive" value="mecanum_drive">Mecanum Drive</option>
+                <option name="pit_rating_drive_train" id="pit_rating_drive_train_swerve_drive" value="swerve_drive">Swerve Drive</option>
+              </select>
+            </div>
+
+            <hr class="divider-hor" style="width:750px">
+
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="pit_rating_weight">Weight:</label>
+              <input class="form-control js-counter-textbox" style="display:inline-block;width:70px;" type="number" name="pit_rating_weight" value="0" />
+            </div>
+          </div>
+
+          <div class="col-md-12 panel panel-default">Elevator:</div>
+          <div class="form-group">
+              <label class="col-md-2 control-label" for="pit_rating_elevator_height">Max Height(feet):</label>
+              <input class="form-control js-counter-textbox" style="display:inline-block;width:70px;" type="number" name="pit_rating_elevator_height" value="0" />
+          </div>
+
+          <div class="col-md-12 panel panel-default">Autonomous:</div>
+          <div class="form-group">
+                <label class="col-md-2 control-label" for="pit_rating_cross_base_line">Cross Base Line:</label>
+                <div class="col-md-2" style="text-align: right;right:50px">
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary">
+                      <input type="radio" name="pit_rating_cross_base_line" id="pit_rating_cross_base_line_1"
+                        value="1" autocomplete="off">Yes</label>
+                    <label class="btn btn-primary active">
+                      <input type="radio" name="pit_rating_cross_base_line" id="pit_rating_cross_base_line_0"
+                        value="0" autocomplete="off" checked="checked">No</label>
+                  </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="col-md-6">
+          <button id="submit" type="button" class="btn btn-primary btn-lg">Submit Scouting Report</button>
+          <span id="error" class="help-block" style="color:red;font-weight:bold;"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    // add new user scouting report
+    $("#submit").on("click", function (ev) {
+      ev.preventDefault();
+
+      $('.loaderImage').show();
+
+      // map from data into json object
+      var data = {};
+      $.each($('#reportForm').serializeArray(), function (k, v) {
+        data[v.name] = v.value;
+      });
+
+      var match_key = AppUtility.getUrlParameter('match_key');
+
+      if (match_key) data['match_key'] = match_key;
+      //console.log(data);
+
+      // add scouting report
+      ParadoxScout.addPitReport(data, function (error) {
+        $('.loaderImage').hide();
+
+        if (error) {
+          AppUtility.showErrorMsg("An error occurred!", error);
+        }
+        else {
+          AppUtility.showSuccessMsg("Scouting Report Saved!", '', function () {
+            setTimeout("location.href = '" + siteUrl + "/matches'", 3000);
+          });
+        }
+      });
+    });
+
+
+    // *** onload ***
+
+    // 1. build teams dropdown
+    $('.loaderImage').show();
+
+    ParadoxScout.buildTeamsDropdown($('#teams'), null, function (error) {
+
+      $('.loaderImage').hide();
+
+      if (error) {
+        AppUtility.showErrorMsg("An error occurred!", error);
+      }
+      else {
+        // if a team key is included in querystring, select that team
+        var selectedTeamKey = AppUtility.getUrlParameter('team_id');
+        if (selectedTeamKey && $("#teams option[value='" + selectedTeamKey + "']").length > 0) {
+          $('#teams').val(selectedTeamKey);
+        }
+      }
+    });
+
+    // 3. ensure counters are >= 0
+    $('.js-counter-textbox').on('change', function (ev) {
+      $(this).val(Math.max(parseFloat($(this).val()), 0) || 0)
+    });
+
+    // 2. add in increments of 5
+    $(".js-counter-btn").on("click", function (ev) {
+      var input = $("input[name=" + $(this).data('counter-for') + "]");
+      var currentVal = parseFloat(input.val());
+      input.val(Math.max((currentVal + 5), 0) || 0);
+    });
+
+    // 3. add in increments of 1
+    $(".js-counter-btn-1").on("click", function (ev) {
+      var input = $("input[name=" + $(this).data('counter-for') + "]");
+      var currentVal = parseFloat(input.val());
+      input.val(Math.max((currentVal + 1), 0) || 0);
+    });
+
+  });
+</script>

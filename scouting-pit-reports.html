@@ -1,0 +1,152 @@
+---
+layout: page
+title: View Team Details
+permalink: /scouting-pit-reports/
+---
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <form id="reportForm" class="form-horizontal">
+        <fieldset>
+
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="form-group">
+                <div class="col-md-8">
+                  <select id="teams" name="team_id" class="form-control">
+                    <option value="-99">- Select which scouting reports you want to view -</option>
+                    <option value="-1">All Teams</option>
+                  </select>
+                  <a id="details-link" style="color:#ccc;font-weight:bold;font-size:18px;float:right;display:none;" href="#"><i class="fa fa-files-o"> View Details & Stats for this team</i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div id="reports" class="col-md-12"></div>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    // display scouting reports based on selected team or all teams from dropdown
+
+    $("#teams").change("click", function (ev) {
+      // determine team reports to fetch
+      var selectedVal = this.value;
+
+      // if selecting the placeholder, just return
+      if (selectedVal === '-99') return;
+
+      // if a specific team is selected, update the teamKey to fetch the reports of just
+      // that team
+      var teamKey = selectedVal == '-1' ? null : selectedVal;
+
+      // clear dropdown
+      $('#reports').empty();
+      $('details-link').hide();
+
+      ParadoxScout.getPitReports(null, teamKey, null, function (reportSnapshot, prevReportKey) {
+        // if nothing returned
+        if (!reportSnapshot) return;
+
+        $('#details-link').attr('href', '{{ site.baseurl }}/team-details?team_id=' + selectedVal);
+        $('#details-link').show();
+
+        // build <div> for report and then append
+        var rpt = reportSnapshot.val();
+        rpt.rptKey = reportSnapshot.key;
+
+        var data = { rpt: rpt };
+
+        var htmlReport = [
+          '<div id="' + data.rpt.rptKey + '" class="col-sm-12 ps-scouting-report">',
+          ' <h4>Team: ' + data.rpt.team_id.replace('frc', '') + '<br>',
+          ' <small><span class="fb-ts" data-fb-ts="' + data.rpt.scored_at + '">' + moment(new Date(data.rpt.scored_at)).fromNow() + '</span> by ' + data.rpt.scored_by.name + '</small></h4>',
+          buildOverall(data),
+          buildColumns(data),
+          '</div>',
+          '<hr style="width:100%;border-color:#fff;">'
+        ];
+
+        function buildOverall(data) {
+          var html=[];
+          app_pit_reports_config.overall.forEach(function(el){
+            html.push(el.title + ' <span class="badge">' + (data.rpt[el.id] || el.defaultValue) + '</span>&nbsp;&nbsp;');
+          });
+          return '<h5>' + html.join('') + '</h5>';
+        }
+
+        function buildColumns(data) {
+          var html=[];
+          var colNumber= 12 / app_pit_reports_config.cols.length;
+
+          app_pit_reports_config.cols.forEach(function(el){
+            html = html.concat(['<div class="col-sm-' + colNumber + '">',
+              '<div class="table-responsive">',
+                '<table class="table">',
+                '<tr><th colspan="2">' + el.header_title + '</th></tr>',
+                buildColumnData(el.col_data, data),
+                '</table>',
+              '</div>',
+            '</div>']);
+          });
+          return html.join('');
+        }
+
+      function buildColumnData(colData, data) {
+        var html=[];
+        colData.forEach(function(el){
+          html.push('<tr><td style="background-color:#000;">' + el.title + '</td><td style="background-color:#000;">' + (data.rpt[el.id] || el.defaultValue) + '</td></tr>');
+        });
+        return html.join('');
+      }
+
+        $('#reports').prepend($(htmlReport.join('\n')));
+      });
+    });
+
+
+    // *** onload ***
+
+    // 1. build teams dropdown
+    $('.loaderImage').show();
+
+    ParadoxScout.buildTeamsDropdown($('#teams'), null, function (error) {
+
+      $('.loaderImage').hide();
+
+      if (error) {
+        AppUtility.showErrorMsg("An error occurred!", error);
+      }
+      else {
+        // if a team key is included in querystring, select that team
+        var selectedTeamKey = AppUtility.getUrlParameter('team_id');
+        if (selectedTeamKey && $("#teams option[value='" + selectedTeamKey + "']").length > 0) {
+          $('#teams').val(selectedTeamKey);
+          $('#teams').change();
+        }
+      }
+    });
+
+    // 2. prepare report _template
+    var reportTemplate = _.template($('#reportTemplate').html());
+
+    // 3. update relative time report was made every 5 seconds
+    setInterval(function () {
+      $('.fb-ts').each(function () {
+        var relativeTime = moment(new Date($(this).data('fb-ts'))).fromNow();
+        $(this).html(relativeTime);
+      })
+    }, 5000)
+
+  });
+
+</script>
