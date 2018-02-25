@@ -385,14 +385,13 @@ ParadoxScout.updateEventScores = function (eventKey, next) {
     var minutesSinceScoresUpdatedAt = Math.round((today.getTime() - scoresLastUpdatedAt.getTime()) / 60000);
 
     // ONLY call API and update db if last scoring update > 5 mins ago AND event is happening!!!
-    // if(minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) {
-    // if (today < eventStart || 
-    //     today > eventEnd.setDate(eventEnd.getDate() + 1) || 
-    //     (minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) ) {
+    if (today < eventStart || 
+        today > eventEnd.setDate(eventEnd.getDate() + 1) || 
+        (minutesSinceScoresUpdatedAt < ParadoxScout.ScoringUpdateIntervalInMinutes + 1) ) {
 
-    //   next();
-    //   return;
-    // }
+      next();
+      return;
+    }
 
     // fetch scores from TBA and update db
     ParadoxScout.ApiService.getAllMatchDetails(eventKey, next)
