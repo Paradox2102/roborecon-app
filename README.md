@@ -74,8 +74,35 @@ git commit -am ‘initial deploy’
 git push
 ```
 
+#### Working with RoboRecon on Windows 10
 
-### Other Useful Information
+##### Approach 1: Using Ubuntu Subsystem (recommended)
+1. If you don't have an editor installed, download VS Code (https://code.visualstudio.com/)
+2. Install ubuntu base on windows. (https://docs.microsoft.com/en-us/windows/wsl/about)
+3. Open a command prompt and then type the following:
+```
+bash
+sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-add-repository ppa:brightbox/ruby-ng
+sudo apt-get update
+sudo apt-get install ruby2.3 ruby2.3-dev build-essential
+sudo gem update
+sudo gem install bundler
+sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
+sudo apt-get install nodejs
+sudo apt-get install git
+```
+
+##### Approach 2: Using Docker
+1. Download the correct version of docker CE (https://www.docker.com/community-edition)
+2. If you don't have an editor installed, download VS Code (https://code.visualstudio.com/)
+
+*At this point, you should restart your machine after everything is installed (some things fail to get added to your path or configured correctly until you do so).*
+
+3. cd into the roborecon-app folder and try running docker-compose up. We've already created a docker-compose.yml file with all configuration details for a docker container that works for jekyll. If all goes well, you'll get a message that the web application is running on port 4000. If so, go to chrome at navigate to http://localhost:4000 ... you should see roborecon running on your machine.
+
+
+## Other Useful Information
 
 * [Clearing up baseurl confusion](https://byparker.com/blog/2014/clearing-up-confusion-around-baseurl/)
 
