@@ -8,22 +8,34 @@ RoboRecon is a FRC scouting application designed by FIRST Team Paradox 2102. Thi
   - Made with Jekyll
   - Part-Magic
 
-### Setup
+## How to configure RoboRecon for your team
+### Quick & Easy (baseline configuration needed to get a production version operational):
 
-1. Submit your team number, an administrator e-mail, and preferred subdomain using [this form](https://goo.gl/forms/U9m5MNoIu6P4GNiD3).  We will notify you after your team has been added to the scouting database. ***NOTE: the administrator's e-mail MUST either be a Gmail account or associated to a Github account.***
+1. Create a fork of the project the RoboRecon github repo (https://github.com/Paradox2102/roborecon-app) into your team’s github account
 
-2. Fork this repo and configure your repository as desired
+2. Delete the CNAME file if you are going to use the default URL github provides (e.g., https://your-github-account.github.io/roborecon-app/) or set it to whatever you are going to configure it to run as (eg. roborecon.yourteam.org).
 
-3. Clone your repository to develop locally.  There are several options to running your application but the prefered way is to use [Docker](https://www.docker.com/).  If you are using Docker, to run the application locally in an enviroment properly configured for Ruby and Jekyll, is as simple as `cd`ing into your project directory and running `docker-compose up` from your terminal.
+  * If you are setting up a custom URL, please see the instructions here on how to configure DNS to play nice with github-pages
 
-Another options is to use CodeEnvy Factory here: https://codenvy.io/f?id=factoryhwp1rln1b26vq11k
+3. Submit your team number, an administrator email, and application URL from step #2 using [this form](https://goo.gl/forms/U9m5MNoIu6P4GNiD3). We will notify you after your team has been added to the scouting database. 
 
-4. Update the `config.yml` with your team number and update any of the other configuration options as desired.  You can also update the `js/config.js` file to customize what data is shown on what screens, how scoring elements are aggregated, create custom scoring elements, and define the score categories for your scouters.  Everything is customizable to whatever you need.
+  * NOTE: the administrator's e-mail MUST either be a Gmail account or associated to a Github account.
 
-5. After you are done with configuring your application instance, commit your work to git and `git push` everything up to your Github repo.
+4. Open the _config.yml file in github for editing and make the following changes:
+  - **REQUIRED**:  Under “Base Site Settings”
+    - url: The URL you specified from step #2 in the “Configure” section above.  
+    - If you are using something like “http://your-github-account.github.io/roborecon-app” for your URL, you also need to set baseurl equal to /roborecon-app (or whatever you have after the base hostname to your site).
 
-6. Configure your web application to be hosted via Github Pages ([docs](https://pages.github.com/)) using your subdomain (e.g., paradox.roborecon.org).  Once this is done, your team's scouting application will be available at that URL. Initially, only the team administrator will be login using the e-mail address provided.  The team admin will abe able to whitelist other users for access as well as assign other administrators, in addition to being able to add event data for events your team is scouting.
+  - **REQUIRED**:  Under the “scout” config option in “Scouting System Settings”
+    - teamkey: <your team #>
+    - currentevent: <TBA event key> (for the event you want to scout)
 
+ *!!! DO NOT CHANGE anything under the “firebase” config … the app will not function at all if you do !!!*
+
+  - *Optional settings*:
+    - Basically, everything else (title, email, description, header, social media links, etc…).  If you do change out the header image, make sure it is copied into the /images folder before you deploy.
+
+This is all you need to do to give your team a robust, extendable, and working scouting system!  Initially, only the team administrator will be login using the e-mail address provided in step #3 of the “Configure” section. The team admin will be able to whitelist other users for access, assign other administrators, and add event data for events your team is scouting.
 
 ### Development
 
