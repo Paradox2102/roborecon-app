@@ -11,7 +11,7 @@ ParadoxScout.start = function (next) {
   ParadoxScout.CompetitionYear = new Date().getFullYear();
 
   // default event key
-  ParadoxScout.CurrentEventKey = '{{ site.scout.currentevent }}';
+  ParadoxScout.CurrentEventKey = '2018cabb';
 
   // default minutes to check TBA for scoring updates
   ParadoxScout.ScoringUpdateIntervalInMinutes = 1;
